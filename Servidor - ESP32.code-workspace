@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../Servidor - ESP32"
+		},
+		{
+			"name": "Esp32-ExpoCenfo project.",
+			"path": "../../Documentos/PlatformIO/Projects/Esp32-ExpoCenfo project."
+		},
+		{
+			"name": "Esp32-ExpoCenfo project",
+			"path": "../../Documentos/PlatformIO/Projects/Esp32-ExpoCenfo project"
+		},
+		{
+			"name": "ESP32-PROJECT",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
