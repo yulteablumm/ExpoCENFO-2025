@@ -23,8 +23,8 @@ const char* ssid = "Amigurumitos";
 const char* password = "17032001";
 
 // OpenRouter API endpoint y tu clave
-const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const char* OPENROUTER_API_KEY = "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";
+const char* OPENROUTER_API_URL = "aqui se pone la URL del modelo de lenguaje";
+const char* OPENROUTER_API_KEY = "aqui se pone la API key generada del modelo de lenguaje";
 
 AsyncWebServer server(80);
 
