@@ -6,8 +6,7 @@
 #include <ESPmDNS.h>
 #include <map>
 #include <Adafruit_NeoPixel.h> // Librería para controlar NeoPixel
-
-struct PendingRequest {
+ngRequest {
   String question;
   String response;
   bool ready;
