@@ -73,6 +73,7 @@ Se consulta al servidor cada segundo hasta que la respuesta esté lista.
 - Diagrama de flujo de la interacción entre interfaz y backend.
   <img width="324" height="956" alt="Diagrama de flujo qu" src="https://github.com/user-attachments/assets/150f3f9a-0366-43b0-a10e-2164f65135c1" />
 
+
 - Esquema técnico de endpoints y comunicación HTTP.
 
 ## Consideraciones de Accesibilidad
