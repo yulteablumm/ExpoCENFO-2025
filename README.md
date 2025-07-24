@@ -124,7 +124,8 @@ lib_deps =
   <img width="50%" height="30%" alt="Docente" src="https://github.com/user-attachments/assets/56ebfa70-dd5d-4cf7-aad3-9f389168b5c9" />
    
 - Captura de pantalla en modo estudiante con respuesta activa.
-  <img width="761" height="453" alt="Estudiante" src="https://github.com/user-attachments/assets/fbf47b94-1807-44f4-808b-c9d08a127752" />
+  
+  <img width="50%" height="20%" alt="Estudiante" src="https://github.com/user-attachments/assets/fbf47b94-1807-44f4-808b-c9d08a127752" />
  
 - Foto del hardware montado con el NeoPixel encendido.
 
