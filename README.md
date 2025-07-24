@@ -102,16 +102,18 @@ lib_deps =
 - `/data/script.js`: Lógica cliente para interacción web
 - `platformio.ini`: Configuración del entorno PlatformIO
 
-## Cambios para añadir en una proxima version
-- Agregar autenticación por tipo de usuario
-- Mejorar diseño de la interfaz web
-
-
 ## Principios Computacionales Aplicados
 - Procesamiento distribuido con tareas asincrónicas en tiempo real.
 - Integración entre sistemas físicos (Edge Computing) y modelos de IA generativa.
 - Entropía informacional y variabilidad algorítmica en lenguaje natural.
 - Interacción estocástica y sensible al contexto mediante LLMs.
+
+## Tecnologías Utilizadas:
+- Hardware: ESP32
+- Comunicación: HTTP
+- Interfaz Web: HTML, CSS y JavaScript básicos
+- Inteligencia Artificial: API externa (de momento se utiliza un modelo de IA de Deep seek.
+- Indicador visual: LED RGB
 
 ## Imágenes y Otros Recursos
 
@@ -143,13 +145,9 @@ lib_deps =
 ## Estado Actual del proyecto en esta version:
 El sistema ya cuenta con una versión funcional básica. Se puede acceder a la página alojada en el ESP32, enviar mensajes a la IA, recibir respuestas, y observar los indicadores visuales LED correspondientes al estado del sistema. La interfaz es simple, pero funcional y lista para ser ampliada en futuras versiones.
 
-
-## Tecnologías Utilizadas:
-- Hardware: ESP32
-- Comunicación: HTTP
-- Interfaz Web: HTML, CSS y JavaScript básicos
-- Inteligencia Artificial: API externa (de momento se utiliza un modelo de IA de Deep seek.
-- Indicador visual: LED RGB
+## Cambios para añadir en una proxima version
+- Agregar autenticación por tipo de usuario
+- Mejorar diseño de la interfaz web
 
 ## Créditos y Autoría
 Desarrollado por **CRTL+Grils** grupo conformado por:
