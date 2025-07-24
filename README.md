@@ -119,6 +119,8 @@ lib_deps =
   <img width="779" height="1037" alt="diagrama_flujo_esp32" src="https://github.com/user-attachments/assets/8c3f8375-768a-484b-a166-9212d5a22fc0" />
 
 - Captura de pantalla de la interfaz web en modo docente.
+
+  
   <img width="50%" height="30%" alt="Docente" src="https://github.com/user-attachments/assets/56ebfa70-dd5d-4cf7-aad3-9f389168b5c9" />
    
 - Captura de pantalla en modo estudiante con respuesta activa.
