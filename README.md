@@ -123,17 +123,18 @@ lib_deps =
   
   <img width="50%" height="30%" alt="Docente" src="https://github.com/user-attachments/assets/56ebfa70-dd5d-4cf7-aad3-9f389168b5c9" />
    
-- Captura de pantalla en modo estudiante con respuesta activa.
+- Captura de pantalla en modo estudiante con sugerencias de pregunta.
   
   <img width="50%" height="20%" alt="Estudiante" src="https://github.com/user-attachments/assets/fbf47b94-1807-44f4-808b-c9d08a127752" />
  
 - Foto del hardware montado con el NeoPixel encendido.
 
-   Docente:
-  ![LED-Docente](https://github.com/user-attachments/assets/8957bbf3-a2d9-47fb-b922-41334bf04f1d)
 
-   Estudiante:
-    ![LED-Estudiante](https://github.com/user-attachments/assets/eecc68fd-dd3a-449c-9d95-ebb605954f59)
+   Docente:<br>
+   <img src="https://github.com/user-attachments/assets/20a0573d-2477-4e6c-94b6-e7dbcf249715" alt="LED-Docente" width="250"><br><br>
+
+   Estudiante:<br>
+   <img src="https://github.com/user-attachments/assets/eecc68fd-dd3a-449c-9d95-ebb605954f59" alt="LED-Estudiante" width="250">
 
 - Captura de consola con registros del sistema.
   <img width="1621" height="835" alt="Screenshot 2025-07-22 142158" src="https://github.com/user-attachments/assets/a0fe192e-edd5-42d4-ae1a-b71a690cac07" />
