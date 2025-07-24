@@ -131,10 +131,10 @@ lib_deps =
 
 
    Docente:<br>
-   <img src="https://github.com/user-attachments/assets/20a0573d-2477-4e6c-94b6-e7dbcf249715" alt="LED-Docente" width="250"><br><br>
+   <img src="https://github.com/user-attachments/assets/20a0573d-2477-4e6c-94b6-e7dbcf249715" alt="LED-Docente" width="500"><br><br>
 
    Estudiante:<br>
-   <img src="https://github.com/user-attachments/assets/eecc68fd-dd3a-449c-9d95-ebb605954f59" alt="LED-Estudiante" width="250">
+   <img src="https://github.com/user-attachments/assets/eecc68fd-dd3a-449c-9d95-ebb605954f59" alt="LED-Estudiante" width="500">
 
 - Captura de consola con registros del sistema.
   <img width="1621" height="835" alt="Screenshot 2025-07-22 142158" src="https://github.com/user-attachments/assets/a0fe192e-edd5-42d4-ae1a-b71a690cac07" />
