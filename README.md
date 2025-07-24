@@ -143,8 +143,15 @@ lib_deps =
 ## Estado Actual del proyecto en esta version:
 El sistema ya cuenta con una versión funcional básica. Se puede acceder a la página alojada en el ESP32, enviar mensajes a la IA, recibir respuestas, y observar los indicadores visuales LED correspondientes al estado del sistema. La interfaz es simple, pero funcional y lista para ser ampliada en futuras versiones.
 
-## Créditos y Autoría
 
+## Tecnologías Utilizadas:
+- Hardware: ESP32
+- Comunicación: HTTP
+- Interfaz Web: HTML, CSS y JavaScript básicos
+- Inteligencia Artificial: API externa (de momento se utiliza un modelo de IA de Deep seek.
+- Indicador visual: LED RGB
+
+## Créditos y Autoría
 Desarrollado por **CRTL+Grils** grupo conformado por:
 Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
 
