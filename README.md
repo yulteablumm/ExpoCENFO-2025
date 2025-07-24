@@ -103,6 +103,8 @@ lib_deps =
 - `platformio.ini`: Configuración del entorno PlatformIO
 
 ## Cambios para añadir en una proxima version
+- Agregar autenticación por tipo de usuario
+- Mejorar diseño de la interfaz web
 
 
 ## Principios Computacionales Aplicados
@@ -117,7 +119,7 @@ lib_deps =
   <img width="779" height="1037" alt="diagrama_flujo_esp32" src="https://github.com/user-attachments/assets/8c3f8375-768a-484b-a166-9212d5a22fc0" />
 
 - Captura de pantalla de la interfaz web en modo docente.
-  <img width="782" height="567" alt="Docente" src="https://github.com/user-attachments/assets/56ebfa70-dd5d-4cf7-aad3-9f389168b5c9" />
+  <img width="70%" height="50%" alt="Docente" src="https://github.com/user-attachments/assets/56ebfa70-dd5d-4cf7-aad3-9f389168b5c9" />
    
 - Captura de pantalla en modo estudiante con respuesta activa.
   <img width="761" height="453" alt="Estudiante" src="https://github.com/user-attachments/assets/fbf47b94-1807-44f4-808b-c9d08a127752" />
@@ -133,6 +135,8 @@ lib_deps =
 - Captura de consola con registros del sistema.
   <img width="1621" height="835" alt="Screenshot 2025-07-22 142158" src="https://github.com/user-attachments/assets/a0fe192e-edd5-42d4-ae1a-b71a690cac07" />
 
+## Estado Actual del proyecto en esta version:
+El sistema ya cuenta con una versión funcional básica. Se puede acceder a la página alojada en el ESP32, enviar mensajes a la IA, recibir respuestas, y observar los indicadores visuales LED correspondientes al estado del sistema. La interfaz es simple, pero funcional y lista para ser ampliada en futuras versiones.
 
 ## Créditos y Autoría
 
