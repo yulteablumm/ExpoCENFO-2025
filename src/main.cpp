@@ -1,58 +1,65 @@
-#include <WiFi.h>
-#include <ESPAsyncWebServer.h>
-#include <SPIFFS.h>
-#include <ArduinoJson.h>
-#include <HTTPClient.h>
-#include <ESPmDNS.h>
-#include <map>
-#include <Adafruit_NeoPixel.h> // Librería para controlar NeoPixel
+// --- Inclusión de librerías necesarias para el funcionamiento del ESP32 y funcionalidades extra ---
+#include <WiFi.h>                    // Manejo de la conexión WiFi
+#include <ESPAsyncWebServer.h>        // Servidor web asíncrono
+#include <SPIFFS.h>                   // Sistema de archivos en memoria flash
+#include <ArduinoJson.h>              // Manejo de JSON
+#include <HTTPClient.h>               // Cliente HTTP para peticiones a APIs
+#include <ESPmDNS.h>                  // Soporte para mDNS (acceso por nombre de red)
+#include <map>                        // Estructura de datos map de C++
+#include <Adafruit_NeoPixel.h>        // Librería para controlar NeoPixel
 
+// --- Estructura para manejar solicitudes pendientes de respuesta ---
 struct PendingRequest {
-  String question;
-  String response;
-  bool ready;
+  String question;   // Pregunta enviada
+  String response;   // Respuesta recibida
+  bool ready;        // Indica si la respuesta está lista
 };
+// Mapa global para almacenar solicitudes pendientes, usando un id único como clave
 static std::map<String, PendingRequest> pendingRequests;
 
+// --- Definición y configuración del NeoPixel ---
 #define LED_PIN 2 // Pin de datos del NeoPixel
 #define NUM_LEDS 1 // Solo un LED NeoPixel
-Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800); // Inicialización del objeto NeoPixel
 
-// Cambia estos datos por los de tu red WiFi
-const char* ssid = "Amigurumitos";
-const char* password = "17032001";
+// --- Configuración de red WiFi ---
+const char* ssid = "Familia Gonzalez 2.4";      // Nombre de la red WiFi
+const char* password = "Aura1975a";      // Contraseña de la red WiFi
 
-// OpenRouter API endpoint y tu clave
-const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const char* OPENROUTER_API_KEY = "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";
+// --- Configuración de la API de OpenRouter ---
+const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"; // Endpoint de la API
+const char* OPENROUTER_API_KEY = "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"; // Clave de API nueva
 
+// --- Inicialización del servidor web asíncrono en el puerto 80 ---
 AsyncWebServer server(80);
 
-// Prototipo de la función para evitar error de declaración
+// --- Prototipo de función para evitar errores de declaración ---
 String callOpenRouterAPI(const char* question);
 
-// Cambia el color del NeoPixel
+// --- Función para cambiar el color del NeoPixel ---
 void setLEDColor(uint8_t r, uint8_t g, uint8_t b) {
-  strip.setPixelColor(0, strip.Color(r, g, b));
-  strip.show();
+  strip.setPixelColor(0, strip.Color(r, g, b)); // Establece el color RGB
+  strip.show();                                 // Actualiza el LED
 }
 
-// --- Efecto arcoíris ---
-TaskHandle_t rainbowTaskHandle = NULL;
-volatile bool rainbowActive = false;
+// --- Efecto arcoíris en el NeoPixel usando multitarea ---
+TaskHandle_t rainbowTaskHandle = NULL;      // Manejador de la tarea arcoíris
+volatile bool rainbowActive = false;        // Bandera para controlar el efecto
 
+// Tarea que ejecuta el efecto arcoíris
 void rainbowTask(void* parameter) {
   uint16_t j = 0;
   while (rainbowActive) {
-    uint32_t color = strip.ColorHSV((j * 65536L) / 256, 255, 255);
+    uint32_t color = strip.ColorHSV((j * 65536L) / 256, 255, 255); // Calcula color HSV
     strip.setPixelColor(0, color);
     strip.show();
     j = (j + 1) % 256;
-    vTaskDelay(20 / portTICK_PERIOD_MS);
+    vTaskDelay(20 / portTICK_PERIOD_MS); // Espera 20 ms
   }
-  vTaskDelete(NULL);
+  vTaskDelete(NULL); // Elimina la tarea cuando termina
 }
 
+// Inicia el efecto arcoíris en una tarea separada
 void startRainbow() {
   if (rainbowTaskHandle == NULL) {
     rainbowActive = true;
@@ -60,6 +67,7 @@ void startRainbow() {
   }
 }
 
+// Detiene el efecto arcoíris
 void stopRainbow() {
   if (rainbowTaskHandle != NULL) {
     rainbowActive = false;
@@ -70,33 +78,34 @@ void stopRainbow() {
   }
 }
 
-// Variable global para el modo
+// --- Variable global para el modo actual (estudiante/docente) ---
 String currentMode = "estudiante";
 
-// Actualiza el color del LED según el modo
+// Actualiza el color del LED según el modo seleccionado
 void updateModeLED() {
   if (currentMode == "estudiante") {
-    setLEDColor(255, 255, 0); // Amarillo
+    setLEDColor(255, 255, 0); // Amarillo para estudiante
   } else if (currentMode == "docente") {
-    setLEDColor(128, 0, 128); // Violeta
+    setLEDColor(128, 0, 128); // Violeta para docente
   }
 }
 
+// --- Función principal de inicialización ---
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(115200); // Inicializa la comunicación serie
   Serial.println("Arrancando ESP32...");
-  strip.begin();
-  strip.show(); // Inicializa el LED apagado
-  setLEDColor(0, 0, 0); // Apaga el LED al inicio
+  strip.begin();        // Inicializa el NeoPixel
+  strip.show();         // Apaga el LED al inicio
+  setLEDColor(0, 0, 0); // Asegura que el LED esté apagado
 
-  // Inicializar SPIFFS
+  // Inicializar SPIFFS para servir archivos estáticos
   if(!SPIFFS.begin(true)){
     Serial.println("Error al montar SPIFFS");
     setLEDColor(255, 0, 0); // Rojo si falla SPIFFS
     return;
   }
 
-  // Conectar a WiFi
+  // Conectar a la red WiFi
   WiFi.begin(ssid, password);
   Serial.print("Conectando a WiFi...");
   while(WiFi.status() != WL_CONNECTED){
@@ -106,9 +115,9 @@ void setup() {
   Serial.println("Conectado!");
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
-  updateModeLED(); // Color según el modo al iniciar
+  updateModeLED(); // Establece el color del LED según el modo
 
-  // Configurar mDNS
+  // Configurar mDNS para acceso por nombre (ej: http://esp32.local)
   if(!MDNS.begin("esp32")){
     Serial.println("Error iniciando mDNS");
   } else {
@@ -118,7 +127,7 @@ void setup() {
   // Servir archivos estáticos (HTML, CSS, JS) desde SPIFFS
   server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
 
-  // Endpoint para cambiar el modo (POST /setmode con JSON {"mode":"estudiante"} o {"mode":"docente"})
+  // --- Endpoint para cambiar el modo (POST /setmode con JSON {"mode":"estudiante"} o {"mode":"docente"}) ---
   server.on("/setmode", HTTP_POST, [](AsyncWebServerRequest *request){}, NULL,
     [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
       String body = "";
@@ -139,10 +148,7 @@ void setup() {
       request->send(200, "application/json", "{\"ok\":true,\"mode\":\"" + mode + "\"}");
     });
 
-  // --- Polling architecture ---
-// (declaración movida al inicio del archivo)
-
-  // Endpoint para procesar preguntas (POST /ask)
+  // --- Endpoint para procesar preguntas (POST /ask) ---
   server.on("/ask", HTTP_POST, [](AsyncWebServerRequest *request){}, NULL,
     [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
       String body = "";
@@ -196,7 +202,7 @@ void setup() {
       request->send(200, "application/json", respJSON);
     });
 
-  // Endpoint para consultar la respuesta (GET /result?id=...)
+  // --- Endpoint para consultar la respuesta (GET /result?id=...) ---
   server.on("/result", HTTP_GET, [](AsyncWebServerRequest *request){
     if (!request->hasParam("id")) {
       request->send(400, "application/json", "{\"error\":\"Falta id\"}");
@@ -219,17 +225,18 @@ void setup() {
     serializeJson(respDoc, respJSON);
     request->send(200, "application/json", respJSON);
   });
-  // --- End polling architecture ---
+  // --- Fin de la arquitectura de polling ---
 
-  server.begin();
+  server.begin(); // Inicia el servidor web
   Serial.println("Servidor web iniciado");
 }
 
+// --- Bucle principal (no se usa, todo es asíncrono) ---
 void loop() {
   // Nada aquí, todo manejado por AsyncWebServer
 }
 
-// Función para llamar a la API de OpenRouter (DeepHermes 3 Llama 3 8B Preview)
+// --- Función para llamar a la API de OpenRouter (modelo DeepHermes 3 Llama 3 8B Preview) ---
 String callOpenRouterAPI(const char* question) {
   HTTPClient http;
   String url = String(OPENROUTER_API_URL);
@@ -277,6 +284,6 @@ String callOpenRouterAPI(const char* question) {
     }
   }
 
-  http.end();
+  http.end(); // Finaliza la conexión HTTP
   return respuesta;
 }

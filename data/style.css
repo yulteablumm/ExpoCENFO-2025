@@ -1,54 +1,346 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 15px;
-  background: #f9f9f9;
-  color: #222;
+  font-family: 'Poppins', 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  margin: 0;
+  padding: 0;
 }
-
-h1 {
-  text-align: center;
-  color: #007acc;
-}
-
-#selector {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-button {
-  background-color: #007acc;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #005f99;
-}
-
-textarea {
-  width: 100%;
-  height: 80px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  resize: none;
-  font-size: 1rem;
-}
-
-.answer {
-  margin-top: 10px;
-  padding: 10px;
-  background: #e0f0ff;
-  border-radius: 5px;
-  min-height: 50px;
-  white-space: pre-wrap;
-}
-
-.profile-section {
-  max-width: 500px;
+.main-layout {
+  display: flex;
+  max-width: 900px;
   margin: 0 auto;
+}
+.sidebar {
+  width: 220px;
+  background: #f7faff;
+  border-right: 2px solid #e0c3fc;
+  padding: 24px 16px;
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 600px;
+}
+.sidebar.visible {
+  display: flex;
+}
+.sidebar-title {
+  font-size: 1.1em;
+  color: #6c47a6;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.sidebar-section {
+  margin-bottom: 18px;
+}
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.tab {
+  padding: 12px 36px;
+  cursor: pointer;
+  background: #f5f7fa;
+  border-radius: 16px 16px 0 0;
+  margin: 0 8px;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: background 0.2s;
+  border: 2px solid #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  color: #6c47a6;
+}
+.tab.active {
+  background: #6c47a6;
+  color: #fff;
+  border-bottom: 2px solid #ffe066;
+}
+.container {
+  flex: 1;
+  background: #fff;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  padding: 28px 24px 18px 24px;
+  font-family: 'Poppins', Arial, sans-serif;
+  min-width: 320px;
+  min-height: 600px;
+}
+.section-title {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+  color: #6c47a6;
+  font-weight: bold;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+#section-docente {
+  background: #f7faff;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+  border: 2px solid #6c47a6;
+  box-shadow: 0 2px 8px rgba(108,71,166,0.08);
+}
+#teacher-emojis {
+  font-size: 1.7em;
+  margin-bottom: 8px;
+  text-align: left;
+}
+#section-estudiante {
+  background: linear-gradient(90deg, #ffe066 60%, #b5e7ff 100%);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+  text-align: center;
+  border: 2px dashed #ffb700;
+  box-shadow: 0 2px 8px rgba(255,183,0,0.08);
+  animation: popIn 0.7s;
+}
+@keyframes popIn {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+#student-emojis {
+  font-size: 2.2em;
+  margin-bottom: 8px;
+  animation: bounce 1.2s infinite alternate;
+}
+@keyframes bounce {
+  0% { transform: translateY(0);}
+  100% { transform: translateY(-8px);}
+}
+.suggestions {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.suggestion-btn {
+  background: #6c47a6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin: 3px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.98em;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 6px rgba(108,71,166,0.08);
+  font-family: 'Poppins', Arial, sans-serif;
+}
+.suggestion-btn:hover {
+  background: #8e5fd6;
+  transform: scale(1.07);
+}
+.question-area {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 0;
+}
+.question-area input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  background: #f7f7f7;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+.question-area button, #voice-btn {
+  padding: 10px 20px;
+  border: none;
+  background: #43a047;
+  color: #fff;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background 0.2s;
+  font-family: 'Montserrat', Arial, sans-serif;
+  margin-left: 4px;
+}
+.question-area button:hover, #voice-btn:hover {
+  background: #22cb2b;
+}
+#voice-btn {
+  background: #ffe066;
+  color: #6c47a6;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1em;
+  font-weight: bold;
+  margin-left: 8px;
+  transition: background 0.2s;
+  font-family: 'Montserrat', Arial, sans-serif;
+  display: none;
+}
+#voice-btn.visible {
+  display: inline-block;
+}
+.response {
+  background: #e4fde3;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 40px;
+  margin-top: 12px;
+  font-size: 1.08em;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+  word-break: break-word;
+  transition: background 0.2s;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+#chat-history {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  min-height: 60px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #f7faff;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(108,71,166,0.05);
+}
+.bubble-user {
+  background: #e0c3fc;
+  padding: 8px 12px;
+  border-radius: 12px 12px 0 12px;
+  max-width: 80%;
+  margin-left: auto;
+  margin-bottom: 4px;
+  text-align: right;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+.bubble-ia {
+  background: #e4fde3;
+  padding: 8px 12px;
+  border-radius: 12px 12px 12px 0;
+  max-width: 80%;
+  margin-right: auto;
+  margin-bottom: 12px;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-direction: column;
+  font-family: 'Poppins', Arial, sans-serif;
+  border-left: 4px solid #ffe066;
+}
+.bubble-ia img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 6px;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+  border: 2px solid #ffe066;
+}
+#clear-history {
+  margin-top:10px;
+  display:block;
+  width:100%;
+  background:#ffe066;
+  color:#6c47a6;
+  border:none;
+  border-radius:8px;
+  padding:8px;
+  font-weight:bold;
+  cursor:pointer;
+  transition: background 0.2s;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+#clear-history:hover {
+  background: #fffbe7;
+}
+/* Mini juego */
+#minigame-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.25);
+  justify-content: center;
+  align-items: center;
+}
+#minigame-content {
+  background: #fffbe7;
+  border-radius: 18px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 24px rgba(255,183,0,0.15);
+  text-align: center;
+  max-width: 320px;
+  margin: auto;
+  animation: popIn 0.7s;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+#minigame-content h2 {
+  color: #ffb700;
+  font-size: 1.4em;
+  margin-bottom: 12px;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+#minigame-content .emoji {
+  font-size: 2.5em;
+  margin-bottom: 12px;
+  animation: bounce 1.2s infinite alternate;
+}
+#voice-read-btn, #voice-pause-btn, #voice-stop-btn {
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', Arial, sans-serif;
+  transition: background 0.2s;
+  display: none;
+}
+#voice-read-btn.visible, #voice-pause-btn.visible, #voice-stop-btn.visible {
+  display: inline-block;
+}
+.sidebar button {
+  background: #6c47a6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', Arial, sans-serif;
+  transition: background 0.2s;
+  width: 100%;
+}
+.sidebar button:hover {
+  background: #8e5fd6;
+}
+.sidebar input, .sidebar textarea {
+  width: 100%;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 6px;
+  font-size: 1em;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+.sidebar label {
+  font-weight: bold;
+  color: #6c47a6;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+.sidebar-list {
+  margin-top: 8px;
+}
+footer {
+  text-align: center;
+  margin-top: 18px;
+  color: #888;
+  font-size: 0.9em;
+  font-family: 'Poppins', Arial, sans-serif;
 }

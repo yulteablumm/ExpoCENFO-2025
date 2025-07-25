@@ -4,156 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asistente IA - Docente y Estudiante</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-    .tabs { display: flex; justify-content: center; margin-top: 20px; }
-    .tab { padding: 10px 30px; cursor: pointer; background: #e0e0e0; border-radius: 10px 10px 0 0; margin: 0 5px; font-weight: bold; }
-    .tab.active { background: #1976d2; color: #fff; }
-    .container { max-width: 500px; margin: 0 auto; background: #fff; border-radius: 0 0 10px 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px; }
-    .suggestions { margin-bottom: 15px; }
-    .suggestion-btn { background: #1976d2; color: #fff; border: none; border-radius: 5px; margin: 3px; padding: 6px 12px; cursor: pointer; }
-    .suggestion-btn:hover { background: #1565c0; }
-    .question-area { display: flex; margin-bottom: 10px; }
-    .question-area input { flex: 1; padding: 8px; border-radius: 5px 0 0 5px; border: 1px solid #ccc; }
-    .question-area button { padding: 8px 16px; border: none; background: #43a047; color: #fff; border-radius: 0 5px 5px 0; cursor: pointer; }
-    .question-area button:hover { background: #388e3c; }
-    .response { background: #e3f2fd; border-radius: 5px; padding: 10px; min-height: 40px; margin-top: 10px; }
-    .section-title { font-size: 1.2em; margin-bottom: 8px; color: #1976d2; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
+  <audio id="snd-clic" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c7b7b.mp3"></audio>
+  <audio id="snd-respuesta" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c7b7b.mp3"></audio>
+  <audio id="snd-win" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c7b7b.mp3"></audio>
   <div class="tabs">
-    <div class="tab active" id="tab-docente">Docente</div>
-    <div class="tab" id="tab-estudiante">Estudiante</div>
+    <div class="tab active" id="tab-docente">👩‍🏫 Docente</div>
+    <div class="tab" id="tab-estudiante">🦄 Estudiante</div>
   </div>
-  <div class="container">
-    <div id="section-docente">
-      <div class="section-title">Preguntas sugeridas para docentes:</div>
-      <div class="suggestions" id="suggestions-docente"></div>
-    </div>
-    <div id="section-estudiante" style="display:none;">
-      <div class="section-title">Preguntas sugeridas para estudiantes:</div>
-      <div class="suggestions" id="suggestions-estudiante"></div>
-    </div>
-    <form id="ask-form">
-      <div class="question-area">
-        <input type="text" id="question" placeholder="Escribe tu pregunta..." required autocomplete="off">
-        <button type="submit">Preguntar</button>
+  <div class="main-layout">
+    <div class="sidebar" id="sidebar-docente">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Calendario / Planeamiento</div>
+        <label for="plan-date">Fecha:</label>
+        <input type="date" id="plan-date">
+        <label for="plan-title">Título:</label>
+        <input type="text" id="plan-title" placeholder="Ejemplo: Actividad de inclusión">
+        <label for="plan-desc">Descripción:</label>
+        <textarea id="plan-desc" rows="2" placeholder="Describe tu actividad o planeación"></textarea>
+        <button onclick="addPlan()">Agregar al calendario</button>
+        <button onclick="exportCalendarICS()">Exportar a Google Calendar</button>
+        <div class="sidebar-list" id="calendar-list"></div>
       </div>
-    </form>
-    <div class="response" id="response"></div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Exportar respuestas útiles</div>
+        <button id="export-history">Exportar a PDF</button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Mini juego rápido</div>
+        <button id="random-game-btn">¡Jugar ahora!</button>
+      </div>
+    </div>
+    <div class="container">
+      <div id="section-docente">
+        <div id="teacher-emojis">📚 🧑‍💻</div>
+        <div class="section-title">Preguntas sugeridas para docentes:</div>
+        <div class="suggestions" id="suggestions-docente"></div>
+      </div>
+      <div id="section-estudiante" style="display:none;">
+        <div id="student-emojis">🦄 🌈 🐻 🎨 🚀</div>
+        <div class="section-title">Preguntas sugeridas para estudiantes:</div>
+        <div class="suggestions" id="suggestions-estudiante"></div>
+      </div>
+      <form id="ask-form">
+        <div class="question-area">
+          <input type="text" id="question" placeholder="Escribe tu pregunta..." required autocomplete="off">
+          <button type="submit">Preguntar</button>
+          <button type="button" id="voice-btn" title="Preguntar por voz">🎤</button>
+        </div>
+      </form>
+      <div class="response" id="response"></div>
+      <div id="chat-history"></div>
+      <button id="clear-history">Limpiar historial</button>
+      <button id="voice-read-btn">🔊 Leer</button>
+      <button id="voice-pause-btn">⏸️ Pausar</button>
+      <button id="voice-stop-btn">⏹️ Detener</button>
+    </div>
   </div>
-  <script>
-    // Preguntas sugeridas
-    const sugeridasDocente = [
-      "¿Cómo puedo adaptar mi clase para un niño con autismo?",
-      "Sugerencias para motivar a estudiantes con TDAH",
-      "¿Qué actividades recomiendas para mejorar la inclusión?",
-      "¿Cómo trabajar con padres de familia de niños con discapacidad?"
-    ];
-    const sugeridasEstudiante = [
-      "¿Qué es la amistad?",
-      "¿Por qué es importante ayudar a los demás?",
-      "¿Cómo puedo aprender jugando?",
-      "¿Qué puedo hacer si me siento triste?"
-    ];
-
-    function renderSuggestions() {
-      const docenteDiv = document.getElementById('suggestions-docente');
-      const estudianteDiv = document.getElementById('suggestions-estudiante');
-      docenteDiv.innerHTML = '';
-      estudianteDiv.innerHTML = '';
-      sugeridasDocente.forEach(q => {
-        docenteDiv.innerHTML += `<button class='suggestion-btn' onclick='setQuestion("${q}")'>${q}</button>`;
-      });
-      sugeridasEstudiante.forEach(q => {
-        estudianteDiv.innerHTML += `<button class='suggestion-btn' onclick='setQuestion("${q}")'>${q}</button>`;
-      });
-    }
-
-    function setQuestion(q) {
-      document.getElementById('question').value = q;
-      document.getElementById('question').focus();
-    }
-
-    // Tabs
-    document.getElementById('tab-docente').onclick = async function() {
-      this.classList.add('active');
-      document.getElementById('tab-estudiante').classList.remove('active');
-      document.getElementById('section-docente').style.display = '';
-      document.getElementById('section-estudiante').style.display = 'none';
-      document.getElementById('response').innerText = '';
-      // Cambiar modo en el backend
-      try {
-        await fetch('/setmode', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: 'docente' })
-        });
-      } catch (e) { console.error('Error cambiando a modo docente', e); }
-    };
-    document.getElementById('tab-estudiante').onclick = async function() {
-      this.classList.add('active');
-      document.getElementById('tab-docente').classList.remove('active');
-      document.getElementById('section-docente').style.display = 'none';
-      document.getElementById('section-estudiante').style.display = '';
-      document.getElementById('response').innerText = '';
-      // Cambiar modo en el backend
-      try {
-        await fetch('/setmode', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: 'estudiante' })
-        });
-      } catch (e) { console.error('Error cambiando a modo estudiante', e); }
-    };
-
-    // Enviar pregunta
-    let pollingInterval = null;
-    async function sendQuestion(event) {
-      if (event) event.preventDefault();
-      const question = document.getElementById('question').value.trim();
-      if (!question) return false;
-      document.getElementById('response').innerText = 'Consultando...';
-      try {
-        const res = await fetch('/ask', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question })
-        });
-        const data = await res.json();
-        if (data.id) {
-          // Iniciar polling
-          if (pollingInterval) clearInterval(pollingInterval);
-          pollingInterval = setInterval(() => checkResult(data.id), 1000);
-        } else {
-          document.getElementById('response').innerText = 'Error: No se recibió ID.';
-        }
-      } catch (e) {
-        document.getElementById('response').innerText = 'Error al consultar la IA.';
-        console.error(e);
-      }
-      return false;
-    }
-
-    async function checkResult(id) {
-      try {
-        const res = await fetch(`/result?id=${id}`);
-        const data = await res.json();
-        if (data.response !== null && data.response !== undefined) {
-          document.getElementById('response').innerText = data.response;
-          clearInterval(pollingInterval);
-        }
-      } catch (e) {
-        document.getElementById('response').innerText = 'Error al consultar el resultado.';
-        clearInterval(pollingInterval);
-        console.error(e);
-      }
-    }
-
-    document.getElementById('ask-form').addEventListener('submit', sendQuestion);
-
-    renderSuggestions();
-  </script>
+  <div id="minigame-modal">
+    <div id="minigame-content"></div>
+  </div>
+  <footer>
+    <small>ESP32 IA Asistente &copy; 2025 | <span id="footer-tip"></span></small>
+  </footer>
 </body>
 </html>
