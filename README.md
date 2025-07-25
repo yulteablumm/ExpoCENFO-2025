@@ -142,6 +142,16 @@ lib_deps =
 - Captura de consola con registros del sistema.
   <img width="800" height="400" alt="Screenshot 2025-07-22 142158" src="https://github.com/user-attachments/assets/a0fe192e-edd5-42d4-ae1a-b71a690cac07" />
 
+- Videos
+   
+
+https://github.com/user-attachments/assets/d9bd0f66-fef2-467f-8280-9b7cc58fa553
+
+
+
+https://github.com/user-attachments/assets/4f17d0e0-ed7b-4375-b664-c7a20352ec14
+
+
 ## Estado Actual del proyecto en esta version:
 El sistema ya cuenta con una versión funcional básica. Se puede acceder a la página alojada en el ESP32, enviar mensajes a la IA, recibir respuestas, y observar los indicadores visuales LED correspondientes al estado del sistema. La interfaz es simple, pero funcional y lista para ser ampliada en futuras versiones.
 
