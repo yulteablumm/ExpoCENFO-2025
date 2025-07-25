@@ -145,6 +145,14 @@ lib_deps =
 - Videos
    
 
+https://github.com/user-attachments/assets/87c47730-b192-4b4e-a790-cde7dc56635f
+
+
+
+https://github.com/user-attachments/assets/a2319ed1-8cfa-46bc-9188-0cea90bff82e
+
+
+
 
 ## Estado Actual del proyecto en esta version:
 El sistema ya cuenta con una versión funcional básica. Se puede acceder a la página alojada en el ESP32, enviar mensajes a la IA, recibir respuestas, y observar los indicadores visuales LED correspondientes al estado del sistema. La interfaz es simple, pero funcional y lista para ser ampliada en futuras versiones.
