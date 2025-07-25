@@ -1,4 +1,4 @@
-# Interfaz Web 
+# Interfaz Web holahola
 ## Descripción General del Funcionamiento
 
 1. La interfaz ofrece dos pestañas: “Docente” y “Estudiante”.
@@ -36,7 +36,7 @@ const sugeridasEstudiante = [ ... ];
 Cada perfil tiene preguntas contextualizadas que pueden ser seleccionadas con un clic.
 
 ### Envío de pregunta
-
+ 
 ```js
 document.getElementById('ask-form').addEventListener('submit', sendQuestion);
 ```
