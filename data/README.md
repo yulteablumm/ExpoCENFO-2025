@@ -139,7 +139,7 @@ function showMinigame() { ... }
 - Captura de pantalla en modo estudiante con respuesta activa.
 - Diagrama de flujo de la interacción entre interfaz y backend.
   
-  <img width="50%" height="80%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
+  <img width="20%" height="50%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
 
 - Esquema técnico de endpoints y comunicación HTTP entre frontend y ESP32.
 
