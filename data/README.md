@@ -106,7 +106,7 @@ function showMinigame() { ... }
 - Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui un pequeño tutorial de como hacerlo.
     1. Selecciona el archivo.
        
-       <img width="50%" height="70%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
+       <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
     3. Ve a platform.io.
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/956e657c-991e-4ec5-8798-9cf6d600cd1c" />
@@ -115,7 +115,7 @@ function showMinigame() { ... }
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3d89c455-2e23-487b-bce3-7e003a4e98ed" />
     7. Selecciona la opcion 'Upload Filesystem Image'
        
-       <img width="30%" height="50%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
+       <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
 
     9. Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
 - Conexión a la red local donde el ESP32 está operativo.
