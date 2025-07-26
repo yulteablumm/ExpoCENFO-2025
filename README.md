@@ -114,10 +114,13 @@ lib_deps =
 
 ## Imágenes y Otros Recursos
   •	Diagrama del flujo completo del sistema.
+  
   •	Captura de pantalla de la interfaz web en modo docente.
   <img width="80%" height="50%" alt="image" src="https://github.com/user-attachments/assets/4f58dd98-9404-4391-98fb-01c80a267d65" />
 
   •	Captura de pantalla en modo estudiante con sugerencias de pregunta.
+  <img width="80%" height="50%" alt="image" src="https://github.com/user-attachments/assets/7fd0c388-e87d-4ef0-af42-037b31b78f1f" />
+
   •	Foto del hardware montado con el NeoPixel encendido.
   Docente:
   Estudiante:
