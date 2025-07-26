@@ -133,10 +133,11 @@ lib_deps =
   
 <img width="80%" height="501%" alt="image" src="https://github.com/user-attachments/assets/f32563ba-877c-4cd4-af5c-6b3a3e7015dc" />
 
-
-
   •	Captura de consola con registros del sistema. 
+  <img width="80%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3152c505-749c-4313-bc53-345d3d6fb202" />
+
   •	Videos
+  
 
 ## Cambios en esta versióm
 1. Historial de conversación segmentado por perfil:
