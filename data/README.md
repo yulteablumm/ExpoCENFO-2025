@@ -138,6 +138,9 @@ function showMinigame() { ... }
 - Captura de pantalla de la interfaz web en modo docente.
 - Captura de pantalla en modo estudiante con respuesta activa.
 - Diagrama de flujo de la interacción entre interfaz y backend.
+  
+  <img width="50%" height="80%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
+
 - Esquema técnico de endpoints y comunicación HTTP entre frontend y ESP32.
 
 ---
@@ -151,14 +154,3 @@ function showMinigame() { ... }
 
 ---
 
-## Licencia y Créditos
-
-Proyecto diseñado por Yuliana, estudiante de Ingeniería en Tecnologías de Información y Comunicación, como parte de una propuesta educativa inclusiva basada en microcontroladores, IA y diseño accesible.
-
-Este proyecto está disponible para fines educativos y no comerciales.
-
-```
-
----
-
-¿Te gustaría que agregue ejemplos de cómo se ven las capturas o un esquema de rutas de servidor en formato Markdown también? Si estás preparando un Wiki público, podríamos desglosarlo en secciones más técnicas.
