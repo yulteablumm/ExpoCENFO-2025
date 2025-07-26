@@ -129,7 +129,8 @@ lib_deps =
   <img width="80%" height="50%" alt="image" src="https://github.com/user-attachments/assets/26f9b80a-d4c5-43a6-aea7-2c14976c591a" />
 
   Estudiante:
-  ![estu](https://github.com/user-attachments/assets/9deda6cb-9169-4092-9e3b-06f9bbd267c5)
+<img width="80%" height="501%" alt="image" src="https://github.com/user-attachments/assets/f32563ba-877c-4cd4-af5c-6b3a3e7015dc" />
+
 
 
   •	Captura de consola con registros del sistema. 
