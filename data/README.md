@@ -103,7 +103,7 @@ function showMinigame() { ... }
 
 - Dispositivo ESP32 con WiFi.
 - Navegador moderno compatible con HTML5 y JavaScript.
-- Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui un pequeño tutorial de como hacerlo.
+- Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui una pequeña guia de como hacerlo.
     1. Selecciona el archivo.
        
        <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
