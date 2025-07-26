@@ -139,6 +139,11 @@ lib_deps =
   •	Videos
   
 
+https://github.com/user-attachments/assets/161d8046-aece-4fa5-94b5-f7d3b6c0cfd7
+
+
+  
+
 ## Cambios en esta versióm
  1. Historial de conversación segmentado por perfil:
    - El sistema ahora distingue entre historial del docente y del estudiante, almacenando cada uno por separado en el navegador mediante localStorage.
