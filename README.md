@@ -105,12 +105,6 @@ lib_deps =
 · `/data/script.js`: Lógica cliente para interacción web  
 · `platformio.ini`: Configuración del entorno PlatformIO  
 
-## Principios Computacionales Aplicados  
-· Procesamiento distribuido con tareas asincrónicas en tiempo real.  
-· Integración entre sistemas físicos (Edge Computing) y modelos de IA generativa.  
-· Entropía informacional y variabilidad algorítmica en lenguaje natural.  
-· Interacción estocástica y sensible al contexto mediante LLMs.  
-
 ## Tecnologías Utilizadas  
 · Hardware: ESP32  
 · Comunicación: HTTP  
@@ -121,6 +115,8 @@ lib_deps =
 ## Imágenes y Otros Recursos
   •	Diagrama del flujo completo del sistema.
   •	Captura de pantalla de la interfaz web en modo docente.
+  <img width="80%" height="50%" alt="image" src="https://github.com/user-attachments/assets/4f58dd98-9404-4391-98fb-01c80a267d65" />
+
   •	Captura de pantalla en modo estudiante con sugerencias de pregunta.
   •	Foto del hardware montado con el NeoPixel encendido.
   Docente:
