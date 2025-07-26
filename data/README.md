@@ -142,7 +142,27 @@ function showMinigame() { ... }
   <img width="20%" height="50%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
 
 - Esquema técnico de endpoints y comunicación HTTP entre frontend y ESP32.
+Claro, Yuliana. Aquí tienes el esquema técnico de endpoints y comunicación HTTP redactado para incluir directamente en tu archivo `README.md`, manteniendo un estilo formal y claro:
 
+---
+
+## Esquema Técnico de Endpoints y Comunicación HTTP
+
+La comunicación entre la interfaz web y el servidor ESP32 se realiza mediante peticiones HTTP locales. El sistema está compuesto por los siguientes endpoints:
+
+| Método | Endpoint         | Descripción |
+|--------|------------------|-------------|
+| `POST` | `/setmode`       | Cambia el modo del sistema entre `"docente"` y `"estudiante"`. Se envía un cuerpo JSON: `{ "mode": "docente" }` o `{ "mode": "estudiante" }`. |
+| `POST` | `/ask`           | Envía la pregunta formulada por el usuario al servidor ESP32. El cuerpo contiene un JSON con la estructura `{ "question": "..." }`. Devuelve un identificador único de la solicitud. |
+| `GET`  | `/result?id=XYZ` | Consulta periódicamente si la respuesta generada por la IA está disponible. Se recibe la respuesta en formato JSON o `null` si aún no ha sido procesada. |
+| `GET`  | `/calendar.ics`  | Descarga el archivo de planeamiento educativo en formato `.ics`, generado desde el calendario del perfil docente. |
+| `GET`  | `/`              | Sirve archivos estáticos desde SPIFFS: `index.html`, `style.css` y `script.js`, utilizados por la interfaz web. |
+
+### Observaciones Técnicas
+- Las peticiones se realizan desde el navegador a través de la función `fetch()`, incluyendo los encabezados `Content-Type: application/json`.
+- El proceso de respuesta incluye arquitectura de polling: tras enviar una pregunta, la interfaz consulta cada segundo si la respuesta está lista usando el ID generado.
+- La respuesta es procesada por el servidor ESP32 a través de una llamada HTTP a la API externa de OpenRouter, utilizando el modelo DeepHermes 3.
+- Al completarse la respuesta, el servidor la entrega al cliente web y elimina la entrada correspondiente del almacenamiento temporal.
 ---
 
 ## Consideraciones de Accesibilidad
