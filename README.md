@@ -140,49 +140,39 @@ lib_deps =
   
 
 ## Cambios en esta versióm
-1. Historial de conversación segmentado por perfil:
+ Historial de conversación segmentado por perfil:
    - El sistema ahora distingue entre historial del docente y del estudiante, almacenando cada uno por separado en el navegador mediante localStorage.
    - Cada entrada incluye pregunta realizada, respuesta generada, enlace a imagen contextual y registro visual.
 
-2. Imágenes automáticas relacionadas:
-   - Se integra Unsplash para generar imágenes temáticas basadas en las palabras clave de la pregunta.
-   - Las imágenes se incorporan junto a la respuesta en la interfaz web y también en la exportación PDF.
+ Exportación extendida de historial a PDF:
+   - La función para guardar conversaciones como documento PDF.
 
-3. Decoración contextual con íconos visuales:
-   - Se añade una función que selecciona íconos decorativos relacionados con la pregunta para enriquecer la presentación de la respuesta en la interfaz.
-
-4. Exportación extendida de historial a PDF:
-   - La función para guardar conversaciones como documento PDF incluye ahora las imágenes obtenidas dinámicamente y mejoras en la paginación.
-
-5. Exportación de actividades docentes a calendario (.ics):
+ Exportación de actividades docentes a calendario (.ics):
    - Las actividades planeadas se pueden exportar en formato .ics, compatible con Google Calendar.
    - Incluye campos de fecha, título y descripción configurados por el usuario.
 
-6. Mini juego motivacional:
+ Mini juego motivacional:
    - Se incorporó un componente lúdico con ventana emergente que muestra mensajes positivos.
    - Se activa desde el panel docente y utiliza estilos visuales diferenciados.
 
-7. Interacción por voz:
+ Interacción por voz:
    - Se habilita el dictado de preguntas mediante reconocimiento de voz (SpeechRecognition), si el navegador lo permite.
    - Mejora la accesibilidad, especialmente para estudiantes con dificultades de motricidad.
 
-8. Lectura automática de respuestas:
+ Lectura automática de respuestas:
    - Se activa la lectura en voz alta de la última respuesta mediante SpeechSynthesis, con controles para pausar y detener.
 
-9. Arquitectura de polling asincrónico refinada:
+ Arquitectura de polling asincrónico refinada:
    - Las respuestas IA se generan en segundo plano y se entregan mediante el endpoint /result, que verifica periódicamente la disponibilidad.
    - Se elimina automáticamente la solicitud del sistema una vez respondida.
 
-10. Función dedicada para llamadas IA mediante OpenRouter:
+ Función dedicada para llamadas IA mediante OpenRouter:
     - Se implementó `callOpenRouterAPI()` para interactuar con el modelo DeepHermes 3 Llama 3 8B Preview.
     - Se estructuran los mensajes en formato JSON, se envía por POST, y se valida la respuesta antes de ser entregada.
 
-11. Estilo visual ampliado y adaptado:
+ Estilo visual ampliado y adaptado:
     - Se agregaron animaciones diferenciadas por perfil, estilos gráficos renovados y jerarquía visual para elementos clave.
     - Se mejora la experiencia de usuario manteniendo claridad, orden y contraste en la interfaz.
-
-12. Tip de ayuda aleatorio en el pie de página:
-    - Se genera una sugerencia o recordatorio cada vez que se recarga la página para reforzar el uso funcional del sistema.
 
 Estado: La versión 2 del sistema se encuentra operativa y estable. Integra funcionalidades ampliadas para accesibilidad, exportación, interacción lúdica y refinamiento técnico en la comunicación con el modelo de IA.
 ## Estado Actual del Proyecto (versión 2)  
