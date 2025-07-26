@@ -137,7 +137,7 @@ function showMinigame() { ... }
 
 - Captura de pantalla de la interfaz web en modo docente.
 
-  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/92a491c4-b653-4468-9997-a3ede7df13a6" />
+ <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/a52d9f08-3545-40b9-bb13-f806e9b558b1" />
 
 - Captura de pantalla en modo estudiante con respuesta activa.
   
