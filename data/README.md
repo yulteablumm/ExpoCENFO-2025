@@ -136,19 +136,19 @@ function showMinigame() { ... }
 ## Imágenes y Recursos
 
 - Captura de pantalla de la interfaz web en modo docente.
+
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/92a491c4-b653-4468-9997-a3ede7df13a6" />
+
 - Captura de pantalla en modo estudiante con respuesta activa.
+  
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/e04115cf-0b04-4146-9f8d-9d503355bc4f" />
+
 - Diagrama de flujo de la interacción entre interfaz y backend.
   
   <img width="20%" height="50%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
 
 - Esquema técnico de endpoints y comunicación HTTP entre frontend y ESP32.
-Claro, Yuliana. Aquí tienes el esquema técnico de endpoints y comunicación HTTP redactado para incluir directamente en tu archivo `README.md`, manteniendo un estilo formal y claro:
-
----
-
-## Esquema Técnico de Endpoints y Comunicación HTTP
-
-La comunicación entre la interfaz web y el servidor ESP32 se realiza mediante peticiones HTTP locales. El sistema está compuesto por los siguientes endpoints:
+  La comunicación entre la interfaz web y el servidor ESP32 se realiza mediante peticiones HTTP locales. El sistema está compuesto por los siguientes endpoints:
 
 | Método | Endpoint         | Descripción |
 |--------|------------------|-------------|
