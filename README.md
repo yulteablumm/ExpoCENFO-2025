@@ -124,8 +124,14 @@ lib_deps =
 
 
   •	Foto del hardware montado con el NeoPixel encendido.
+  
   Docente:
+  <img width="80%" height="50%" alt="image" src="https://github.com/user-attachments/assets/26f9b80a-d4c5-43a6-aea7-2c14976c591a" />
+
   Estudiante:
+  ![estu](https://github.com/user-attachments/assets/9deda6cb-9169-4092-9e3b-06f9bbd267c5)
+
+
   •	Captura de consola con registros del sistema. 
   •	Videos
 
