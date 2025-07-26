@@ -140,42 +140,42 @@ lib_deps =
   
 
 ## Cambios en esta versióm
- Historial de conversación segmentado por perfil:
+ 1. Historial de conversación segmentado por perfil:
    - El sistema ahora distingue entre historial del docente y del estudiante, almacenando cada uno por separado en el navegador mediante localStorage.
    - Cada entrada incluye pregunta realizada, respuesta generada, enlace a imagen contextual y registro visual.
 
- Exportación extendida de historial a PDF:
+ 2. Exportación extendida de historial a PDF:
    - La función para guardar conversaciones como documento PDF.
 
- Exportación de actividades docentes a calendario (.ics):
+3. Exportación de actividades docentes a calendario (.ics):
    - Las actividades planeadas se pueden exportar en formato .ics, compatible con Google Calendar.
    - Incluye campos de fecha, título y descripción configurados por el usuario.
 
- Mini juego motivacional:
+4. Mini juego motivacional:
    - Se incorporó un componente lúdico con ventana emergente que muestra mensajes positivos.
    - Se activa desde el panel docente y utiliza estilos visuales diferenciados.
 
- Interacción por voz:
+5. Interacción por voz:
    - Se habilita el dictado de preguntas mediante reconocimiento de voz (SpeechRecognition), si el navegador lo permite.
    - Mejora la accesibilidad, especialmente para estudiantes con dificultades de motricidad.
 
- Lectura automática de respuestas:
+6. Lectura automática de respuestas:
    - Se activa la lectura en voz alta de la última respuesta mediante SpeechSynthesis, con controles para pausar y detener.
 
- Arquitectura de polling asincrónico refinada:
+7. Arquitectura de polling asincrónico refinada:
    - Las respuestas IA se generan en segundo plano y se entregan mediante el endpoint /result, que verifica periódicamente la disponibilidad.
    - Se elimina automáticamente la solicitud del sistema una vez respondida.
 
- Función dedicada para llamadas IA mediante OpenRouter:
+8. Función dedicada para llamadas IA mediante OpenRouter:
     - Se implementó `callOpenRouterAPI()` para interactuar con el modelo DeepHermes 3 Llama 3 8B Preview.
     - Se estructuran los mensajes en formato JSON, se envía por POST, y se valida la respuesta antes de ser entregada.
 
- Estilo visual ampliado y adaptado:
+9. Estilo visual ampliado y adaptado:
     - Se agregaron animaciones diferenciadas por perfil, estilos gráficos renovados y jerarquía visual para elementos clave.
     - Se mejora la experiencia de usuario manteniendo claridad, orden y contraste en la interfaz.
 
-Estado: La versión 2 del sistema se encuentra operativa y estable. Integra funcionalidades ampliadas para accesibilidad, exportación, interacción lúdica y refinamiento técnico en la comunicación con el modelo de IA.
 ## Estado Actual del Proyecto (versión 2)  
+La versión 2 del sistema se encuentra operativa y estable. Integra funcionalidades ampliadas para accesibilidad, exportación, interacción lúdica y refinamiento técnico en la comunicación con el modelo de IA.
 
 ## Cambios para añadir en una próxima versión  
   
