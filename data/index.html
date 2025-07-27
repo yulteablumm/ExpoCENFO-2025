@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asistente IA - Docente y Estudiante</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <audio id="snd-clic" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c7b7b.mp3"></audio>
+  <audio id="snd-respuesta" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c7b7b.mp3"></audio>
+  <audio id="snd-win" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b6c7b7b.mp3"></audio>
+  <div class="tabs">
+    <div class="tab active" id="tab-docente">👩‍🏫 Docente</div>
+    <div class="tab" id="tab-estudiante">🦄 Estudiante</div>
+  </div>
+  <div class="main-layout">
+    <div class="sidebar" id="sidebar-docente">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Calendario / Planeamiento</div>
+        <label for="plan-date">Fecha:</label>
+        <input type="date" id="plan-date">
+        <label for="plan-title">Título:</label>
+        <input type="text" id="plan-title" placeholder="Ejemplo: Actividad de inclusión">
+        <label for="plan-desc">Descripción:</label>
+        <textarea id="plan-desc" rows="2" placeholder="Describe tu actividad o planeación"></textarea>
+        <button onclick="addPlan()">Agregar al calendario</button>
+        <button onclick="exportCalendarICS()">Exportar a Google Calendar</button>
+        <div class="sidebar-list" id="calendar-list"></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Exportar respuestas útiles</div>
+        <button id="export-history">Exportar a PDF</button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Mini juego rápido</div>
+        <button id="random-game-btn">¡Jugar ahora!</button>
+      </div>
+    </div>
+    <div class="container">
+      <div id="section-docente">
+        <div id="teacher-emojis">📚 🧑‍💻</div>
+        <div class="section-title">Preguntas sugeridas para docentes:</div>
+        <div class="suggestions" id="suggestions-docente"></div>
+      </div>
+      <div id="section-estudiante" style="display:none;">
+        <div id="student-emojis">🦄 🌈 🐻 🎨 🚀</div>
+        <div class="section-title">Preguntas sugeridas para estudiantes:</div>
+        <div class="suggestions" id="suggestions-estudiante"></div>
+      </div>
+      <form id="ask-form">
+        <div class="question-area">
+          <input type="text" id="question" placeholder="Escribe tu pregunta..." required autocomplete="off">
+          <button type="submit">Preguntar</button>
+          <button type="button" id="voice-btn" title="Preguntar por voz">🎤</button>
+        </div>
+      </form>
+      <div class="response" id="response"></div>
+      <div id="chat-history"></div>
+      <button id="clear-history">Limpiar historial</button>
+      <button id="voice-read-btn">🔊 Leer</button>
+      <button id="voice-pause-btn">⏸️ Pausar</button>
+      <button id="voice-stop-btn">⏹️ Detener</button>
+    </div>
+  </div>
+  <div id="minigame-modal">
+    <div id="minigame-content"></div>
+  </div>
+  <footer>
+    <small>ESP32 IA Asistente &copy; 2025 | <span id="footer-tip"></span></small>
+  </footer>
+</body>
+</html>
