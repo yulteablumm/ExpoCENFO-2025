@@ -171,11 +171,7 @@ https://github.com/user-attachments/assets/161d8046-aece-4fa5-94b5-f7d3b6c0cfd7
    - Las respuestas IA se generan en segundo plano y se entregan mediante el endpoint /result, que verifica periódicamente la disponibilidad.
    - Se elimina automáticamente la solicitud del sistema una vez respondida.
 
-8. Función dedicada para llamadas IA mediante OpenRouter:
-    - Se implementó `callOpenRouterAPI()` para interactuar con el modelo DeepHermes 3 Llama 3 8B Preview.
-    - Se estructuran los mensajes en formato JSON, se envía por POST, y se valida la respuesta antes de ser entregada.
-
-9. Estilo visual ampliado y adaptado:
+8. Estilo visual ampliado y adaptado:
     - Se agregaron animaciones diferenciadas por perfil, estilos gráficos renovados y jerarquía visual para elementos clave.
     - Se mejora la experiencia de usuario manteniendo claridad, orden y contraste en la interfaz.
 
