@@ -123,43 +123,28 @@ lib_deps =
 
 - Captura de pantalla de la interfaz web en modo docente.
 
-  
-  <img width="50%" height="30%" alt="Docente" src="https://github.com/user-attachments/assets/56ebfa70-dd5d-4cf7-aad3-9f389168b5c9" />
-   
+
 - Captura de pantalla en modo estudiante con sugerencias de pregunta.
   
-  <img width="50%" height="20%" alt="Estudiante" src="https://github.com/user-attachments/assets/fbf47b94-1807-44f4-808b-c9d08a127752" />
- 
+
 - Foto del hardware montado con el NeoPixel encendido.
 
 
    Docente:<br>
-   <img src="https://github.com/user-attachments/assets/20a0573d-2477-4e6c-94b6-e7dbcf249715" alt="LED-Docente" width="500"><br><br>
-
+ 
    Estudiante:<br>
-   <img src="https://github.com/user-attachments/assets/eecc68fd-dd3a-449c-9d95-ebb605954f59" alt="LED-Estudiante" width="500">
 
 - Captura de consola con registros del sistema.
-  <img width="800" height="400" alt="Screenshot 2025-07-22 142158" src="https://github.com/user-attachments/assets/a0fe192e-edd5-42d4-ae1a-b71a690cac07" />
 
 - Videos
    
 
-https://github.com/user-attachments/assets/87c47730-b192-4b4e-a790-cde7dc56635f
-
-
-
-https://github.com/user-attachments/assets/a2319ed1-8cfa-46bc-9188-0cea90bff82e
-
-
 
 
 ## Estado Actual del proyecto en esta version:
-El sistema ya cuenta con una versión funcional básica. Se puede acceder a la página alojada en el ESP32, enviar mensajes a la IA, recibir respuestas, y observar los indicadores visuales LED correspondientes al estado del sistema. La interfaz es simple, pero funcional y lista para ser ampliada en futuras versiones.
 
 ## Cambios para añadir en una proxima version
-- Agregar autenticación por tipo de usuario
-- Mejorar diseño de la interfaz web
+
 
 ## Créditos y Autoría
 Desarrollado por **CRTL+Grils** grupo conformado por:
