@@ -1,5 +1,5 @@
 
-# ESP32 Backend - Asistente IA Educativo Multiprofile
+# ESP32 Backend - Asistente IA Educativo Multiperfil
 
 Este proyecto implementa un servidor local sobre ESP32 que atiende solicitudes de una interfaz web educativa. Su propósito es permitir que docentes y estudiantes formulen preguntas, que son procesadas por un modelo de lenguaje vía OpenRouter. Incluye visualización de estados mediante NeoPixel, estructuras asincrónicas y un frontend interactivo con diseño responsivo.
 
