@@ -27,8 +27,8 @@ const char* ssid = "";      // Nombre de la red WiFi
 const char* password = "";      // Contraseña de la red WiFi
 
 // --- Configuración de la API de OpenRouter ---
-const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"; // Endpoint de la API
-const char* OPENROUTER_API_KEY = "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"; // Clave de API nueva
+const char* OPENROUTER_API_URL = ""; // Endpoint de la API
+const char* OPENROUTER_API_KEY = ""; // Clave de API nueva
 
 // --- Inicialización del servidor web asíncrono en el puerto 80 ---
 AsyncWebServer server(80);
