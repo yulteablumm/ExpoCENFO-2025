@@ -1,4 +1,4 @@
-# ESP32 Backend - Asistente IA Educativo Multiprofile
+# ESP32 Backend - Asistente IA Educativo Multiperfil
 
 Este archivo corresponde al servidor local alojado en el ESP32. El objetivo principal es recibir preguntas desde una interfaz web, enviarlas a un modelo de lenguaje generativo vía OpenRouter, y entregar la respuesta a través de comunicación HTTP. Además, integra retroalimentación visual por medio de un NeoPixel que representa estados del sistema y perfiles.
 
