@@ -119,7 +119,8 @@ lib_deps =
 
 - Diagrama del flujo completo del sistema.
   
-  <img width="50%" height="90%" alt="diagrama_flujo_esp32" src="https://github.com/user-attachments/assets/8c3f8375-768a-484b-a166-9212d5a22fc0" />
+<img width="50%" height="90%" alt="EXPOCENFO-version 1, diagrama general drawio" src="https://github.com/user-attachments/assets/1095153c-0067-4bd3-9c06-a54e846c5712" />
+
 
 - Captura de pantalla de la interfaz web en modo docente.
 
