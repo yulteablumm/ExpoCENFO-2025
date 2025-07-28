@@ -67,6 +67,13 @@ La tarea arcoíris se ejecuta en multitarea paralela (`xTaskCreatePinnedToCore`)
 
 ---
 
+## Diagrama de Flujo
+- Diagrama de flujo entre frontend, servidor y modelo de lenguaje.
+ <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (2)" src="https://github.com/user-attachments/assets/430e5898-050b-45b4-bff1-3208de621dca" />
+ 
+---
+
+
 ## Instrucciones de Implementación
 
 1. Subir contenido del frontend a `/data` usando SPIFFS (PlatformIO).
