@@ -48,7 +48,7 @@ Este archivo corresponde al servidor local alojado en el ESP32. El objetivo prin
 
 ## Diagrama de Flujo
 - Diagrama de flujo entre frontend, servidor y modelo de lenguaje.
-  <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (1)" src="https://github.com/user-attachments/assets/095a589c-842a-40c8-b26a-1b88e8cde8cc" />
+ <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (2)" src="https://github.com/user-attachments/assets/430e5898-050b-45b4-bff1-3208de621dca" />
 
 
 ## Instrucciones de Implementación
