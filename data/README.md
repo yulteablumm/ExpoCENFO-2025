@@ -69,12 +69,11 @@ Se consulta al servidor cada segundo hasta que la respuesta esté lista.
 ## Imágenes y Recursos 
 
 - Captura de pantalla de la interfaz web en modo docente.
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/6b354207-97a7-49a8-bfe9-e59f44b8d90b" />
+
 - Captura de pantalla en modo estudiante con respuesta activa.
-- Diagrama de flujo de la interacción entre interfaz y backend.
-  <img width="324" height="956" alt="Diagrama de flujo qu" src="https://github.com/user-attachments/assets/150f3f9a-0366-43b0-a10e-2164f65135c1" />
+![470572654-eecc68fd-dd3a-449c-9d95-ebb605954f59](https://github.com/user-attachments/assets/ad1b6351-790d-4f06-8ce2-512844b49a1c)
 
-
-- Esquema técnico de endpoints y comunicación HTTP.
 
 ## Consideraciones de Accesibilidad
 
