@@ -162,7 +162,7 @@ El sistema ya cuenta con una versión funcional básica. Se puede acceder a la p
 - Agregar autenticación por tipo de usuario
 - Mejorar diseño de la interfaz web
 
-## Créditos y Autoría
+## Créditos
 Desarrollado por **CRTL+Grils** grupo conformado por:
 Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
 
