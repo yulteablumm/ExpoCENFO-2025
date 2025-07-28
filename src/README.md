@@ -85,7 +85,11 @@ La tarea arcoíris se ejecuta en multitarea paralela (`xTaskCreatePinnedToCore`)
 ---
 
 ## Requisitos Previos
+
  -ESP32 DevKit
+ 
  -NeoPixel RGB LED
+ 
  -Plataforma PlatformIO o Arduino IDE configurada
+ 
  -Acceso a API de OpenRouter con modelo habilitado
