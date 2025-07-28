@@ -47,13 +47,9 @@ Este archivo corresponde al servidor local alojado en el ESP32. El objetivo prin
 - `OPENROUTER_API_KEY`: clave de acceso para autenticar solicitudes.
 
 ## Diagrama de Flujo
-
-Se recomienda agregar los siguientes recursos visuales en `/docs/`:
-
-- Esquema técnico de endpoints y comunicación HTTP.
 - Diagrama de flujo entre frontend, servidor y modelo de lenguaje.
-- Captura de consola con respuesta generada.
-- Fotografía del hardware con LED indicando el estado.
+  <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (1)" src="https://github.com/user-attachments/assets/095a589c-842a-40c8-b26a-1b88e8cde8cc" />
+
 
 ## Instrucciones de Implementación
 
