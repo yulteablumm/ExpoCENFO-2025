@@ -121,6 +121,7 @@ lib_deps =
 - Diagrama del flujo completo del sistema.
 - <img width="50%" height="90%" alt="image" src="https://github.com/user-attachments/assets/12b44e23-714a-40a6-838d-fb15b9479b85" />
 
+
 - Captura de pantalla de la interfaz web en modo docente.
 
 
@@ -135,6 +136,8 @@ lib_deps =
    Estudiante:<br>
 
 - Captura de consola con registros del sistema.
+
+<img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/24231e3e-bb5b-4770-955b-f2c15a0cf178" />
 
 - Videos
    
