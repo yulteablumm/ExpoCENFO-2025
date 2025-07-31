@@ -144,27 +144,41 @@ lib_deps =
    
 ---
 
-## Requisitos
+## Requisitos previos
 
-- Dispositivo ESP32 con WiFi.
-- Navegador moderno compatible con HTML5 y JavaScript.
-- Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui una pequeña guia de como hacerlo.
-    1. Selecciona el archivo.
+   - Dispositivo ESP32 con WiFi.
+   - Navegador moderno compatible con HTML5 y JavaScript.
+   - ESP32 DevKit
+   - NeoPixel RGB LED
+   - Plataforma PlatformIO o Arduino IDE configurada
+   - Acceso a API de OpenRouter con modelo habilitado
+   - Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui una pequeña guia de como hacerlo.
+   - Conexión a la red local donde el ESP32 está operativo.
+
+
+---
+
+## Instrucciones de Implementación
+
+1. Subir contenido del frontend a `/data` usando SPIFFS (PlatformIO).
+   - Selecciona el archivo.
        
        <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
-    2. Ve a platform.io.
+   - Ve a platform.io.
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/956e657c-991e-4ec5-8798-9cf6d600cd1c" />
-    3. Expande la carpeta del ideaboard, y la carpeta que dice Platform.
+     - Expande la carpeta del ideaboard, y la carpeta que dice Platform.
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3d89c455-2e23-487b-bce3-7e003a4e98ed" />
-    4. Selecciona la opcion 'Upload Filesystem Image'
+    - Selecciona la opcion 'Upload Filesystem Image'
        
        <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
 
-    5. Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
-  - Conexión a la red local donde el ESP32 está operativo.
-
+    - Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
+3. Configurar credenciales WiFi y API key directamente en el código.
+4. Compilar y flashear el firmware en el ESP32.
+5. Acceder vía navegador a `http://esp32.local` o IP local.
+6. Interactuar seleccionando el perfil y escribiendo preguntas en el asistente.
 
 ---
 
@@ -176,6 +190,7 @@ lib_deps =
 4. Elegir una pregunta sugerida o escribir una nueva.
 5. Hacer clic en “Preguntar”.
 6. Esperar la respuesta generada por el motor de IA.
+   
 ---
 
 ## Estado Actual del proyecto (version 3):
