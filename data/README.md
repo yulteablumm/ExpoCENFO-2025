@@ -158,12 +158,5 @@ function showMinigame() { ... }
 | `GET`  | `/calendar.ics`  | Descarga el archivo de planeamiento educativo en formato `.ics`, generado desde el calendario del perfil docente. |
 | `GET`  | `/assets/`       | Sirve archivos estáticos desde SPIFFS: `index.html`, `style.css` y `script.js`, utilizados por la interfaz web. |
 
-## Consideraciones de Accesibilidad
 
-- Botones con buen contraste para facilitar la visibilidad.
-- Campos con texto de ayuda (`placeholder`) para guiar al usuario.
-- Área de respuestas con tamaño y fondo adecuado para facilitar lectura.
-- Diseño adaptable a pantallas móviles mediante `viewport`, márgenes centralizados y disposición responsiva.
-
----
 
