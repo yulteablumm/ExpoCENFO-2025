@@ -74,23 +74,3 @@ La tarea arcoíris se ejecuta en multitarea paralela (`xTaskCreatePinnedToCore`)
  
 ---
 
-
-## Instrucciones de Implementación
-
-1. Subir contenido del frontend a `/data` usando SPIFFS (PlatformIO).
-2. Configurar credenciales WiFi y API key directamente en el código.
-3. Compilar y flashear el firmware en el ESP32.
-4. Acceder vía navegador a `http://esp32.local` o IP local.
-5. Interactuar seleccionando el perfil y escribiendo preguntas en el asistente.
-
----
-
-## Requisitos Previos
-
- -ESP32 DevKit
- 
- -NeoPixel RGB LED
- 
- -Plataforma PlatformIO o Arduino IDE configurada
- 
- -Acceso a API de OpenRouter con modelo habilitado
