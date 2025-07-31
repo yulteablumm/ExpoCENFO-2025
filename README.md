@@ -122,6 +122,7 @@ lib_deps =
 - <img width="50%" height="90%" alt="image" src="https://github.com/user-attachments/assets/12b44e23-714a-40a6-838d-fb15b9479b85" />
 
 
+
 - Captura de pantalla de la interfaz web en modo docente.
 
 
@@ -149,7 +150,7 @@ lib_deps =
 ## Cambios para añadir en una proxima version
 
 
-## Créditos y Autoría
+## Créditos
 Desarrollado por **CRTL+Grils** grupo conformado por:
 Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
 
