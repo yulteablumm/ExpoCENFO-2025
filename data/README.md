@@ -129,40 +129,6 @@ El contenido del juego se presenta en un contenedor animado con estilo visual co
 
 ---
 
-## Requisitos
-
-- Dispositivo ESP32 con WiFi.
-- Navegador moderno compatible con HTML5 y JavaScript.
-- Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui una pequeña guia de como hacerlo.
-    1. Selecciona el archivo.
-       
-       <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
-    2. Ve a platform.io.
-       
-       <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/956e657c-991e-4ec5-8798-9cf6d600cd1c" />
-    3. Expande la carpeta del ideaboard, y la carpeta que dice Platform.
-       
-       <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3d89c455-2e23-487b-bce3-7e003a4e98ed" />
-    4. Selecciona la opcion 'Upload Filesystem Image'
-       
-       <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
-
-    5. Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
-  - Conexión a la red local donde el ESP32 está operativo.
-
-
----
-
-## Instrucciones de Uso
-
-1. Encender el ESP32 con los archivos del proyecto cargados vía SPIFFS.
-2. Acceder desde el navegador web a `http://[IP_DEL_ESP32]` o `http://esp32.local` si se usa mDNS.
-3. Seleccionar el perfil deseado: “Docente” o “Estudiante”.
-4. Elegir una pregunta sugerida o escribir una nueva.
-5. Hacer clic en “Preguntar”.
-6. Esperar la respuesta generada por el motor de IA.
----
-
 ## Imágenes y Recursos
 
 - Captura de pantalla de la interfaz web en modo docente.
