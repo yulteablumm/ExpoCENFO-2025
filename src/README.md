@@ -5,16 +5,17 @@ Este archivo corresponde al servidor local alojado en el ESP32 que atiende solic
 
 ---
 
+
 ## Funcionalidad General
 
-Conexión a red WiFi usando credenciales definidas en el código.
-Montaje de SPIFFS para servir archivos estáticos (index.html, style.css, script.js, /assets).
-Activación de mDNS para acceso local tipo http://esp32.local.
-Inicio de servidor asíncrono usando ESPAsyncWebServer en el puerto 80.
-Cambio entre perfiles "docente" y "estudiante" mediante el endpoint /setmode.
-Registro de preguntas desde la interfaz usando el endpoint /ask con arquitectura de polling en /result?id=....
-Comunicación con el modelo DeepHermes 3 Llama 3 8B Preview vía OpenRouter.
-Animación y color de NeoPixel para retroalimentación visual de estado.
+- Conexión a red WiFi usando credenciales definidas en el código.
+- Montaje de SPIFFS para servir archivos estáticos (`index.html`, `style.css`, `script.js`, `/assets`).
+- Activación de mDNS para acceso local tipo `http://esp32.local`.
+- Inicio de servidor asíncrono usando `ESPAsyncWebServer` en el puerto 80.
+- Cambio entre perfiles `"docente"` y `"estudiante"` mediante el endpoint `/setmode`.
+- Registro de preguntas desde la interfaz usando el endpoint `/ask` con arquitectura de polling en `/result?id=...`.
+- Comunicación con el modelo DeepHermes 3 Llama 3 8B Preview vía OpenRouter.
+- Animación y color de NeoPixel para retroalimentación visual de estado.
 
 ---
 
