@@ -1,5 +1,5 @@
 
-# Interfaz Web para Asistente IA: Docente y Estudiante
+# Interfaz Web
 
 ## Descripción General del Funcionamiento
 
