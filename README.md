@@ -169,14 +169,14 @@ lib_deps =
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/956e657c-991e-4ec5-8798-9cf6d600cd1c" />
        
-     - Expande la carpeta del ideaboard, y la carpeta que dice Platform.
+   - Expande la carpeta del ideaboard, y la carpeta que dice Platform.
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3d89c455-2e23-487b-bce3-7e003a4e98ed" />
-    - Selecciona la opcion 'Upload Filesystem Image'
+   - Selecciona la opcion 'Upload Filesystem Image'
        
        <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
 
-    - Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
+   - Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
 4. Compilar y flashear el firmware en el ESP32.
 5. Acceder vía navegador a `http://esp32.local` o IP local.
 6. Interactuar seleccionando el perfil y escribiendo preguntas en el asistente.
