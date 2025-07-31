@@ -1,5 +1,5 @@
 
-# Backend Educativo con ESP32
+# ESP32 Backend
 
 Este archivo corresponde al servidor local alojado en el ESP32 que atiende solicitudes de una interfaz web educativa. Su propósito es permitir que docentes y estudiantes formulen preguntas, que son procesadas por un modelo de lenguaje vía OpenRouter. Incluye visualización de estados mediante NeoPixel, estructuras asincrónicas y un frontend interactivo con diseño responsivo.
 
