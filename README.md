@@ -152,7 +152,6 @@ lib_deps =
    - NeoPixel RGB LED
    - Plataforma PlatformIO o Arduino IDE configurada
    - Acceso a API de OpenRouter con modelo habilitado
-   - Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui una pequeña guia de como hacerlo.
    - Conexión a la red local donde el ESP32 está operativo.
 
 
@@ -161,6 +160,8 @@ lib_deps =
 ## Instrucciones de Implementación
 
 1. Subir contenido del frontend a `/data` usando SPIFFS (PlatformIO).
+2. Configurar credenciales WiFi y API key directamente en el código.
+3. Subir archivos de data a la placa ESP32. Aqui una pequeña guia de como hacerlo:
    - Selecciona el archivo.
        
        <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
@@ -176,7 +177,6 @@ lib_deps =
        <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
 
     - Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
-3. Configurar credenciales WiFi y API key directamente en el código.
 4. Compilar y flashear el firmware en el ESP32.
 5. Acceder vía navegador a `http://esp32.local` o IP local.
 6. Interactuar seleccionando el perfil y escribiendo preguntas en el asistente.
