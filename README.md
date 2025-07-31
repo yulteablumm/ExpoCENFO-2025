@@ -145,7 +145,8 @@ lib_deps =
 
 
 
-## Estado Actual del proyecto en esta version:
+## Estado Actual del proyecto (version 3):
+La versión 3 del sistema se encuentra operativa y estable. Implementa un backend sobre ESP32 que permite crear una herramienta educativa interactiva. A través de su interfaz web local servida desde SPIFFS, el usuario puede realizar preguntas que son procesadas mediante la API de OpenRouter, mostrando las respuestas tanto visualmente con NeoPixels como en la interfaz. La arquitectura incluye gestión de estados, comunicación HTTP, análisis de respuestas en JSON, y control del sistema desde cualquier navegador en la misma red local. Además, está diseñado para ser modular y fácilmente replicable en entornos educativos.
 
 ## Cambios para añadir en una proxima version
 
