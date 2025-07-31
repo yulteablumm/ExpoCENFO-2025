@@ -1,5 +1,6 @@
 # ESP32 Asistente IA educativo Multiperfil (Docente y Estudiante)
-Versión 2 
+**Versión 3**
+
 ## Público Meta y Propósito Educativo
 Este proyecto está diseñado para apoyar a docentes que trabajan con estudiantes de escuela con adecuaciones significativas y no significativas en sus procesos de aprendizaje. Su principal objetivo es facilitar la generación de material educativo adaptado, aprovechando la inteligencia artificial para responder preguntas contextualizadas y generar contenido útil.
 Al permitir que el maestro consulte a la IA directamente desde una interfaz física o web, se optimiza el tiempo de planificación, se fomenta la personalización del material y se promueve una participación más equitativa dentro del grupo. Esto contribuye a:
