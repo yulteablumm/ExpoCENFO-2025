@@ -1,5 +1,5 @@
 
-# ESP32 Backend - Asistente IA Educativo Multiperfil
+# ESP32 Backend
 
 Este archivo corresponde al servidor local alojado en el ESP32 que atiende solicitudes de una interfaz web educativa. Su propósito es permitir que docentes y estudiantes formulen preguntas, que son procesadas por un modelo de lenguaje vía OpenRouter. Incluye visualización de estados mediante NeoPixel, estructuras asincrónicas y un frontend interactivo con diseño responsivo.
 
@@ -37,7 +37,7 @@ Este archivo corresponde al servidor local alojado en el ESP32 que atiende solic
 | Modo estudiante       | Amarillo               |
 | Pregunta en proceso   | Efecto arcoíris dinámico |
 | Error en SPIFFS       | Rojo                   |
-| Respuesta generada    | Parpadeo rojo (implementable) |
+| Respuesta generada    | Parpadeo rojo          |
 
 La tarea arcoíris se ejecuta en multitarea paralela (`xTaskCreatePinnedToCore`) para no bloquear el flujo principal.
 
