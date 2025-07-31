@@ -167,6 +167,7 @@ lib_deps =
    - Ve a platform.io.
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/956e657c-991e-4ec5-8798-9cf6d600cd1c" />
+       
      - Expande la carpeta del ideaboard, y la carpeta que dice Platform.
        
        <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3d89c455-2e23-487b-bce3-7e003a4e98ed" />
