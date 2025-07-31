@@ -131,24 +131,66 @@ El contenido del juego se presenta en un contenedor animado con estilo visual co
 
 ## Requisitos
 
-- ESP32 con conectividad WiFi.
-- Navegador moderno compatible con HTML5, JavaScript y Web Speech API.
-- Archivos cargados correctamente en la partición SPIFFS del ESP32 mediante PlatformIO.
+- Dispositivo ESP32 con WiFi.
+- Navegador moderno compatible con HTML5 y JavaScript.
+- Archivos cargados en la partición SPIFFS del ESP32. Para esto debes cargar todos los documentos de la carpeta data, abriendo el archivo aqui una pequeña guia de como hacerlo.
+    1. Selecciona el archivo.
+       
+       <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/23e6cec1-f168-4805-a735-ea8d8981a609" />
+    2. Ve a platform.io.
+       
+       <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/956e657c-991e-4ec5-8798-9cf6d600cd1c" />
+    3. Expande la carpeta del ideaboard, y la carpeta que dice Platform.
+       
+       <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/3d89c455-2e23-487b-bce3-7e003a4e98ed" />
+    4. Selecciona la opcion 'Upload Filesystem Image'
+       
+       <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/de9c1733-8ea7-44fb-8490-ea04670a588c" />
 
-### Carga SPIFFS con PlatformIO
+    5. Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
+  - Conexión a la red local donde el ESP32 está operativo.
 
-1. Abre PlatformIO.
-2. Ve a la carpeta del proyecto y selecciona `Platform`.
-3. Ejecuta “Upload Filesystem Image” desde el menú.
-4. Carga todos los archivos dentro de la carpeta `data`.
 
 ---
 
 ## Instrucciones de Uso
 
-1. Encender el ESP32 con los archivos cargados.
-2. Acceder desde el navegador a `http://[IP_DEL_ESP32]` o `http://esp32.local` si se usa mDNS.
-3. Seleccionar el perfil deseado.
-4. Elegir una pregunta sugerida o formular una nueva.
+1. Encender el ESP32 con los archivos del proyecto cargados vía SPIFFS.
+2. Acceder desde el navegador web a `http://[IP_DEL_ESP32]` o `http://esp32.local` si se usa mDNS.
+3. Seleccionar el perfil deseado: “Docente” o “Estudiante”.
+4. Elegir una pregunta sugerida o escribir una nueva.
 5. Hacer clic en “Preguntar”.
-6. Revisar la respuesta y usar controles de voz o exportación según necesidad.
+6. Esperar la respuesta generada por el motor de IA.
+---
+
+## Imágenes y Recursos
+
+- Captura de pantalla de la interfaz web en modo docente.
+
+
+- Captura de pantalla en modo estudiante con respuesta activa.
+
+
+- Diagrama de flujo de la interacción entre interfaz y backend.
+  
+  <img width="20%" height="50%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
+
+- Esquema técnico de endpoints y comunicación HTTP entre frontend y ESP32.
+  La comunicación entre la interfaz web y el servidor ESP32 se realiza mediante peticiones HTTP locales. El sistema está compuesto por los siguientes endpoints:
+
+| Método | Endpoint         | Descripción |
+|--------|------------------|-------------|
+| `POST` | `/setmode`       | Cambia el modo del sistema entre `"docente"` y `"estudiante"`. Se envía un cuerpo JSON: `{ "mode": "docente" }` o `{ "mode": "estudiante" }`. |
+| `POST` | `/ask`           | Envía la pregunta formulada por el usuario al servidor ESP32. El cuerpo contiene un JSON con la estructura `{ "question": "..." }`. Devuelve un identificador único de la solicitud. |
+| `GET`  | `/result?id=XYZ` | Consulta periódicamente si la respuesta generada por la IA está disponible. Se recibe la respuesta en formato JSON o `null` si aún no ha sido procesada. |
+| `GET`  | `/calendar.ics`  | Descarga el archivo de planeamiento educativo en formato `.ics`, generado desde el calendario del perfil docente. |
+| `GET`  | `/assets/`       | Sirve archivos estáticos desde SPIFFS: `index.html`, `style.css` y `script.js`, utilizados por la interfaz web. |
+
+## Consideraciones de Accesibilidad
+
+- Botones con buen contraste para facilitar la visibilidad.
+- Campos con texto de ayuda (`placeholder`) para guiar al usuario.
+- Área de respuestas con tamaño y fondo adecuado para facilitar lectura.
+- Diseño adaptable a pantallas móviles mediante `viewport`, márgenes centralizados y disposición responsiva.
+
+---
