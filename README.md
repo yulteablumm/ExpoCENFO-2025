@@ -114,9 +114,7 @@ lib_deps =
 ## Imágenes y Otros Recursos
 
 - Diagrama del flujo completo del sistema.
-- <img width="50%" height="90%" alt="image" src="https://github.com/user-attachments/assets/12b44e23-714a-40a6-838d-fb15b9479b85" />
-
-
+ <img width="50%" height="90%" alt="image" src="https://github.com/user-attachments/assets/12b44e23-714a-40a6-838d-fb15b9479b85" />
 
 - Captura de pantalla de la interfaz web en modo docente.
 
