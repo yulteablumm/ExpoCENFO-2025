@@ -23,12 +23,12 @@ static std::map<String, PendingRequest> pendingRequests;
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800); // Inicialización del objeto NeoPixel
 
 // --- Configuración de red WiFi ---
-const char* ssid = "Amigurumitos";      // Nombre de la red WiFi
-const char* password = "17032001";      // Contraseña de la red WiFi
+const char* ssid = "";      // Nombre de la red WiFi
+const char* password = "";      // Contraseña de la red WiFi
 
 // --- Configuración de la API de OpenRouter ---
-const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"; // Endpoint de la API
-const char* OPENROUTER_API_KEY = "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"; // Clave de API nueva
+const char* OPENROUTER_API_URL = ""; // Endpoint de la API
+const char* OPENROUTER_API_KEY = ""; // Clave de API nueva
 
 // --- Inicialización del servidor web asíncrono en el puerto 80 ---
 AsyncWebServer server(80);
