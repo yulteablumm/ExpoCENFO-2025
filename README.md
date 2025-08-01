@@ -103,11 +103,6 @@ lib_deps =
 - `/data/script.js`: Lógica cliente para interacción web
 - `platformio.ini`: Configuración del entorno PlatformIO
 
-## Principios Computacionales Aplicados
-- Procesamiento distribuido con tareas asincrónicas en tiempo real.
-- Integración entre sistemas físicos (Edge Computing) y modelos de IA generativa.
-- Entropía informacional y variabilidad algorítmica en lenguaje natural.
-- Interacción estocástica y sensible al contexto mediante LLMs.
 
 ## Tecnologías Utilizadas:
 - Hardware: ESP32
