@@ -142,12 +142,16 @@ lib_deps =
 
 <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/889490d0-e43a-41b4-ae23-a19e0ce03c23" />
 
+
 - Foto del hardware montado con el NeoPixel encendido.
-   Docente:
+
+  Docente:
+  
    <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/e6188533-5e66-4b83-a708-c35736fabb72" />
 
  
    Estudiante:
+  
    <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/c60f17e2-9cb8-4abc-a285-c4231b7e5fb8" />
 
 
