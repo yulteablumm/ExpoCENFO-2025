@@ -222,7 +222,7 @@ La versión 3 del sistema se encuentra operativa y estable. Implementa un backen
 
 
 ## Créditos
-Desarrollado por **CRTL+Grils** grupo conformado por:
+Desarrollado por **CRTL+Girls** grupo conformado por:
 Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
 
 
