@@ -278,8 +278,9 @@ lib_deps =
 - Captura de consola con registros del sistema.   
 <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/24231e3e-bb5b-4770-955b-f2c15a0cf178" />
 
-- Videos   
+- Videos    
 https://github.com/user-attachments/assets/cdf8cd0f-599a-4581-9e31-f6405b9b8482   
+
 
 https://github.com/user-attachments/assets/6fafd910-5a34-46d5-afcf-4755e3546ff6
 
