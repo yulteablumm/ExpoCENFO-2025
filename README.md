@@ -198,13 +198,17 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ### **7. Prototipos Conceptuales**
 
 #### **1. Conexión Básica ESP32 + NeoPixel**  
-*(De `main.cpp` líneas 20-24 y 47-80)*  
-```arduino
-#include <Adafruit_NeoPixel.h>
+*(En main.cpp):*  
+```#include <Adafruit_NeoPixel.h>
+#include <WiFi.h>
+
 #define LED_PIN 2
 #define NUM_LEDS 1
-
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+// Declara las funciones primero (prototipos)
+void setLEDColor(uint8_t r, uint8_t g, uint8_t b);
+void startRainbowEffect();
 
 void setup() {
   Serial.begin(115200);
@@ -214,15 +218,15 @@ void setup() {
 }
 
 void loop() {
-  // Ejemplo: Ciclo de colores (Docente -> Estudiante -> Procesando)
   setLEDColor(128, 0, 128); // Violeta (Docente)
   delay(2000);
-  setLEDColor(255, 255, 0);  // Amarillo (Estudiante)
+  setLEDColor(255, 255, 0); // Amarillo (Estudiante)
   delay(2000);
-  startRainbowEffect();       // Arcoíris (Procesando)
+  startRainbowEffect();      // Arcoíris (Procesando)
   delay(5000);
 }
 
+// Implementación de funciones
 void setLEDColor(uint8_t r, uint8_t g, uint8_t b) {
   strip.setPixelColor(0, strip.Color(r, g, b));
   strip.show();
@@ -237,7 +241,16 @@ void startRainbowEffect() {
 }
 ```
 
----
+```
+*(En platform.io:)*
+```[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_deps =
+    adafruit/Adafruit NeoPixel@^1.15.1
+    WiFi
+```
 
 ### **2. Consulta Mínima al LLM (OpenRouter)**  
 *(De `main.cpp` líneas 190-245, simplificado)*  
