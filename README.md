@@ -44,9 +44,8 @@ Un docente puede preguntar: *"¿Cómo enseñar los volcanes a un estudiante con 
 #### **Usuarios/beneficiarios:**  
 | Grupo | Beneficio | Limitación |  
 |-------|----------|------------|  
-| **Docentes en escuelas con WiFi** | Acceso rápido a IA pedagógica. | Requiere conexión inicial para consultas. |  
-| **Estudiantes con adecuaciones** | Reciben material adaptado creado en el momento. | Depende de que el docente planifique con conexión. |  
-| **Equipos técnicos de educación** | Prototipo escalable para instituciones con infraestructura digital. | No aplicable en zonas sin Internet. |  
+| **Docentes** | Acceso rápido a IA pedagógica. | Requiere conexión para consultas. |  
+| **Estudiantes con adecuaciones** | Reciben material adaptado para fortalecer su aprendizaje. | Depende de que el docente planifique con conexión si no tiene una conexion estable en el momento. |   
 
 **Alternativas para mitigar la dependencia offline:**  
 - **Exportación de respuestas**: El docente puede exportar en formato PDF las consultas y guardarlas para acceder a ellas luego.  
