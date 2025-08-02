@@ -253,6 +253,5 @@ lib_deps =
     WiFi
 ```
 
-```
 
 - #### **Evidencia visual:**
