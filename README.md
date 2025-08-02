@@ -198,7 +198,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ### **7. Prototipos Conceptuales**
 
 #### **1. Conexión Básica ESP32 + NeoPixel**  
-*(En main.cpp):*  
+**(En main.cpp):**  
 ```#include <Adafruit_NeoPixel.h>
 #include <WiFi.h>
 
@@ -242,7 +242,8 @@ void startRainbowEffect() {
 ```
 
 ```
-*(En platform.io:)*
+
+**(En platform.io:)**
 ```[env:esp32dev]
 platform = espressif32
 board = esp32dev
