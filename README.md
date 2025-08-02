@@ -196,8 +196,8 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ---
 
 ### **7. Prototipos Conceptuales**
-
-#### **1. Conexión Básica ESP32 + NeoPixel**  
+- #### **Códio minímo de prueba:**   
+**1. Conexión Básica ESP32 + NeoPixel**  
 **(En main.cpp):**  
 ```#include <Adafruit_NeoPixel.h>
 #include <WiFi.h>
@@ -241,7 +241,6 @@ void startRainbowEffect() {
 }
 ```
 
-```
 
 **(En platform.io:)**
 
@@ -254,66 +253,6 @@ lib_deps =
     WiFi
 ```
 
-### **2. Consulta Mínima al LLM (OpenRouter)**  
-*(De `main.cpp` líneas 190-245, simplificado)*  
-```arduino
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <ArduinoJson.h>
-
-const char* ssid = "TU_WIFI";
-const char* password = "TU_CLAVE";
-const char* apiKey = "sk-or-v1-tu-api-key"; // Reemplazar con tu clave
-
-void setup() {
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("\n✅ WiFi conectado");
-}
-
-void loop() {
-  if (WiFi.status() == WL_CONNECTED) {
-    String respuesta = consultarIA("Explica el ciclo del agua para niños");
-    Serial.println("Respuesta IA: " + respuesta);
-  }
-  delay(10000); // Esperar 10 segundos
-}
-
-String consultarIA(String pregunta) {
-  HTTPClient http;
-  http.begin("https://openrouter.ai/api/v1/chat/completions");
-  http.addHeader("Content-Type", "application/json");
-  http.addHeader("Authorization", String("Bearer ") + apiKey);
-
-  String payload = "{\"model\":\"nousresearch/deephermes-3-llama-3-8b-preview\",\"messages\":[{\"role\":\"user\",\"content\":\"" + pregunta + "\"}]}";
-  
-  int httpCode = http.POST(payload);
-  if (httpCode == 200) {
-    String response = http.getString();
-    DynamicJsonDocument doc(1024);
-    deserializeJson(doc, response);
-    return doc["choices"][0]["message"]["content"].as<String>();
-  } else {
-    return "Error: " + String(httpCode);
-  }
-}
 ```
 
----
-
-### **Cómo Usar Estos Códigos**  
-1. **Prueba NeoPixel**:  
-   - Carga el primer código para verificar los colores.  
-
-2. **Prueba OpenRouter**:  
-   - Reemplaza `TU_WIFI`, `TU_CLAVE` y `tu-api-key`.  
-   - Verás las respuestas en el Monitor Serial.  
-
-3. **Prueba Servidor Web**:  
-   - Accede a `http://[IP_ESP32]` desde un navegador.  
-
----
+- #### **Evidencia visual:**
