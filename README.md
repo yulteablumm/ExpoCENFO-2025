@@ -11,7 +11,7 @@
              - Fiorela Pérez: Responsable de desarrollo backend y frontend del sistema.  
              - Mariana Cubero: Coordinadora del proyecto y diseño de elementos decorativos en el Maker Space.   
              - Sharon Castro: Diseño conceptual y decoración para la exposición.   
-             - Yuliana González: Documentación técnica y gestión del repositorio GitHub.    
+             - Yuliana González: Documentación y gestión del repositorio GitHub.    
 ---
 
 ### **2. Descripción y Justificación**  
