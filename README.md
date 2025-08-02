@@ -196,7 +196,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ---
 
 ### **7. Prototipos Conceptuales**
-- #### **Códio minímo de prueba:**   
+- #### **Código minímo de prueba:**   
 **1. Conexión Básica ESP32 + NeoPixel**  
 **(En main.cpp):**  
 ```#include <Adafruit_NeoPixel.h>
@@ -255,3 +255,31 @@ lib_deps =
 
 
 - #### **Evidencia visual:**
+
+- Captura de pantalla de la interfaz web en modo docente.   
+<img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/bc57e6a3-6aea-4441-ac96-48d75702f2c7" />   
+<img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/a500bc6f-3f2e-4f5b-af5b-1dcc04bb6b25" />   
+<img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/885f118e-5baf-41f9-958a-9ab956efa717" />
+
+- Captura de pantalla en modo estudiante.  
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/93dfbcca-9cbd-46aa-8f39-a824e5369199" />   
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/8078ecb0-e612-4c50-a59e-340b08285126" />   
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/a7fcdb56-76da-4770-9b15-35e2b09a1545" />   
+  <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/889490d0-e43a-41b4-ae23-a19e0ce03c23" />
+
+
+- Foto del hardware montado con el NeoPixel encendido.   
+  Docente:   
+   <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/e6188533-5e66-4b83-a708-c35736fabb72" />
+ 
+   Estudiante:   
+   <img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/c60f17e2-9cb8-4abc-a285-c4231b7e5fb8" />
+
+- Captura de consola con registros del sistema.   
+<img width="50%" height="80%" alt="image" src="https://github.com/user-attachments/assets/24231e3e-bb5b-4770-955b-f2c15a0cf178" />
+
+- Videos   
+https://github.com/user-attachments/assets/cdf8cd0f-599a-4581-9e31-f6405b9b8482   
+
+https://github.com/user-attachments/assets/6fafd910-5a34-46d5-afcf-4755e3546ff6
+
