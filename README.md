@@ -164,7 +164,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 
 ---
 
-- #### **Bocetos o Esquemas***
+- #### **Bocetos o Esquemas**
   - Diagrama de flujo de la interacción entre interfaz y backend.  
     <img width="20%" height="50%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
   
@@ -172,22 +172,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
    <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (2)" src="https://github.com/user-attachments/assets/430e5898-050b-45b4-bff1-3208de621dca" />
 ---
 
-### **5. Prototipos Conceptuales**  
-#### **Ejemplo de Consulta Docente:**  
-```python
-# Pregunta: "Actividades para enseñar el ciclo del agua a un estudiante con discapacidad visual"
-Respuesta IA:
-1. Usar texturas (ej: algodón para nubes, gel frío para lluvia).
-2. Relato sonoro con efectos de agua.
-3. Maqueta 3D con piezas movibles.
-```  
-**Señal NeoPixel:** Parpadeo azul al generar actividades.  
 
-#### **Ejemplo de Interfaz Web:**  
-![Modo Docente](https://ejemplo.com/docente.png)  
-*(Captura: Panel con opciones para "simplificar explicación" o "generar ejercicio práctico")*  
-
----
 
 ### **6. Plan de Trabajo con Enfoque Inclusivo**  
 | Hito | Actividades |  
