@@ -6,9 +6,9 @@
 - **Nombre:** *AI Asistente Educativo Inclusivo con ESP32*  
 - **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
   - **Roles:**
-             - Fiorela Perez: Desarrollo del backend y frontend.
-             - Mariana Cubero:
-             - Sharon Castro: 
+             - Fiorela Perez: Desarrollo del backend y frontend.   
+             - Mariana Cubero: Coordinadora, encargada de realizar objetos para decoracion en el Maker Space.   
+             - Sharon Castro: Encargada de buscar ideas para decoracion el dia de la exposicion.   
              - Yuliana González: Creación de la documentación en GitHub.
 ---
 
