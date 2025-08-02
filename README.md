@@ -244,6 +244,7 @@ void startRainbowEffect() {
 ```
 
 **(En platform.io:)**
+
 ```[env:esp32dev]
 platform = espressif32
 board = esp32dev
