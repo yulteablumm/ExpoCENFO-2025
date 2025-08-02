@@ -179,7 +179,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 - **Cronograma Preliminar**  
 
 | **Actividad**                     | **Fecha Estimada** | **Qué se logró hacer** |  
-|------------------------------|---------------|-------------------|----------------|  
+|------------------------------|---------------|----------------|  
 | **1. Desarrollo del Firmware**  | 14/julio - 17/julio | - Servidor web en ESP32<br>- Control básico del NeoPixel<br>- Conexion funcional a LLM|  
 | **2. Integración con API**      | 18/julio - 18/julio | - Conexión funcional a OpenRouter<br>- Manejo de respuestas JSON |  
 | **3. Diseño Interfaz Web**      | 18/julio - 24/julio | - HTML/CSS/JS responsive<br>- Modos docente/estudiante |  
