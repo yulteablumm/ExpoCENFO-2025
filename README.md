@@ -20,54 +20,53 @@ Los docentes que trabajan con estudiantes que requieren adecuaciones curriculare
 2. **Dificultad para explicar conceptos** de manera personalizada dentro del mismo grupo.  
 3. **Limitaciones de recursos** pedagógicos inclusivos listos para usar.  
 
+---
+
+#### **Importancia y contexto:**  
+
 Al permitir que el docente consulte a la IA directamente desde una interfaz física o web, se optimiza el tiempo de planificación, se fomenta la personalización del material y se promueve una participación más equitativa dentro del grupo. Esto contribuye a:
 - Responder rápidamente a dudas pedagógicas específicas.
 - Generar explicaciones, ejemplos y actividades según las necesidades del estudiante.
 - Alinear el contenido que se trabaja en clase de manera que todo el grupo avance en los mismos temas, respetando los ritmos individuales.
 - Promover la autonomía del docente en la creación de recursos sin depender de repositorios externos o procesos de búsqueda extensos.
-
----
-
-#### **Importancia y contexto:**  
-- **Educación inclusiva real:** Cumple con lo establecido en la Ley 7600 (Costa Rica) y los Objetivos de Desarrollo Sostenible (ODS 4).  
-- **Brecha tecnológica:** Muchas herramientas educativas con IA son costosas o requieren internet estable; este sistema funciona **offline** parcialmente y con hardware económico.  
-- **Empoderamiento docente:** Reduce la dependencia de manuales genéricos o búsquedas extensas en internet.  
+- Cumple con lo establecido en la Ley 7600 (Costa Rica) y los Objetivos de Desarrollo Sostenible (ODS 4) para una educación inclusiva.  
 
 **Ejemplo de impacto:**  
 Un docente puede preguntar: *"¿Cómo enseñar los volcanes a un estudiante con TEA?"* y recibir:  
-- Una explicación con lenguaje claro y apoyo visual.  
+- Una explicación con lenguaje claro.  
 - Una actividad sensorial (ej: maqueta con texturas).  
 - Un juego de asociación para el grupo.  
+
+**Importante:** Realizar la consulta a la IA siendo claros  y concisos en lo que se quiere preguntar o recibir.
 
 ---
 
 #### **Usuarios/beneficiarios:**  
-| Grupo | Beneficio |  
-|-------|----------|  
-| **Docentes de educación especial** | Generan material adaptado sin dedicar horas extra. |  
-| **Docentes de aulas regulares** | Atienden la diversidad sin retrasar al grupo. |  
-| **Estudiantes con adecuaciones** | Reciben contenido accesible a sus necesidades. |  
-| **Comunidad educativa** | Promueve inclusión con herramientas concretas. |  
+| Grupo | Beneficio | Limitación |  
+|-------|----------|------------|  
+| **Docentes en escuelas con WiFi** | Acceso rápido a IA pedagógica. | Requiere conexión inicial para consultas. |  
+| **Estudiantes con adecuaciones** | Reciben material adaptado creado en el momento. | Depende de que el docente planifique con conexión. |  
+| **Equipos técnicos de educación** | Prototipo escalable para instituciones con infraestructura digital. | No aplicable en zonas sin Internet. |  
 
-**Caso concreto:**  
-- **Escuela rural sin recursos:** El asistente funciona con WiFi básico o modo offline, llevando IA pedagógica a contextos con limitaciones tecnológicas.  
+**Alternativas para mitigar la dependencia offline:**  
+- **Exportación de respuestas**: El docente puede exportar en formato PDF las consultas y guardarlas para acceder a ellas luego.  
+- **Base de datos local mínima**: Almacena respuestas básicas (ej: definiciones pedagógicas) en el ESP32 (SPIFFS).  
 
---- 
+---
 
-### **2. Público Meta y Propósito Educativo**  
-#### **Beneficiarios Directos:**  
-- **Docentes** de educación regular o especial que requieran:  
-  - Generar material adaptado a adecuaciones significativas (ej: estudiantes con discapacidad cognitiva).  
-  - Crear actividades paralelas para adecuaciones no significativas (ej: ajustes en tiempo o formato).  
-- **Estudiantes** con necesidades educativas diversas, promoviendo su participación en el mismo tema de clase con recursos personalizados.  
+### **3. Objetivos del Proyecto**  
 
-#### **Objetivos Educativos:**  
-| Propósito | Implementación Técnica |  
-|-----------|------------------------|  
-| **Generar material adaptado** | IA contextualiza respuestas (ej: simplificar lenguaje o proponer ejemplos táctiles). |  
-| **Optimizar tiempo docente** | Interfaz física/web para consultas rápidas (sin búsquedas manuales). |  
-| **Equidad en el aula** | Mismo tema para todos con variaciones en profundidad/complejidad. |  
-| **Autonomía del docente** | Respuestas instantáneas sin depender de repositorios externos. |  
+#### **Objetivo General:**  
+Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una interfaz accesible y señales visuales (NeoPixel), facilite la creación de material pedagógico adaptado para estudiantes con adecuaciones curriculares, aprovechando modelos de lenguaje generativo (OpenRouter u otros) en entornos con conexión a Internet.  
+
+---
+
+#### **Objetivos Específicos:**  
+
+- Permitir que un microcontrolador como el ESP32 interactúe en tiempo real con un modelo de lenguaje generativo.
+- Establecer un servidor web alojado directamente en la placa ESP32 para actuar de forma local.
+- Ofrecer un entorno multiperfil accesible para docentes y estudiantes.
+- Visualizar estados y respuestas del sistema mediante señales físicas (LED RGB) y web (interfaz HTML).
 
 ---
 
