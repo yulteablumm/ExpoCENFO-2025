@@ -196,3 +196,104 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ---
 
 ### **7. Prototipos Conceptuales**
+### **7. Prototipos Conceptuales**  
+
+#### **Código Mínimo de Prueba**  
+
+**1. Conexión Básica ESP32 + NeoPixel** *(Feedback visual)*  
+```arduino
+#include <Adafruit_NeoPixel.h>
+#define LED_PIN 2
+#define NUM_LEDS 1
+
+Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  strip.begin();
+  strip.show(); // Inicializa LED apagado
+}
+
+void loop() {
+  // Modo Docente (Violeta)
+  strip.setPixelColor(0, strip.Color(150, 0, 150)); 
+  strip.show();
+  delay(2000);
+  
+  // Procesando (Arcoíris)
+  for(int i=0; i<256; i++) {
+    strip.setPixelColor(0, strip.ColorHSV((i * 65536L) / 256));
+    strip.show();
+    delay(20);
+  }
+}
+```
+
+**2. Consulta a OpenRouter API** *(Conexión con IA)*  
+```arduino
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+
+const char* ssid = "TuRedWiFi";
+const char* password = "TuContraseña";
+const char* apiKey = "sk-or-v1-tu-api-key";
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("Conectado!");
+}
+
+void loop() {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin("https://openrouter.ai/api/v1/chat/completions");
+    http.addHeader("Content-Type", "application/json");
+    http.addHeader("Authorization", String("Bearer ") + apiKey);
+    
+    String payload = "{\"model\":\"nousresearch/deephermes-3-llama-3-8b-preview\",\"messages\":[{\"role\":\"user\",\"content\":\"Explica el ciclo del agua para un niño con adecuacion no significativa\"}]}";
+    
+    int httpCode = http.POST(payload);
+    if (httpCode == 200) {
+      String response = http.getString();
+      Serial.println("Respuesta IA:");
+      Serial.println(response);
+    } else {
+      Serial.println("Error: " + String(httpCode));
+    }
+    http.end();
+  }
+  delay(10000); // Espera 10 segundos entre consultas
+}
+```
+
+---
+
+
+---
+
+### **Cómo Probarlo**  
+1. **Hardware**:  
+   - Conecta el NeoPixel al pin GPIO2 del ESP32.  
+   - Alimenta el sistema via USB (5V).  
+
+2. **Software**:  
+   - Carga el código en Arduino IDE con las librerías instaladas.  
+   - Abre el Monitor Serial (115200 baudios) para ver respuestas.  
+
+3. **Interfaz**:  
+   - Accede a `http://192.168.4.1` desde cualquier dispositivo en la red WiFi del ESP32.  
+
+---
+
+### **Próximos Pasos**  
+- [ ] Añadir caché local para preguntas frecuentes.  
+- [ ] Implementar reconocimiento de voz con el micrófono.  
+- [ ] Crear un PCB personalizado para integración física.  
+
+¿Necesitas el código completo o ajustar algún componente? 🚀
