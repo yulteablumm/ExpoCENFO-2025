@@ -8,7 +8,7 @@
 - **Nombre:** *Asistente Educativo con ESP32*  
 - **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
   - **Roles:**    
-             -Fiorela Pérez: Responsable de desarrollo backend y frontend del sistema.  
+             - Fiorela Pérez: Responsable de desarrollo backend y frontend del sistema.  
              - Mariana Cubero: Coordinadora del proyecto y diseño de elementos decorativos en el Maker Space.   
              - Sharon Castro: Diseño conceptual y decoración para la exposición.   
              - Yuliana González: Documentación técnica y gestión del repositorio GitHub.    
