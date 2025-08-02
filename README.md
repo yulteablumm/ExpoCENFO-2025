@@ -1,4 +1,4 @@
-**Avance Preliminar ExpoCENFO**  
+# Avance Preliminar ExpoCENFO # 
 
 ---
 
@@ -6,10 +6,10 @@
 - **Nombre:** *AI Asistente Educativo Inclusivo con ESP32*  
 - **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
   - **Roles:**
-             - Fiorela Perez: 
+             - Fiorela Perez: Desarrollo del backend y frontend.
              - Mariana Cubero:
-             - Sharon Castro:
-             - Yuliana González:
+             - Sharon Castro: 
+             - Yuliana González: Creación de la documentación en GitHub.
 ---
 
 ### **2. Público Meta y Propósito Educativo**  
