@@ -172,19 +172,27 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
    <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (2)" src="https://github.com/user-attachments/assets/430e5898-050b-45b4-bff1-3208de621dca" />
 ---
 
+### **6. Plan de Trabajo**  
 
+- **Cronograma Preliminar**  
 
-### **6. Plan de Trabajo con Enfoque Inclusivo**  
-| Hito | Actividades |  
-|------|------------|  
-| **Validación con Docentes** | Talleres para probar consultas pedagógicas reales. |  
-| **Pruebas de Accesibilidad** | Evaluar interfaz con estudiantes con discapacidad. |  
-| **Optimización Offline** | Ampliar base de datos de respuestas predefinidas. |  
+| **Actividad**                     | **Fecha Estimada** | **Qué se logró hacer** |  
+|------------------------------|---------------|-------------------|----------------|  
+| **1. Desarrollo del Firmware**  | 14/julio - 17/julio | - Servidor web en ESP32<br>- Control básico del NeoPixel<br>- Conexion funcional a LLM|  
+| **2. Integración con API**      | 18/julio - 18/julio | - Conexión funcional a OpenRouter<br>- Manejo de respuestas JSON |  
+| **3. Diseño Interfaz Web**      | 18/julio - 24/julio | - HTML/CSS/JS responsive<br>- Modos docente/estudiante |  
+| **4. Pruebas**                  | 14/julio - 25/julio | - Validación de partes del sistema conforme se iba creando |   
+| **5. Documentación**            | DD/MM - 02/agosto     | - Manual de uso<br>- Guía de instalación<br>- Descripción del sistema|  
 
-#### **Riesgos:**  
-- **Baja conectividad en escuelas:** Mitigación con modo offline robusto.  
-- **Respuestas no contextualizadas:** Mitigación con *prompt engineering* para educación especial.  
+---
 
---- 
+#### **Riesgos Identificados y Mitigaciones**  
 
-**Nota:** Este proyecto prioriza la **inclusión real** mediante tecnología accesible y centrada en el docente como facilitador.
+| **Riesgo**                          | **Mitigación** |  
+|-------------------------------------|----------------|  
+| **1. ** | - Implementar caché local con respuestas predefinidas<br>- Usar mensajes claros de error ("Reintentar más tarde") |  
+| **2. **       | - Limitar tiempo de operación continua<br>- Añadir disipador pasivo |  
+
+---
+
+### **7. Prototipos Conceptuales**
