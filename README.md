@@ -101,7 +101,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
   
   ---
   
-  - LLM/API:  
+  - **LLM/API:**  
    OpenRouter (DeepHermes 3 - Llama 3 8B)  
   Gratuito para uso educativo (hasta 1,000 consultas/día).
   
@@ -115,7 +115,7 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
   
   ---
   
-  - Librerías y herramientas:  
+  - **Librerías y herramientas:**  
      En `platformio.ini`:
   
   ```ini
@@ -142,30 +142,31 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
   
   ---
   
-  - Archivos del Proyecto
+  - **Archivos del Proyecto**
   
-    - `/src/main.cpp`: Lógica central de backend ESP32
-    - `/data/index.html`: Interfaz web para el usuario
-    - `/data/styles.css`: Estilos de la página
-    - `/data/script.js`: Lógica cliente para interacción web
-    - `platformio.ini`: Configuración del entorno PlatformIO
+     `/src/main.cpp`: Lógica central de backend ESP32
+     `/data/index.html`: Interfaz web para el usuario
+     `/data/styles.css`: Estilos de la página
+     `/data/script.js`: Lógica cliente para interacción web
+     `platformio.ini`: Configuración del entorno PlatformIO
   
-  * **Backend (ESP32)**
-    - **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
-    - **Polling distribuido:** El servidor gestiona la pregunta y genera un `ID` único. Una tarea separada llama al modelo y publica la respuesta para ser consultada posteriormente.
-    - **Gestión de modos:** Permite alternar entre perfiles con retroalimentación visual y lógica en el sistema.
-    - **Integración con OpenRouter:** Utiliza `HTTPClient` para enviar preguntas y recibir respuestas JSON estructuradas.
-  
-  * **Frontend (HTML + JavaScript)**
-    - Interfaz web intuitiva con pestañas para docentes y estudiantes.
-    - Preguntas sugeridas según el perfil.
-    - Campo de entrada y botón de envío que realiza POST a `/ask`.
-    - Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
+    * **Backend (ESP32)**
+      - **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
+      - **Polling distribuido:** El servidor gestiona la pregunta y genera un `ID` único. Una tarea separada llama al modelo y publica la respuesta para ser consultada posteriormente.
+      - **Gestión de modos:** Permite alternar entre perfiles con retroalimentación visual y lógica en el sistema.
+      - **Integración con OpenRouter:** Utiliza `HTTPClient` para enviar preguntas y recibir respuestas JSON estructuradas.
+    
+    * **Frontend (HTML + JavaScript)**
+      - Interfaz web intuitiva con pestañas para docentes y estudiantes.
+      - Preguntas sugeridas según el perfil.
+      - Campo de entrada y botón de envío que realiza POST a `/ask`.
+      - Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
 
 ---
 
 - #### **Bocetos o Esquemas***
 
+---
 
 ### **5. Prototipos Conceptuales**  
 #### **Ejemplo de Consulta Docente:**  
