@@ -3,7 +3,7 @@
 ---
 
 ### **1. Información del Proyecto**  
-- **Nombre:** *AI Asistente Educativo Inclusivo con ESP32*  
+- **Nombre:** *Asistente Educativo con ESP32*  
 - **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
   - **Roles:**    
              - Fiorela Perez: Desarrollo del backend y frontend.   
@@ -165,7 +165,11 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ---
 
 - #### **Bocetos o Esquemas***
-
+  - Diagrama de flujo de la interacción entre interfaz y backend.  
+    <img width="20%" height="50%" alt="EXPOCENFO drawio" src="https://github.com/user-attachments/assets/c12e9ae9-4991-4bae-81f6-bf31225c1841" />
+  
+  - Diagrama de flujo entre frontend, servidor y modelo de lenguaje.  
+   <img width="60%" height="80%" alt="EXPOCENFO-version 1 diagrama main cpp drawio (2)" src="https://github.com/user-attachments/assets/430e5898-050b-45b4-bff1-3208de621dca" />
 ---
 
 ### **5. Prototipos Conceptuales**  
