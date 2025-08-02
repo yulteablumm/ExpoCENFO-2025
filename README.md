@@ -94,10 +94,10 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 - #### **Componentes previstos:**  
   - Microcontrolador: ESP32  
   - Sensores/actuadores:  
-    | Componente          | Función                             | Conexión ESP32 |  
-    |---------------------|-------------------------------------|----------------|  
-    | **NeoPixel RGB**    | Feedback visual (colores/estados)   | GPIO2          |  
-    | **Botón en interfaz**    | Cambiar modos (docente/estudiante)  | GPIO0          |  
+    | Componente          | Función                             |
+    |---------------------|-------------------------------------|  
+    | **NeoPixel RGB**    | Feedback visual (colores/estados)   |
+    | **Botón en interfaz**    | Cambiar modos (docente/estudiante)  | 
   
   ---
   
