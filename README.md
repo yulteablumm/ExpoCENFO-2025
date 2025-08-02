@@ -69,24 +69,20 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 
 ---
 
-### **3. Requisitos Adaptados**  
-#### **Funcionales:**  
+### **3. Requisitos Iniciales**  
+
 1. **Modo Docente:**  
-   - Consultas pedagógicas (ej: *"¿Cómo explicar fracciones a un estudiante con TEA?"*).  
+   - Consultas pedagógicas a la IA y que devuelva una respuesta.  
    - Generador de actividades diferenciadas (ej: *"3 ejercicios de suma con apoyo visual"*).  
 2. **Modo Estudiante:**  
-   - Explicaciones con lenguaje simple y emojis.  
+   - Explicaciones con lenguaje simple.  
    - Mini-juegos para reforzar aprendizajes (ej: memoria de conceptos).  
 3. **Señales Visuales:**  
    - NeoPixel:  
      - **Violeta:** Modo docente activo.  
      - **Amarillo:** Modo estudiante.  
-     - **Arcoíris:** Procesando consulta.  
-
-#### **No Funcionales:**  
-- **Offline:** Respuestas predefinidas para términos pedagógicos comunes (ej: inclusión, TDAH).  
-- **Accesibilidad:** Compatibilidad con lectores de pantalla en la interfaz web.  
-
+     - **Arcoíris:** Procesando consulta.
+  
 ---
 
 ### **4. Diseño Preliminar Actualizado**  
