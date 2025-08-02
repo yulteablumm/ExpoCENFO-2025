@@ -144,11 +144,11 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
   
   - **Archivos del Proyecto**
   
-     `/src/main.cpp`: Lógica central de backend ESP32
-     `/data/index.html`: Interfaz web para el usuario
-     `/data/styles.css`: Estilos de la página
-     `/data/script.js`: Lógica cliente para interacción web
-     `platformio.ini`: Configuración del entorno PlatformIO
+     `/src/main.cpp`: Lógica central de backend ESP32  
+     `/data/index.html`: Interfaz web para el usuario  
+     `/data/styles.css`: Estilos de la página  
+     `/data/script.js`: Lógica cliente para interacción web  
+     `platformio.ini`: Configuración del entorno PlatformIO  
   
     * **Backend (ESP32)**
       - **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
