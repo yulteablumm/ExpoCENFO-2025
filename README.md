@@ -196,11 +196,9 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 ---
 
 ### **7. Prototipos Conceptuales**
-### **7. Prototipos Conceptuales**  
 
-#### **Código Mínimo de Prueba**  
-
-**1. Conexión Básica ESP32 + NeoPixel** *(Feedback visual)*  
+#### **1. Conexión Básica ESP32 + NeoPixel**  
+*(De `main.cpp` líneas 20-24 y 47-80)*  
 ```arduino
 #include <Adafruit_NeoPixel.h>
 #define LED_PIN 2
@@ -209,91 +207,98 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  Serial.begin(115200);
   strip.begin();
-  strip.show(); // Inicializa LED apagado
+  strip.show(); // Apagar LED inicialmente
+  Serial.println("✅ NeoPixel listo");
 }
 
 void loop() {
-  // Modo Docente (Violeta)
-  strip.setPixelColor(0, strip.Color(150, 0, 150)); 
-  strip.show();
+  // Ejemplo: Ciclo de colores (Docente -> Estudiante -> Procesando)
+  setLEDColor(128, 0, 128); // Violeta (Docente)
   delay(2000);
-  
-  // Procesando (Arcoíris)
-  for(int i=0; i<256; i++) {
-    strip.setPixelColor(0, strip.ColorHSV((i * 65536L) / 256));
+  setLEDColor(255, 255, 0);  // Amarillo (Estudiante)
+  delay(2000);
+  startRainbowEffect();       // Arcoíris (Procesando)
+  delay(5000);
+}
+
+void setLEDColor(uint8_t r, uint8_t g, uint8_t b) {
+  strip.setPixelColor(0, strip.Color(r, g, b));
+  strip.show();
+}
+
+void startRainbowEffect() {
+  for(int j=0; j<256; j++) {
+    strip.setPixelColor(0, strip.ColorHSV((j * 65536L) / 256));
     strip.show();
     delay(20);
   }
 }
 ```
 
-**2. Consulta a OpenRouter API** *(Conexión con IA)*  
+---
+
+### **2. Consulta Mínima al LLM (OpenRouter)**  
+*(De `main.cpp` líneas 190-245, simplificado)*  
 ```arduino
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "TuRedWiFi";
-const char* password = "TuContraseña";
-const char* apiKey = "sk-or-v1-tu-api-key";
+const char* ssid = "TU_WIFI";
+const char* password = "TU_CLAVE";
+const char* apiKey = "sk-or-v1-tu-api-key"; // Reemplazar con tu clave
 
 void setup() {
   Serial.begin(115200);
   WiFi.begin(ssid, password);
-  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("Conectado!");
+  Serial.println("\n✅ WiFi conectado");
 }
 
 void loop() {
   if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
-    http.begin("https://openrouter.ai/api/v1/chat/completions");
-    http.addHeader("Content-Type", "application/json");
-    http.addHeader("Authorization", String("Bearer ") + apiKey);
-    
-    String payload = "{\"model\":\"nousresearch/deephermes-3-llama-3-8b-preview\",\"messages\":[{\"role\":\"user\",\"content\":\"Explica el ciclo del agua para un niño con adecuacion no significativa\"}]}";
-    
-    int httpCode = http.POST(payload);
-    if (httpCode == 200) {
-      String response = http.getString();
-      Serial.println("Respuesta IA:");
-      Serial.println(response);
-    } else {
-      Serial.println("Error: " + String(httpCode));
-    }
-    http.end();
+    String respuesta = consultarIA("Explica el ciclo del agua para niños");
+    Serial.println("Respuesta IA: " + respuesta);
   }
-  delay(10000); // Espera 10 segundos entre consultas
+  delay(10000); // Esperar 10 segundos
+}
+
+String consultarIA(String pregunta) {
+  HTTPClient http;
+  http.begin("https://openrouter.ai/api/v1/chat/completions");
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Authorization", String("Bearer ") + apiKey);
+
+  String payload = "{\"model\":\"nousresearch/deephermes-3-llama-3-8b-preview\",\"messages\":[{\"role\":\"user\",\"content\":\"" + pregunta + "\"}]}";
+  
+  int httpCode = http.POST(payload);
+  if (httpCode == 200) {
+    String response = http.getString();
+    DynamicJsonDocument doc(1024);
+    deserializeJson(doc, response);
+    return doc["choices"][0]["message"]["content"].as<String>();
+  } else {
+    return "Error: " + String(httpCode);
+  }
 }
 ```
 
 ---
 
+### **Cómo Usar Estos Códigos**  
+1. **Prueba NeoPixel**:  
+   - Carga el primer código para verificar los colores.  
+
+2. **Prueba OpenRouter**:  
+   - Reemplaza `TU_WIFI`, `TU_CLAVE` y `tu-api-key`.  
+   - Verás las respuestas en el Monitor Serial.  
+
+3. **Prueba Servidor Web**:  
+   - Accede a `http://[IP_ESP32]` desde un navegador.  
 
 ---
-
-### **Cómo Probarlo**  
-1. **Hardware**:  
-   - Conecta el NeoPixel al pin GPIO2 del ESP32.  
-   - Alimenta el sistema via USB (5V).  
-
-2. **Software**:  
-   - Carga el código en Arduino IDE con las librerías instaladas.  
-   - Abre el Monitor Serial (115200 baudios) para ver respuestas.  
-
-3. **Interfaz**:  
-   - Accede a `http://192.168.4.1` desde cualquier dispositivo en la red WiFi del ESP32.  
-
----
-
-### **Próximos Pasos**  
-- [ ] Añadir caché local para preguntas frecuentes.  
-- [ ] Implementar reconocimiento de voz con el micrófono.  
-- [ ] Crear un PCB personalizado para integración física.  
-
-¿Necesitas el código completo o ajustar algún componente? 🚀
