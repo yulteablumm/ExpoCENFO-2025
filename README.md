@@ -91,66 +91,80 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
  
 ---
 
-#### **Componentes previstos:**  
-- Microcontrolador: ESP32  
-- Sensores/actuadores:  
-  | Componente          | Función                             | Conexión ESP32 |  
-  |---------------------|-------------------------------------|----------------|  
-  | **NeoPixel RGB**    | Feedback visual (colores/estados)   | GPIO2          |  
-  | **Botón en interfaz**    | Cambiar modos (docente/estudiante)  | GPIO0          |  
+- **Componentes previstos:**  
+  - Microcontrolador: ESP32  
+  - Sensores/actuadores:  
+    | Componente          | Función                             | Conexión ESP32 |  
+    |---------------------|-------------------------------------|----------------|  
+    | **NeoPixel RGB**    | Feedback visual (colores/estados)   | GPIO2          |  
+    | **Botón en interfaz**    | Cambiar modos (docente/estudiante)  | GPIO0          |  
+  
+  ---
+  
+  - LLM/API:  
+   OpenRouter (DeepHermes 3 - Llama 3 8B)  
+  Gratuito para uso educativo (hasta 1,000 consultas/día).
+  
+  Ejemplo de consulta:
+  
+  json   
+  {   
+    "model": "nousresearch/deephermes-3-llama-3-8b-preview",    
+    "messages": [{"role": "user", "content": "Explica la fotosíntesis para un niño de 5 años"}]  
+  }   
+  
+  ---
+  
+  - Librerías y herramientas:  
+     En `platformio.ini`:
+  
+  ```ini
+  [env:esp32dev]
+  platform = espressif32
+  board = esp32dev
+  framework = arduino
+  monitor_speed = 115200
+  lib_deps =
+    ESPAsyncWebServer
+    AsyncTCP
+    bblanchon/ArduinoJson@^7.4.2
+    adafruit/Adafruit NeoPixel@^1.15.1
+  ```
+  
+  **Función de cada librería**
+  
+  | Librería | Función |
+  |---------|--------|
+  | ESPAsyncWebServer | Servidor web asincrónico para manejar múltiples conexiones HTTP simultáneas |
+  | AsyncTCP | Soporte para conexiones TCP no bloqueantes |
+  | ArduinoJson | Manejo de estructuras JSON para la API y el frontend |
+  | Adafruit NeoPixel | Control del LED RGB para visualizar estados del sistema |
+  
+  ---
+  
+  - Archivos del Proyecto
+  
+    - `/src/main.cpp`: Lógica central de backend ESP32
+    - `/data/index.html`: Interfaz web para el usuario
+    - `/data/styles.css`: Estilos de la página
+    - `/data/script.js`: Lógica cliente para interacción web
+    - `platformio.ini`: Configuración del entorno PlatformIO
+  
+  - ### Backend (ESP32)
+    - **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
+    - **Polling distribuido:** El servidor gestiona la pregunta y genera un `ID` único. Una tarea separada llama al modelo y publica la respuesta para ser consultada posteriormente.
+    - **Gestión de modos:** Permite alternar entre perfiles con retroalimentación visual y lógica en el sistema.
+    - **Integración con OpenRouter:** Utiliza `HTTPClient` para enviar preguntas y recibir respuestas JSON estructuradas.
+  
+  - ### Frontend (HTML + JavaScript)
+    - Interfaz web intuitiva con pestañas para docentes y estudiantes.
+    - Preguntas sugeridas según el perfil.
+    - Campo de entrada y botón de envío que realiza POST a `/ask`.
+    - Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
 
 ---
 
-- LLM/API:  
- OpenRouter (DeepHermes 3 - Llama 3 8B)  
-Gratuito para uso educativo (hasta 1,000 consultas/día).
-
-Ejemplo de consulta:
-
-json
-{
-  "model": "nousresearch/deephermes-3-llama-3-8b-preview",
-  "messages": [{"role": "user", "content": "Explica la fotosíntesis para un niño de 5 años"}]
-}
-
-- Librerías y herramientas:
-   En `platformio.ini`:
-
-```ini
-[env:esp32dev]
-platform = espressif32
-board = esp32dev
-framework = arduino
-monitor_speed = 115200
-lib_deps =
-  ESPAsyncWebServer
-  AsyncTCP
-  bblanchon/ArduinoJson@^7.4.2
-  adafruit/Adafruit NeoPixel@^1.15.1
-```
-
-**Función de cada librería**
-
-| Librería | Función |
-|---------|--------|
-| ESPAsyncWebServer | Servidor web asincrónico para manejar múltiples conexiones HTTP simultáneas |
-| AsyncTCP | Soporte para conexiones TCP no bloqueantes |
-| ArduinoJson | Manejo de estructuras JSON para la API y el frontend |
-| Adafruit NeoPixel | Control del LED RGB para visualizar estados del sistema |
-
-- ### Backend (ESP32)
-  - **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
-  - **Polling distribuido:** El servidor gestiona la pregunta y genera un `ID` único. Una tarea separada llama al modelo y publica la respuesta para ser consultada posteriormente.
-  - **Gestión de modos:** Permite alternar entre perfiles con retroalimentación visual y lógica en el sistema.
-  - **Integración con OpenRouter:** Utiliza `HTTPClient` para enviar preguntas y recibir respuestas JSON estructuradas.
-
-- ### Frontend (HTML + JavaScript)
-  - Interfaz web intuitiva con pestañas para docentes y estudiantes.
-  - Preguntas sugeridas según el perfil.
-  - Campo de entrada y botón de envío que realiza POST a `/ask`.
-  - Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
-
-
+- Bocetos o Esquemas
 ### **5. Prototipos Conceptuales**  
 #### **Ejemplo de Consulta Docente:**  
 ```python
