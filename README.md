@@ -5,12 +5,54 @@
 ### **1. Información del Proyecto**  
 - **Nombre:** *AI Asistente Educativo Inclusivo con ESP32*  
 - **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
-  - **Roles:**
+  - **Roles:**    
              - Fiorela Perez: Desarrollo del backend y frontend.   
              - Mariana Cubero: Coordinadora, encargada de realizar objetos para decoracion en el Maker Space.   
              - Sharon Castro: Encargada de buscar ideas para decoracion el dia de la exposicion.   
              - Yuliana González: Creación de la documentación en GitHub.
 ---
+
+### **2. Descripción y Justificación**  
+
+#### **Problema que se aborda:**  
+Los docentes que trabajan con estudiantes que requieren adecuaciones curriculares significativas (ej: discapacidad cognitiva, autismo) o no significativas (ej: ajustes en ritmo o formato) enfrentan desafíos clave:  
+1. **Falta de tiempo** para crear material adaptado a cada necesidad.  
+2. **Dificultad para explicar conceptos** de manera personalizada dentro del mismo grupo.  
+3. **Limitaciones de recursos** pedagógicos inclusivos listos para usar.  
+
+Al permitir que el docente consulte a la IA directamente desde una interfaz física o web, se optimiza el tiempo de planificación, se fomenta la personalización del material y se promueve una participación más equitativa dentro del grupo. Esto contribuye a:
+- Responder rápidamente a dudas pedagógicas específicas.
+- Generar explicaciones, ejemplos y actividades según las necesidades del estudiante.
+- Alinear el contenido que se trabaja en clase de manera que todo el grupo avance en los mismos temas, respetando los ritmos individuales.
+- Promover la autonomía del docente en la creación de recursos sin depender de repositorios externos o procesos de búsqueda extensos.
+
+---
+
+#### **Importancia y contexto:**  
+- **Educación inclusiva real:** Cumple con lo establecido en la Ley 7600 (Costa Rica) y los Objetivos de Desarrollo Sostenible (ODS 4).  
+- **Brecha tecnológica:** Muchas herramientas educativas con IA son costosas o requieren internet estable; este sistema funciona **offline** parcialmente y con hardware económico.  
+- **Empoderamiento docente:** Reduce la dependencia de manuales genéricos o búsquedas extensas en internet.  
+
+**Ejemplo de impacto:**  
+Un docente puede preguntar: *"¿Cómo enseñar los volcanes a un estudiante con TEA?"* y recibir:  
+- Una explicación con lenguaje claro y apoyo visual.  
+- Una actividad sensorial (ej: maqueta con texturas).  
+- Un juego de asociación para el grupo.  
+
+---
+
+#### **Usuarios/beneficiarios:**  
+| Grupo | Beneficio |  
+|-------|----------|  
+| **Docentes de educación especial** | Generan material adaptado sin dedicar horas extra. |  
+| **Docentes de aulas regulares** | Atienden la diversidad sin retrasar al grupo. |  
+| **Estudiantes con adecuaciones** | Reciben contenido accesible a sus necesidades. |  
+| **Comunidad educativa** | Promueve inclusión con herramientas concretas. |  
+
+**Caso concreto:**  
+- **Escuela rural sin recursos:** El asistente funciona con WiFi básico o modo offline, llevando IA pedagógica a contextos con limitaciones tecnológicas.  
+
+--- 
 
 ### **2. Público Meta y Propósito Educativo**  
 #### **Beneficiarios Directos:**  
