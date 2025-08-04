@@ -192,8 +192,8 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 
 | **Riesgo**                          | **Mitigación** |  
 |-------------------------------------|----------------|  
-| **1. ** | - Implementar caché local con respuestas predefinidas<br>- Usar mensajes claros de error ("Reintentar más tarde") |  
-| **2. **       | - Limitar tiempo de operación continua<br>- Añadir disipador pasivo |  
+| **1. ** | -  |  
+| **2. **       | -  |  
 
 ---
 
