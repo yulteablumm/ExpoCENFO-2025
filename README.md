@@ -1,3 +1,54 @@
+# Proyecto educativo con ESP32  #
+
+Universidad CENFOTEC
+- **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
+  - **Roles:**    
+             - Fiorela Pérez: Responsable de desarrollo backend y frontend del sistema.  
+             - Mariana Cubero: Coordinadora del proyecto y diseño de elementos decorativos en el Maker Space.   
+             - Sharon Castro: Diseño conceptual y decoración para la exposición.   
+             - Yuliana González: Documentación y gestión del repositorio GitHub.    
+---
+
+## 1. Estructura del Repositorio
+/docs/                   # Documentación extendida (diagramas, notas técnicas, PDFs)
+/hardware/               # Esquemas, diagramas de conexión, archivos CAD/PCB
+/software/               # Código fuente (microcontrolador, backend, scripts)
+/models/                 # Modelos, prompts y configuraciones de LLM
+/tests/                  # Pruebas unitarias y de integración
+/examples/               # Ejemplos simples de uso del sistema
+README.md                # Descripción general del proyecto
+ARCHITECTURE.md          # Documentación detallada de la arquitectura
+SETUP.md                 # Guía de instalación y despliegue
+CONTRIBUTING.md          # Normas para colaborar en el proyecto
+LICENSE                  # Licencia del proyecto
+CHANGELOG.md             # Registro de cambios
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Avance Preliminar ExpoCENFO # 
