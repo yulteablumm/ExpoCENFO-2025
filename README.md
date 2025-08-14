@@ -1,8 +1,12 @@
+# Proyecto educativo con ESP32  #
 
-
-# Guía para Documentar Proyectos de Inteligencia en el Borde con LLMs #
-**Autor:** Tomás de Camino Beck, Ph.D.  
-**Institución:** Universidad CENFOTEC
+Universidad CENFOTEC
+- **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
+  - **Roles:**    
+             - Fiorela Pérez: Responsable de desarrollo backend y frontend del sistema.  
+             - Mariana Cubero: Coordinadora del proyecto y diseño de elementos decorativos en el Maker Space.   
+             - Sharon Castro: Diseño conceptual y decoración para la exposición.   
+             - Yuliana González: Documentación y gestión del repositorio GitHub. 
 
 ---
 
@@ -135,15 +139,7 @@ Ubicar en `ARCHITECTURE.md`:
 
 
 
-# Proyecto educativo con ESP32  #
-
-Universidad CENFOTEC
-- **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
-  - **Roles:**    
-             - Fiorela Pérez: Responsable de desarrollo backend y frontend del sistema.  
-             - Mariana Cubero: Coordinadora del proyecto y diseño de elementos decorativos en el Maker Space.   
-             - Sharon Castro: Diseño conceptual y decoración para la exposición.   
-             - Yuliana González: Documentación y gestión del repositorio GitHub.    
+   
 ---
 
 ## 1. Estructura del Repositorio
