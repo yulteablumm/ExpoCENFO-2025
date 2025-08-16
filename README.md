@@ -1,7 +1,7 @@
 # Proyecto educativo con ESP32  #
 
 Universidad CENFOTEC
-- **Equipo:** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
+- **Equipo: CTRL+Girls** Fiorela Perez, Mariana Cubero, Sharon Castro y Yuliana González.
 ---
 
 ## 1. Estructura del Repositorio
