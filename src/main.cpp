@@ -23,12 +23,12 @@ static std::map<String, PendingRequest> pendingRequests;
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800); // Inicialización del objeto NeoPixel
 
 // --- Configuración de red WiFi ---
-const char* ssid = "Familia Gonzalez 2.4";      // Nombre de la red WiFi
-const char* password = "Aura1975a";      // Contraseña de la red WiFi
+const char* ssid = "";      // Nombre de la red WiFi
+const char* password = "";      // Contraseña de la red WiFi
 
 // --- Configuración de la API de OpenRouter ---
-const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"; // Endpoint de la API
-const char* OPENROUTER_API_KEY = "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"; // Clave de API nueva
+const char* OPENROUTER_API_URL = ""; // Endpoint de la API
+const char* OPENROUTER_API_KEY = ""; // Clave de API 
 
 // --- Inicialización del servidor web asíncrono en el puerto 80 ---
 AsyncWebServer server(80);
@@ -297,7 +297,7 @@ String callOpenRouterAPI(const char* question) {
 
   // Construir el payload según OpenRouter
   DynamicJsonDocument doc(2048);
-  doc["model"] = "deepseek/deepseek-r1-0528-qwen3-8b:free";
+  doc["model"] = ""; //Modelo de LLM
   JsonArray messages = doc.createNestedArray("messages");
   JsonObject userMsg = messages.createNestedObject();
   userMsg["role"] = "user";
