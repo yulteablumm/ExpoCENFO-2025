@@ -49,7 +49,7 @@
 
   Implementacion
   
-  ```
+  
   fetch("https://openrouter.ai/api/v1/chat/completions", {
   method: "POST",
   headers: {
@@ -68,7 +68,7 @@
     ]
   })
 });
-```
+
 ---
 
   **Función de cada librería**
