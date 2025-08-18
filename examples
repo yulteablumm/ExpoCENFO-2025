@@ -1,3 +1,4 @@
+'''
 //Prueba Básica de NeoPixel
 //Prueba Básica de NeoPixel
 #include <Adafruit_NeoPixel.h>
@@ -20,3 +21,4 @@ void loop() {
   pixels.setPixelColor(0, pixels.Color(0, 0, 255)); // Azul
   pixels.show(); delay(1000);
 }
+'''
