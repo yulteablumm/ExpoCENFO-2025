@@ -22,3 +22,4 @@ void loop() {
   pixels.show(); delay(1000);
 }
 ```
+---
