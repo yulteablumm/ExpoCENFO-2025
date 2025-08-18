@@ -59,6 +59,22 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 
 ---
 
+## Componentes Principales
+
+### Backend (ESP32)
+- **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
+- **Polling distribuido:** El servidor gestiona la pregunta y genera un `ID` único. Una tarea separada llama al modelo y publica la respuesta para ser consultada posteriormente.
+- **Gestión de modos:** Permite alternar entre perfiles con retroalimentación visual y lógica en el sistema.
+- **Integración con OpenRouter:** Utiliza `HTTPClient` para enviar preguntas y recibir respuestas JSON estructuradas.
+
+### Frontend (HTML + JavaScript)
+- Interfaz web intuitiva con pestañas para docentes y estudiantes.
+- Preguntas sugeridas según el perfil.
+- Campo de entrada y botón de envío que realiza POST a `/ask`.
+- Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
+
+---
+
 ### **3. Requisitos Iniciales**  
 
 1. **Modo Docente:**  
