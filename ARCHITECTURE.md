@@ -50,7 +50,7 @@
   Implementacion
   
   ```
- fetch("https://openrouter.ai/api/v1/chat/completions", {
+  fetch("https://openrouter.ai/api/v1/chat/completions", {
   method: "POST",
   headers: {
     "Authorization": "Bearer <OPENROUTER_API_KEY>",
@@ -68,8 +68,9 @@
     ]
   })
 });
-  ```
-  
+```
+---
+
   **Función de cada librería**
   
   | Librería | Función |
