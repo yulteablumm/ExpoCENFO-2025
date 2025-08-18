@@ -77,43 +77,36 @@ void setup() {
 void loop() {}
 ```
 
-### Prueba uso de IA
+### Prueba uso de API
 ```
-#include <HTTPClient.h>
-#include <ArduinoJson.h>
+import requests
 
-const char* apiUrl = "tu_api_url";
-const char* apiKey = "tu_api_key";
-
-void setup() {
-  Serial.begin(115200);
-  WiFi.begin("TuRedWiFi", "TuPassword");
-  while(WiFi.status() != WL_CONNECTED) delay(500);
-
-  HTTPClient http;
-  http.begin(apiUrl);
-  http.addHeader("Authorization", String("Bearer ") + apiKey);
-  http.addHeader("Content-Type", "application/json");
-
-  DynamicJsonDocument doc(512);
-  doc["model"] = "deepseek/deepseek-r1-0528-qwen3-8b:free";
-  JsonArray messages = doc.createNestedArray("messages");
-  JsonObject msg = messages.createNestedObject();
-  msg["role"] = "user";
-  msg["content"] = "Di hola en español";
-
-  String payload;
-  serializeJson(doc, payload);
-
-  int httpCode = http.POST(payload);
-  if(httpCode == 200) {
-    String response = http.getString();
-    Serial.println(response);
-  }
-  http.end();
+url = "https://openrouter.ai/api/v1/chat/completions"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer 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"
+}
+data = {
+    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "messages": [
+        {"role": "user", "content": "¿Cuál es la capital de Francia?"}
+    ]
 }
 
-void loop() {}
+response = requests.post(url, headers=headers, json=data)
+print("Status code:", response.status_code)
+print("Raw response:")
+print(response.text)
+if response.status_code == 200:
+    try:
+        result = response.json()
+        print("Respuesta IA:")
+        print(result["choices"][0]["message"]["content"])
+    except Exception as e:
+        print("Error al decodificar JSON:", e)
+else:
+    print("No se recibió respuesta JSON válida.")
+
 ```
 ---
 ### Prueba de cambios de modo
