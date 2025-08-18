@@ -82,7 +82,7 @@ void loop() {}
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char* apiUrl = "https://openrouter.ai/api/v1/chat/completions";
+const char* apiUrl = "tu_api_url";
 const char* apiKey = "tu_api_key";
 
 void setup() {
