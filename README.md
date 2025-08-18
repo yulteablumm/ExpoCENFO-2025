@@ -133,22 +133,6 @@ Ubicar en `ARCHITECTURE.md`:
 
 
 
-   
----
-
-## 1. Estructura del Repositorio
-/docs/                   # Documentación extendida (diagramas, notas técnicas, PDFs)
-/hardware/               # Esquemas, diagramas de conexión, archivos CAD/PCB
-/software/               # Código fuente (microcontrolador, backend, scripts)
-/models/                 # Modelos, prompts y configuraciones de LLM
-/tests/                  # Pruebas unitarias y de integración
-/examples/               # Ejemplos simples de uso del sistema
-README.md                # Descripción general del proyecto
-ARCHITECTURE.md          # Documentación detallada de la arquitectura
-SETUP.md                 # Guía de instalación y despliegue
-CONTRIBUTING.md          # Normas para colaborar en el proyecto
-LICENSE                  # Licencia del proyecto
-CHANGELOG.md             # Registro de cambios
 
 
 
