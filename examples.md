@@ -81,13 +81,13 @@ void loop() {}
 ```
 import requests
 
-url = "https://openrouter.ai/api/v1/chat/completions"
+url = "tu_url_de_api"
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer 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"
+    "Authorization": "Bearer tu_api_key"
 }
 data = {
-    "model": "deepseek/deepseek-chat-v3-0324:free",
+    "model": "tu_modelo_LLM",
     "messages": [
         {"role": "user", "content": "¿Cuál es la capital de Francia?"}
     ]
