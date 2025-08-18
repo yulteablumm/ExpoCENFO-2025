@@ -24,19 +24,7 @@
 
 
 
-### **3. Requisitos Iniciales**  
 
-1. **Modo Docente:**  
-   - Consultas pedagógicas a la IA y que devuelva una respuesta.  
-   - Generador de actividades diferenciadas (ej: *"3 ejercicios de suma con apoyo visual"*).  
-2. **Modo Estudiante:**  
-   - Explicaciones con lenguaje simple.  
-   - Mini-juegos para reforzar aprendizajes (ej: memoria de conceptos).  
-3. **Señales Visuales:**  
-   - NeoPixel:  
-     - **Violeta:** Modo docente activo.  
-     - **Amarillo:** Modo estudiante.  
-     - **Arcoíris:** Procesando consulta.
   
 ---
 
