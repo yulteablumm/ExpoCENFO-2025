@@ -125,18 +125,11 @@
   );
   ```
 
-#### **6.2 Gestión de Memoria**  
+#### **Gestión de Memoria**  
 - **Técnicas**:  
   - Pool de buffers JSON (reutilización)  
   - Limpieza agresiva de `pendingRequests`  
   - SPIFFS con rotación automática  
 
-#### **6.3 Seguridad**  
-| Capa               | Implementación                     |
-|--------------------|------------------------------------|
-| Red                | WiFi WPA2                          |
-| API                | Claves en código (no recomendado para producción) |
-| Web                | CORS restringido                   |
 
----
 
