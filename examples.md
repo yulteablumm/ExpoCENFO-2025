@@ -1,0 +1,23 @@
+//Prueba Básica de NeoPixel
+```
+#include <Adafruit_NeoPixel.h>
+#define PIN 2
+#define NUMPIXELS 1
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  pixels.begin();
+  pixels.setBrightness(50); // 50% brillo
+}
+
+void loop() {
+  // Ciclo de colores básicos
+  pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // Rojo
+  pixels.show(); delay(1000);
+  pixels.setPixelColor(0, pixels.Color(0, 255, 0)); // Verde
+  pixels.show(); delay(1000);
+  pixels.setPixelColor(0, pixels.Color(0, 0, 255)); // Azul
+  pixels.show(); delay(1000);
+}
+```
