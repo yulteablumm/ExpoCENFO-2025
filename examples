@@ -1,4 +1,5 @@
 //Prueba Básica de NeoPixel
+//Prueba Básica de NeoPixel
 #include <Adafruit_NeoPixel.h>
 #define PIN 2
 #define NUMPIXELS 1
