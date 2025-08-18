@@ -23,12 +23,12 @@ static std::map<String, PendingRequest> pendingRequests;
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800); // Inicialización del objeto NeoPixel
 
 // --- Configuración de red WiFi ---
-const char* ssid = "";      // Nombre de la red WiFi
-const char* password = "";      // Contraseña de la red WiFi
+const char* ssid = "Familia Gonzalez 2.4";      // Nombre de la red WiFi
+const char* password = "Aura1975a";      // Contraseña de la red WiFi
 
 // --- Configuración de la API de OpenRouter ---
-const char* OPENROUTER_API_URL = ""; // Endpoint de la API
-const char* OPENROUTER_API_KEY = ""; // Clave de API nueva
+const char* OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"; // Endpoint de la API
+const char* OPENROUTER_API_KEY = "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"; // Clave de API nueva
 
 // --- Inicialización del servidor web asíncrono en el puerto 80 ---
 AsyncWebServer server(80);
@@ -229,6 +229,55 @@ void setup() {
 
   server.begin(); // Inicia el servidor web
   Serial.println("Servidor web iniciado");
+
+  // --- Endpoints para administración del sistema ---
+  
+  // Endpoint para eliminar historial de estudiantes
+  server.on("/deleteHistory", HTTP_POST, [](AsyncWebServerRequest *request) {
+    Serial.println("Solicitud para eliminar historial de estudiantes recibida");
+    
+    // Eliminar archivos de historial en SPIFFS
+    File root = SPIFFS.open("/");
+    File file = root.openNextFile();
+    
+    while (file) {
+      String fileName = String(file.name());
+      if (fileName.startsWith("/student_") || fileName.startsWith("/analytics_")) {
+        SPIFFS.remove(fileName);
+        Serial.println("Archivo eliminado: " + fileName);
+      }
+      file = root.openNextFile();
+    }
+    
+    request->send(200, "application/json", "{\"success\":true,\"message\":\"Historial de estudiantes eliminado exitosamente\"}");
+  });
+
+  // Endpoint para reinicio completo del sistema
+  server.on("/fullReset", HTTP_POST, [](AsyncWebServerRequest *request) {
+    Serial.println("Solicitud de reinicio completo recibida");
+    
+    // Eliminar todos los archivos de datos (excepto archivos del sistema)
+    File root = SPIFFS.open("/");
+    File file = root.openNextFile();
+    
+    while (file) {
+      String fileName = String(file.name());
+      if (!fileName.startsWith("/index.html") && 
+          !fileName.startsWith("/style.css") && 
+          !fileName.startsWith("/script.js") && 
+          !fileName.startsWith("/images/")) {
+        SPIFFS.remove(fileName);
+        Serial.println("Archivo eliminado: " + fileName);
+      }
+      file = root.openNextFile();
+    }
+    
+    request->send(200, "application/json", "{\"success\":true,\"message\":\"Reinicio completo iniciado\"}");
+    
+    // Reiniciar el ESP32 después de 3 segundos
+    delay(3000);
+    ESP.restart();
+  });
 }
 
 // --- Bucle principal (no se usa, todo es asíncrono) ---
@@ -248,7 +297,7 @@ String callOpenRouterAPI(const char* question) {
 
   // Construir el payload según OpenRouter
   DynamicJsonDocument doc(2048);
-  doc["model"] = "nousresearch/deephermes-3-llama-3-8b-preview:free";
+  doc["model"] = "deepseek/deepseek-r1-0528-qwen3-8b:free";
   JsonArray messages = doc.createNestedArray("messages");
   JsonObject userMsg = messages.createNestedObject();
   userMsg["role"] = "user";

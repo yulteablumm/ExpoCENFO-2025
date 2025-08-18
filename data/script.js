@@ -3,7 +3,11 @@
 
 // ===== VARIABLES GLOBALES =====
 let currentMode = "docente";
+let currentRole = localStorage.getItem('currentRole') || null; // 'docente' | 'estudiante'
+let studentName = localStorage.getItem('studentName') || '';
 let chatHistory = [];
+
+// Duplicated legacy history handlers removed to avoid conflicts; unified versions exist below.
 let calendarPlans = [];
 let pollingInterval = null;
 let dinoGameInterval = null;
@@ -15,7 +19,17 @@ let currentTheme = 'default';
 let reminders = [];
 let reminderIntervals = [];
 let progressChart = null;
+let studentChart = null;
 let analyticsData = {};
+let selectedStudentKey = null;
+let selectedStudentName = '';
+
+// ===== CONTROL DE TASA PARA LLAMADAS A IA =====
+let aiAskQueue = Promise.resolve();
+let suggestionsCooldownUntil = 0;
+const SUGGESTIONS_COOLDOWN_MS = 30000; // 30s de espera tras 429
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ===== DATOS DE SUGERENCIAS =====
 const sugeridasDocente = [
@@ -45,7 +59,6 @@ const teacherJokes = [
 ];
 
 const tips = [
-    "💡 Usa el micrófono para preguntar sin escribir",
     "🎮 Los juegos ayudan a reforzar el aprendizaje",
     "📄 Puedes exportar tus mejores respuestas a PDF",
     "📅 Planifica tus clases y expórtalas a Google Calendar",
@@ -171,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Configurar eventos
     setupEventListeners();
-    setupSpeechRecognition();
     setupThemeSelector();
     setupAnalytics();
     
@@ -189,9 +201,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configurar tip aleatorio
     setRandomTip();
     
-    // Inicializar modo docente
-    switchMode('docente');
+    // Cambiar modo solo si ya estaba definido un rol previamente
+    if(currentRole==='estudiante') switchMode('estudiante');
+    else if(currentRole==='docente') switchMode('docente');
     
+    // Mostrar u ocultar modal de rol según estado
+    const roleModal = document.getElementById('role-modal');
+    if (roleModal) {
+        if (currentRole) {
+            roleModal.classList.remove('show');
+            roleModal.style.display = 'none';
+            showLogout();
+            updateTabsVisibility();
+        } else {
+            roleModal.classList.add('show');
+        }
+    }
     console.log('✅ Aplicación inicializada correctamente');
 });
 
@@ -218,8 +243,20 @@ function showLoadingScreen() {
 }
 
 // ===== GESTIÓN DE HISTORIAL =====
+function sanitizeName(name){
+    return name.trim().toLowerCase().replace(/[^a-z0-9]/gi,'_');
+}
+function capitalizeWords(name){
+    return name
+        .trim()
+        .split(/\s+/)
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+}
 function getHistoryKey() {
-    return currentMode === "docente" ? "chatHistoryDocente" : "chatHistoryEstudiante";
+    if(currentRole==='docente') return 'chatHistoryDocente';
+    const clean = studentName?sanitizeName(studentName):'anonimo';
+    return `chatHistoryEstudiante_${clean}`;
 }
 
 function loadHistory() {
@@ -276,6 +313,54 @@ function updateVoiceControls(show = true) {
     });
 }
 
+// Renderiza el último intercambio con efecto de escritura
+function addToHistoryAnimated(question, answer, imgUrl) {
+    const extraEmojis = getRandomEmojis();
+    const entry = { 
+        question, 
+        answer: answer + " " + extraEmojis, 
+        imgUrl,
+        timestamp: new Date().toLocaleString()
+    };
+    chatHistory.push(entry);
+    saveHistory(chatHistory);
+
+    const chatDiv = document.getElementById('chat-history');
+    if (!chatDiv) return;
+
+    // Burbuja de usuario
+    const userBubble = document.createElement('div');
+    userBubble.className = 'bubble-user';
+    userBubble.innerHTML = `<strong>👤 Tú:</strong> ${entry.question}`;
+    chatDiv.appendChild(userBubble);
+
+    // Burbuja de IA con target para tipeo
+    const aiBubble = document.createElement('div');
+    aiBubble.className = 'bubble-ia';
+    aiBubble.innerHTML = `
+        <strong>🤖 IA:</strong> <span class="typing-target"></span>
+        <small style="opacity: 0.7; font-size: 0.8em; display: block; margin-top: 0.5rem;">📅 ${entry.timestamp}</small>
+    `;
+    chatDiv.appendChild(aiBubble);
+
+    const target = aiBubble.querySelector('.typing-target');
+    // Efecto de tipeo y scroll
+    typeWriter(entry.answer, target, 1, () => {
+        if (entry.imgUrl) {
+            const img = document.createElement('img');
+            img.src = entry.imgUrl;
+            img.alt = 'Imagen relacionada';
+            img.loading = 'lazy';
+            aiBubble.appendChild(img);
+        }
+        updateVoiceControls(true);
+        smoothScrollToBottom(chatDiv);
+    });
+
+    // Scroll inicial
+    smoothScrollToBottom(chatDiv);
+}
+
 // ===== CONFIGURACIÓN DE EVENTOS =====
 function setupEventListeners() {
     // Cambio de modo
@@ -290,9 +375,7 @@ function setupEventListeners() {
     // Formulario de pregunta
     document.getElementById('ask-form').addEventListener('submit', sendQuestion);
     
-    // Botón de voz
-    document.getElementById('voice-btn').addEventListener('click', startVoiceRecognition);
-    
+        
     // Controles de voz
     document.getElementById('voice-read-btn').addEventListener('click', readLastResponse);
     document.getElementById('voice-pause-btn').addEventListener('click', pauseSpeech);
@@ -309,11 +392,88 @@ function setupEventListeners() {
     
     // Juego aleatorio
     document.getElementById('random-game-btn').addEventListener('click', showRandomGame);
+    // Selector de tema (sidebar Docente) 
+    const themeSelect = document.getElementById('sidebar-theme-select'); 
+    if (themeSelect) { themeSelect.value = currentTheme; // Sincroniza el valor al cargar 
+    themeSelect.addEventListener('change', (e) => {
+        applyTheme(e.target.value); // Aplica el tema seleccionado 
+        playSound('clic'); }); }
+    
+    // Botón parar respuesta
+    const stopBtn = document.getElementById('stop-typing-btn');
+    if (stopBtn) {
+        stopBtn.addEventListener('click', stopTyping);
+    }
+
+    // Modal de selección de rol
+    const btnRoleDoc = document.getElementById('btn-role-docente');
+    const btnRoleEst = document.getElementById('btn-role-estudiante');
+    if (btnRoleDoc) btnRoleDoc.addEventListener('click', () => showRoleStep('docente'));
+    if (btnRoleEst) btnRoleEst.addEventListener('click', () => showRoleStep('estudiante'));
+
+    const btnDocLogin = document.getElementById('btn-docente-login');
+    if (btnDocLogin) btnDocLogin.addEventListener('click', () => {
+        const email = (document.getElementById('docente-email') || {}).value || '';
+        if (!email) { alert('Ingresa tu correo.'); return; }
+        localStorage.setItem('teacherEmail', email.trim().toLowerCase());
+        localStorage.setItem('currentRole', 'docente');
+        currentRole = 'docente';
+        currentMode = 'docente';
+        hideRoleModal();
+        showLogout();
+        updateTabsVisibility();
+        switchMode('docente');
+    });
+
+    const btnStuStart = document.getElementById('btn-student-start');
+    if (btnStuStart) btnStuStart.addEventListener('click', () => {
+        const name = (document.getElementById('student-name-input') || {}).value || '';
+        if (!name.trim()) { alert('Ingresa tu nombre.'); return; }
+        localStorage.setItem('studentName', capitalizeWords(name.trim()));
+        localStorage.setItem('currentRole', 'estudiante');
+        studentName = capitalizeWords(name.trim());
+        currentRole = 'estudiante';
+        currentMode = 'estudiante';
+        hideRoleModal();
+        showLogout();
+        updateTabsVisibility();
+        switchMode('estudiante');
+    });
+}
+
+
+// ===== UTILIDADES VISIBILIDAD SEGÚN ROL =====
+function updateTabsVisibility(){
+    // Oculta botones de modo que no correspondan al rol
+    document.getElementById('tab-docente').style.display = (currentRole==='docente') ? 'flex':'none';
+    document.getElementById('tab-estudiante').style.display = (currentRole==='estudiante') ? 'flex':'none';
+}
+
+function renderStudents(){
+    const container=document.getElementById('students-list');
+    if(!container) return;
+    const keys=Object.keys(localStorage).filter(k=>k.startsWith('chatHistoryEstudiante_'));
+    if(keys.length===0){container.innerHTML='<p>No hay estudiantes registrados.</p>';return;}
+    container.innerHTML=keys.map(k=>{
+        const name=k.replace('chatHistoryEstudiante_','').replace(/_/g,' ');
+        const displayName = capitalizeWords(name);
+        return `<button class="suggestion-btn" data-student="${displayName}">${displayName}</button>`;
+    }).join('');
+    container.querySelectorAll('button').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            const sel=btn.getAttribute('data-student');
+            const key=`chatHistoryEstudiante_${sel.replace(/\s+/g,'_').toLowerCase()}`;
+            selectedStudentKey = key;
+            selectedStudentName = sel;
+            // Cargar historial SOLO para análisis, sin tocar el chat activo del docente
+            const sHistory = JSON.parse(localStorage.getItem(key)||'[]');
+            renderStudentAnalysisByHistory(sHistory, sel);
+        });
+    });
 }
 
 // ===== CAMBIO DE MODO =====
 function switchMode(mode) {
-    if (currentMode === mode) return;
     
     currentMode = mode;
     
@@ -353,6 +513,10 @@ function switchMode(mode) {
     document.getElementById('response').innerHTML = '';
     
     console.log(`📡 Cambiado a modo ${mode}`);
+
+    // Si el docente, actualizar lista de estudiantes
+    if(currentRole==='docente') renderStudents();
+    updateTabsVisibility();
 }
 
 async function sendModeToESP32(mode) {
@@ -390,6 +554,213 @@ function renderEstudianteSuggestions() {
     ).join('');
 }
 
+// ===== SUGERENCIAS DINÁMICAS RELACIONADAS =====
+function renderSuggestionButtons(containerId, suggestions) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = suggestions.slice(0, 6).map(s =>
+        `<button class="suggestion-btn" onclick="setQuestion('${String(s).replace(/'/g, '')}')">${s}</button>`
+    ).join('');
+}
+
+async function updateRelatedSuggestions(lastQuestion) {
+    const containerId = currentMode === 'docente' ? 'suggestions-docente' : 'suggestions-estudiante';
+    const container = document.getElementById(containerId);
+    if (!container || !lastQuestion) return;
+
+    // Cooldown activo => usar fallback para evitar 429
+    if (Date.now() < suggestionsCooldownUntil) {
+        renderSuggestionButtons(containerId, buildFallbackSuggestions(lastQuestion, currentMode));
+        return;
+    }
+
+    // Placeholder de actualización
+    container.innerHTML = '<div style="text-align:center;color: var(--dark-gray);">Actualizando sugerencias...</div>';
+
+    let suggestions = [];
+    try {
+        suggestions = await getRelatedQuestionsAI(lastQuestion, currentMode);
+    } catch (e) {
+        console.warn('No se pudo obtener sugerencias con IA:', e);
+        if (e && e.rateLimit) {
+            suggestionsCooldownUntil = Date.now() + SUGGESTIONS_COOLDOWN_MS;
+        }
+    }
+
+    if (!suggestions || suggestions.length === 0 || suggestions.length < 3) {
+        suggestions = buildFallbackSuggestions(lastQuestion, currentMode);
+    }
+
+    renderSuggestionButtons(containerId, suggestions);
+}
+
+async function getRelatedQuestionsAI(question, mode) {
+    const roleText = mode === 'docente' ? 'docente de educación inclusiva' : 'estudiante de primaria';
+    const prompt = `Eres un ${roleText}. Dada la pregunta del usuario: "${question}". Genera exactamente 6 preguntas de seguimiento relacionadas, útiles y en español. Devuelve únicamente un JSON válido de arreglo de strings, por ejemplo: ["pregunta 1","pregunta 2","..."]; sin texto adicional.`;
+    const text = await askAIServer(prompt);
+    return tryParseSuggestions(text, { topic: question, mode });
+}
+
+async function askAIServer(prompt) {
+    // Encolar para que solo haya una llamada a la vez
+    return aiAskQueue = aiAskQueue.then(async () => {
+        // Reintentos con backoff ante 429/errores transitorios
+        let attempt = 0;
+        let lastErr = null;
+        while (attempt < 3) {
+            attempt++;
+            try {
+                const res = await fetch('/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: prompt })
+                });
+                if (!res.ok) {
+                    // 429 Too Many Requests
+                    if (res.status === 429) {
+                        const wait = 1000 * Math.pow(2, attempt - 1);
+                        await sleep(wait);
+                        const e = new Error('Rate limit /ask');
+                        e.rateLimit = true;
+                        lastErr = e;
+                        continue; // retry
+                    }
+                    // Otros errores: intentar leer texto para log
+                    const txt = await res.text().catch(() => '');
+                    throw new Error(`Error /ask ${res.status}: ${txt.slice(0,200)}`);
+                }
+
+                let data;
+                try {
+                    data = await res.json();
+                } catch (e) {
+                    // Puede haber HTML de error pese a 200
+                    const txt = await res.text().catch(() => '');
+                    throw new Error(`Respuesta no JSON en /ask: ${txt.slice(0,200)}`);
+                }
+                if (!data || !data.id) throw new Error('ID no recibido para sugerencias');
+
+                // Polling a /result con manejo de 429
+                for (let i = 0; i < 20; i++) {
+                    await sleep(1000);
+                    const r2 = await fetch(`/result?id=${data.id}`);
+                    if (r2.status === 429) {
+                        // backoff ligero y continuar
+                        await sleep(500);
+                        continue;
+                    }
+                    if (!r2.ok) {
+                        const txt2 = await r2.text().catch(() => '');
+                        throw new Error(`Error /result ${r2.status}: ${txt2.slice(0,200)}`);
+                    }
+                    let d2;
+                    try { d2 = await r2.json(); } catch (e) { d2 = null; }
+                    if (d2 && d2.response !== null && d2.response !== undefined) {
+                        return d2.response;
+                    }
+                }
+                throw new Error('Timeout al obtener sugerencias');
+            } catch (err) {
+                lastErr = err;
+                // Si 429, activar cooldown y seguir backoff
+                if (err && (err.rateLimit || String(err.message||'').includes('429'))) {
+                    suggestionsCooldownUntil = Date.now() + SUGGESTIONS_COOLDOWN_MS;
+                    const wait = 1000 * Math.pow(2, attempt - 1);
+                    await sleep(wait);
+                    continue;
+                }
+                // Errores no recuperables
+                break;
+            }
+        }
+        if (lastErr) throw lastErr;
+        throw new Error('Fallo desconocido al obtener sugerencias');
+    });
+}
+
+function tryParseSuggestions(text, { topic = '', mode = 'docente' } = {}) {
+    if (!text) return [];
+
+    const ensureQuestion = (s) => {
+        let q = String(s).trim();
+        // descartar si es numérico o código de error simple
+        if (/^[-+]?\d+$/.test(q)) return '';
+        if (/\berror\b|\bcódigo\b|\bcode\b|\b429\b|\b-?11\b/i.test(q)) return '';
+        // limpiar comillas externas
+        q = q.replace(/^"|"$/g, '');
+        // asegurar signo de interrogación al final
+        if (!q.endsWith('?')) q = q + '?';
+        // asegurar apertura de interrogación al inicio si falta
+        if (!/^¿/.test(q)) q = '¿' + q;
+        // capitalizar primera letra significativa
+        q = q.replace(/^(¿)(\s*)([a-záéíóúñ])/i, (m, p1, p2, p3) => p1 + p2 + p3.toUpperCase());
+        // rechazar preguntas muy cortas
+        if (q.length < 10) return '';
+        return q;
+    };
+
+    const sanitizeList = (arr) => {
+        const out = [];
+        arr.forEach(s => {
+            const q = ensureQuestion(s);
+            if (q && !out.includes(q)) out.push(q);
+        });
+        return out.slice(0, 6);
+    };
+
+    // Intento 1: JSON directo
+    try {
+        const arr = JSON.parse(text);
+        if (Array.isArray(arr)) return sanitizeList(arr);
+    } catch (e) {}
+
+    // Intento 2: extraer el primer arreglo JSON del texto
+    const match = String(text).match(/\[[\s\S]*\]/);
+    if (match) {
+        try {
+            const arr = JSON.parse(match[0]);
+            if (Array.isArray(arr)) return sanitizeList(arr);
+        } catch (e) {}
+    }
+
+    // Intento 3: parsear líneas con numeración o viñetas
+    const lines = String(text)
+        .split(/\r?\n|•|\u2022|;|\s{2,}|\t|\|/)
+        .map(l => l.replace(/^\s*\d+\.|^\s*[\-•]\s*/, '').trim())
+        .filter(Boolean);
+
+    let uniq = sanitizeList(lines);
+
+    // Si aún es insuficiente, construir en base al tópico
+    if (uniq.length < 3) {
+        const base = buildFallbackSuggestions(topic, mode);
+        // combinar sin duplicados y recortar a 6
+        const combined = sanitizeList([...uniq, ...base]);
+        return combined.length ? combined : base;
+    }
+
+    return uniq;
+}
+
+function buildFallbackSuggestions(q, mode) {
+    const topic = (q || '').split(/[?!\.]/)[0].trim();
+    return mode === 'docente' ? [
+        `¿Qué estrategias inclusivas aplicar para ${topic}?`,
+        `¿Cómo evaluar el progreso en ${topic}?`,
+        `¿Materiales accesibles para ${topic}?`,
+        `¿Adaptaciones para estudiantes con NEE en ${topic}?`,
+        `¿Actividades prácticas para ${topic}?`,
+        `¿Cómo integrar a la familia en ${topic}?`
+    ] : [
+        `¿Puedes darme un ejemplo sobre ${topic}?`,
+        `¿Por qué es importante ${topic}?`,
+        `¿Cómo puedo practicar ${topic} de forma divertida?`,
+        `¿Qué curiosidad hay sobre ${topic}?`,
+        `¿En qué me ayuda saber de ${topic}?`,
+        `¿Qué palabras nuevas puedo aprender sobre ${topic}?`
+    ];
+}
+
 function setQuestion(q) {
     document.getElementById('question').value = q.replace(/'/g, '');
     document.getElementById('question').focus();
@@ -398,45 +769,15 @@ function setQuestion(q) {
 
 // ===== RECONOCIMIENTO DE VOZ =====
 function setupSpeechRecognition() {
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        speechRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        speechRecognition.lang = 'es-ES';
-        speechRecognition.continuous = false;
-        speechRecognition.interimResults = false;
-        
-        document.getElementById('voice-btn').classList.add('visible');
-    } else {
-        document.getElementById('voice-btn').style.display = 'none';
-        console.warn('⚠️ Speech Recognition no disponible');
-    }
+    // Eliminado reconocimiento de voz
+    const vb = document.getElementById('voice-btn');
+    if (vb) vb.remove();
+    speechRecognition = null;
 }
 
 function startVoiceRecognition() {
-    if (!speechRecognition) return;
-    
-    const voiceBtn = document.getElementById('voice-btn');
-    voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-    voiceBtn.style.background = 'var(--accent-pink)';
-    
-    speechRecognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('question').value = transcript;
-        playSound('clic');
-        
-        // Actualizar estadísticas de voz
-        updateStudentStats('voice');
-    };
-    
-    speechRecognition.onerror = function(event) {
-        console.error('Error de reconocimiento de voz:', event.error);
-    };
-    
-    speechRecognition.onend = function() {
-        voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-        voiceBtn.style.background = 'var(--secondary-yellow)';
-    };
-    
-    speechRecognition.start();
+    // Eliminado reconocimiento de voz
+    return;
 }
 
 // ===== SÍNTESIS DE VOZ =====
@@ -482,7 +823,41 @@ async function sendQuestion(event) {
             body: JSON.stringify({ question })
         });
         
-        const data = await response.json();
+        if (!response.ok) {
+            if (response.status === 429) {
+                // Cooldown y fallback offline para no romper la UI
+                suggestionsCooldownUntil = Date.now() + SUGGESTIONS_COOLDOWN_MS;
+                const offlineResponse = getOfflineResponse(question);
+                if (offlineResponse) {
+                    setTimeout(() => {
+                        addToHistoryAnimated(question, offlineResponse, '');
+                        hideLoadingResponse();
+                        playSound('respuesta');
+                        updateStudentStats('question', question);
+                        if (currentMode === 'estudiante') { celebrateResponse(); }
+                        updateRelatedSuggestions(question);
+                    }, 800);
+                } else {
+                    showErrorResponse('Servidor ocupado (429). Intenta de nuevo en unos segundos.');
+                }
+                return false;
+            } else {
+                const txt = await response.text().catch(() => '');
+                console.warn('Error /ask:', response.status, txt.slice(0,200));
+                showErrorResponse('No se pudo enviar la pregunta.');
+                return false;
+            }
+        }
+        
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            const txt = await response.text().catch(() => '');
+            console.warn('Respuesta no JSON de /ask:', txt.slice(0,200));
+            showErrorResponse('Respuesta inválida del servidor.');
+            return false;
+        }
         
         if (data.id) {
             startPolling(data.id, question);
@@ -496,7 +871,7 @@ async function sendQuestion(event) {
         const offlineResponse = getOfflineResponse(question);
         if (offlineResponse) {
             setTimeout(() => {
-                addToHistory(question, offlineResponse, '');
+                addToHistoryAnimated(question, offlineResponse, '');
                 hideLoadingResponse();
                 playSound('respuesta');
                 updateStudentStats('question', question);
@@ -504,6 +879,9 @@ async function sendQuestion(event) {
                 if (currentMode === 'estudiante') {
                     celebrateResponse();
                 }
+                
+                // Actualizar sugerencias relacionadas
+                updateRelatedSuggestions(question);
             }, 1500); // Simular tiempo de respuesta
         } else {
             showErrorResponse('Sin conexión. Intenta con preguntas sobre colores, números, animales o emociones.');
@@ -519,7 +897,21 @@ function startPolling(id, question) {
     pollingInterval = setInterval(async () => {
         try {
             const response = await fetch(`/result?id=${id}`);
-            const data = await response.json();
+            // Manejo de 429 durante polling: esperar al siguiente tick
+            if (response.status === 429) {
+                return;
+            }
+            if (!response.ok) {
+                const txt = await response.text().catch(() => '');
+                console.warn('Error /result:', response.status, txt.slice(0,200));
+                return;
+            }
+            let data;
+            try {
+                data = await response.json();
+            } catch (e) {
+                return;
+            }
             
             if (data.response !== null && data.response !== undefined) {
                 clearInterval(pollingInterval);
@@ -534,7 +926,8 @@ function startPolling(id, question) {
                     console.log('No se pudo cargar imagen:', error);
                 }
                 
-                addToHistory(question, data.response, imgUrl);
+                const finalAnswer = normalizeAIResponse(data.response, question);
+                addToHistoryAnimated(question, finalAnswer, imgUrl);
                 hideLoadingResponse();
                 playSound('respuesta');
                 
@@ -546,6 +939,9 @@ function startPolling(id, question) {
                 if (currentMode === 'estudiante') {
                     celebrateResponse();
                 }
+                
+                // Actualizar sugerencias relacionadas con IA
+                updateRelatedSuggestions(question);
             }
         } catch (error) {
             console.error('Error al obtener resultado:', error);
@@ -593,6 +989,38 @@ function clearHistory() {
     }
 }
 
+// ===== SESSION & PLAN HELPERS =====
+function showLogout(){
+    const btn=document.getElementById('logout-btn');
+    if(btn) btn.style.display='inline-flex';
+}
+function logout(){
+    localStorage.removeItem('currentRole');
+    localStorage.removeItem('studentName');
+    localStorage.removeItem('teacherEmail');
+    location.reload();
+}
+// plan helpers
+function togglePlanDone(id){
+    calendarPlans=calendarPlans.map(p=>p.id===id?{...p,done:!p.done}:p);
+    localStorage.setItem('calendarPlans',JSON.stringify(calendarPlans));
+    renderCalendar();
+}
+function deletePlan(id){
+    if(!confirm('¿Eliminar actividad?')) return;
+    calendarPlans=calendarPlans.filter(p=>p.id!==id);
+    localStorage.setItem('calendarPlans',JSON.stringify(calendarPlans));
+    renderCalendar();
+}
+function editPlan(id){
+    const plan=calendarPlans.find(p=>p.id===id);
+    if(!plan) return;
+    plan.title=prompt('Editar título',plan.title)||plan.title;
+    plan.desc=prompt('Editar descripción',plan.desc)||plan.desc;
+    localStorage.setItem('calendarPlans',JSON.stringify(calendarPlans));
+    renderCalendar();
+}
+
 // ===== CALENDARIO =====
 function addPlan() {
     const date = document.getElementById('plan-date').value;
@@ -635,13 +1063,16 @@ function renderCalendar() {
     container.innerHTML = calendarPlans
         .sort((a, b) => new Date(a.date) - new Date(b.date))
         .map(plan => `
-            <div style="background: var(--light-gray); border-left: 4px solid var(--primary-purple); padding: 1rem; margin: 0.5rem 0; border-radius: 10px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <strong>📅 ${new Date(plan.date).toLocaleDateString('es-ES')}</strong>
-                        <h4 style="color: var(--primary-purple); margin: 0.5rem 0;">${plan.title}</h4>
-                        <p style="margin: 0; color: var(--dark-gray);">${plan.desc}</p>
-                    </div>
+            <div style="background: var(--light-gray); border-left: 4px solid var(--primary-purple); padding: 1rem; margin: 0.5rem 0; border-radius: 10px; position:relative;">
+                <div>
+                    <strong>📅 ${new Date(plan.date).toLocaleDateString('es-ES')}</strong>
+                    <h4 style="color: var(--primary-purple); margin: 0.5rem 0;">${plan.title}</h4>
+                    <p style="margin: 0; color: var(--dark-gray);">${plan.desc}</p>
+                </div>
+                <div style="position:absolute;top:10px;right:10px;display:flex;gap:6px;">
+                    <button onclick="togglePlanDone(${plan.id})" title="Marcar" style="background:var(--accent-green);color:#fff;border:none;border-radius:6px;padding:4px 6px;cursor:pointer;">✓</button>
+                    <button onclick="editPlan(${plan.id})" title="Editar" style="background:var(--accent-orange);color:#fff;border:none;border-radius:6px;padding:4px 6px;cursor:pointer;">✎</button>
+                    <button onclick="deletePlan(${plan.id})" title="Borrar" style="background:var(--accent-pink);color:#fff;border:none;border-radius:6px;padding:4px 6px;cursor:pointer;">✕</button>
                 </div>
             </div>
         `).join('');
@@ -1095,6 +1526,41 @@ function celebrateResponse() {
     }
 }
 
+// Normaliza la respuesta del servidor a texto legible y amigable
+function normalizeAIResponse(raw, question = '') {
+    try {
+        if (raw === null || raw === undefined) {
+            const fallback = getOfflineResponse(question);
+            return `⚠️ No se recibió respuesta del servidor.\n\n${fallback}`;
+        }
+        if (typeof raw === 'number') {
+            // Mapea códigos negativos a mensajes claros
+            const map = {
+                [-11]: 'El servidor está ocupado o alcanzó el límite de peticiones. Inténtalo de nuevo en breve.'
+            };
+            const base = map[raw] || `Se produjo un error al generar la respuesta (código ${raw}).`;
+            const fallback = getOfflineResponse(question);
+            return `⚠️ ${base}\n\n${fallback}`;
+        }
+        if (typeof raw === 'object') {
+            if (raw.text) return String(raw.text);
+            if (raw.message) return String(raw.message);
+            // Como último recurso, formatea el JSON
+            return JSON.stringify(raw, null, 2);
+        }
+        let text = String(raw);
+        const looksLikeHTML = /<\s*html[\s>]|<\s*body[\s>]|<!DOCTYPE/i.test(text);
+        if (looksLikeHTML) {
+            const fallback = getOfflineResponse(question);
+            return `⚠️ El servidor devolvió contenido inesperado.\n\n${fallback}`;
+        }
+        return text.trim();
+    } catch (e) {
+        const fallback = getOfflineResponse(question);
+        return `⚠️ Ocurrió un problema al procesar la respuesta.\n\n${fallback}`;
+    }
+}
+
 // ===== MANEJO DE ERRORES =====
 window.addEventListener('error', function(e) {
     console.error('Error global:', e.error);
@@ -1302,17 +1768,22 @@ function setupThemeSelector() {
     });
 }
 
-function applyTheme(theme) {
-    currentTheme = theme;
-    document.body.setAttribute('data-theme', theme);
+function applyTheme(theme) { 
+    currentTheme = theme; 
+    document.body.setAttribute('data-theme', theme); 
     localStorage.setItem('currentTheme', theme);
-    
     // Actualizar indicador visual
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.style.background = option.dataset.theme === theme ? 'rgba(139, 69, 19, 0.2)' : '';
     });
-    
+
+    // Sincroniza el <select> del sidebar Docente con el tema actual
+    const docSelect = document.getElementById('sidebar-theme-select');
+    if (docSelect && docSelect.value !== theme) {
+        docSelect.value = theme;
+    }
+
     // Mostrar notificación de cambio de tema
     showThemeNotification(theme);
 }
@@ -1459,7 +1930,7 @@ function showReminderAlert(reminder) {
     notification.style.background = 'linear-gradient(135deg, #FF6347, #FFD700)';
     notification.innerHTML = `
         <div class="achievement-title">🔔 ¡Recordatorio!</div>
-        <div class="achievement-message">${reminder.message}</div>
+               <div class="achievement-message">${reminder.message}</div>
     `;
     
     document.body.appendChild(notification);
@@ -1490,6 +1961,165 @@ function showReminderAlert(reminder) {
             }
         });
     }
+}
+
+// ===== MODAL DE ROL =====
+function showRoleStep(step) {
+    const s1 = document.getElementById('role-step-1');
+    const sd = document.getElementById('role-step-docente');
+    const se = document.getElementById('role-step-estudiante');
+    if (!s1 || !sd || !se) return;
+    const st = String(step);
+    s1.style.display = (st==='1') ? 'grid' : 'none';
+    sd.style.display = (st==='docente') ? 'block' : 'none';
+    se.style.display = (st==='estudiante') ? 'block' : 'none';
+    if (st==='1') {
+        const em = document.getElementById('docente-email'); if (em) em.value='';
+        const pw = document.getElementById('docente-pass'); if (pw) pw.value='';
+        const nm = document.getElementById('student-name-input'); if (nm) nm.value='';
+    }
+}
+function hideRoleModal() {
+    const modal = document.getElementById('role-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+    }
+}
+
+// ===== HERRAMIENTAS DE ADMINISTRACIÓN =====
+function deleteStudentHistory() {
+    if (!selectedStudentKey) { alert('Selecciona un estudiante primero.'); return; }
+    if (!confirm(`¿Eliminar historial de ${selectedStudentName}?`)) return;
+    localStorage.removeItem(selectedStudentKey);
+    const container = document.getElementById('student-analysis-container');
+    if (container) {
+        container.innerHTML = `<div style="text-align: center; padding: 2rem;"><div style="font-size: 3rem; margin-bottom: 1rem;">📊</div><h4 style="color: var(--primary-purple); margin-bottom: 0.5rem;">${selectedStudentName}</h4><p style="color: var(--dark-gray);">Historial eliminado</p></div>`;
+    }
+    renderStudents();
+    if (currentRole==='docente') {
+        chatHistory = [];
+        renderHistory();
+    }
+}
+function showFullResetModal() {
+    const msg = 'Esta acción reiniciará la aplicación: roles, nombres, historiales, recordatorios y temas. ¿Deseas continuar?';
+    if (!confirm(msg)) return;
+    try { localStorage.clear(); } catch(e) {}
+    location.reload();
+}
+
+// ===== ANÁLISIS POR ESTUDIANTE =====
+function renderStudentAnalysisByHistory(history, displayName) {
+    const container = document.getElementById('student-analysis-container');
+    if (!container) return;
+
+    if (!history || history.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                <h4 style="color: var(--primary-purple); margin-bottom: 0.5rem;">${displayName}</h4>
+                <p style="color: var(--dark-gray);">No hay consultas registradas para este estudiante</p>
+            </div>
+        `;
+        if (studentChart) { studentChart.destroy(); studentChart = null; }
+        return;
+    }
+
+    const totalQuestions = history.length;
+    const dates = history.map(h => new Date(h.timestamp || Date.now()));
+    const last = new Date(Math.max.apply(null, dates));
+    const avgLen = Math.round(history.reduce((a,h)=>a+((h.question||'').split(/\s+/).filter(Boolean).length),0)/totalQuestions);
+
+    // Últimos 7 días
+    const last7 = getLast7Days();
+    const dailyCounts = last7.map(d => {
+        return history.filter(h => {
+            const t = new Date(h.timestamp || Date.now()).toISOString().split('T')[0];
+            return t === d;
+        }).length;
+    });
+
+    // Temas
+    const topics = ['matemáticas','colores','animales','emociones','juegos','música','arte','ciencia'];
+    const topicCounts = {};
+    topics.forEach(t => topicCounts[t] = 0);
+    history.forEach(h => {
+        const q = (h.question || '').toLowerCase();
+        topics.forEach(t => { if (q.includes(t.slice(0,5))) topicCounts[t] += 1; });
+    });
+    const topTopics = Object.entries(topicCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+    // Preguntas recientes
+    const recent = history.slice(-5).reverse();
+
+    container.innerHTML = `
+        <div class="stats-summary" style="margin-bottom:1rem;">
+            <div class="stat-item"><div class="stat-number">${totalQuestions}</div><div class="stat-label">Total Preguntas</div></div>
+            <div class="stat-item"><div class="stat-number">${avgLen}</div><div class="stat-label">Promedio Palabras</div></div>
+            <div class="stat-item"><div class="stat-number">${last.toLocaleDateString('es-ES')}</div><div class="stat-label">Última Actividad</div></div>
+            <div class="stat-item"><div class="stat-number" style="font-size:1.8rem;">${topTopics.length>0?capitalizeWords(topTopics[0][0]):'N/A'}</div><div class="stat-label">Tema Destacado</div></div>
+        </div>
+        <div class="chart-container"><canvas id="student-chart" height="300"></canvas></div>
+        <div class="content-grid" style="grid-template-columns: repeat(auto-fit,minmax(250px,1fr));">
+            <div class="feature-card">
+                <div class="card-header"><i class="fas fa-tags"></i><h3>Temas más consultados</h3></div>
+                <div class="card-content">
+                    ${topTopics.length 
+                        ? (
+                            '<div style="display:flex;flex-direction:column;gap:.25rem;">' +
+                            topTopics.map(([t,c])=>
+                                `<div style="display:flex;justify-content:space-between;align-items:center;padding:.25rem 0;border-bottom:1px dashed var(--medium-gray);">
+                                    <span style="font-weight:600;">${capitalizeWords(t)}</span>
+                                    <span style="color:var(--primary-purple);font-weight:700;">${c}</span>
+                                </div>`
+                            ).join('') +
+                            '</div>'
+                          )
+                        : '<p>No hay datos de temas</p>'
+                    }
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="card-header"><i class="fas fa-clock"></i><h3>Preguntas recientes</h3></div>
+                <div class="card-content">
+                    ${recent.map(r=>`<div style="margin-bottom:.5rem;">• ${r.question}</div>`).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+
+    const ctx = document.getElementById('student-chart');
+    if (!ctx) return;
+    if (studentChart) { studentChart.destroy(); }
+
+    studentChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: last7.map(d => {
+                const dd = new Date(d);
+                return dd.toLocaleDateString('es-ES',{ weekday:'short', day:'numeric' });
+            }),
+            datasets: [{
+                label: 'Preguntas por día',
+                data: dailyCounts,
+                backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                borderColor: 'rgba(37, 99, 235, 0.9)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: `Actividad semanal de ${displayName}`, font: { size: 16, weight: 'bold' } },
+                legend: { display: false }
+            },
+            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+    });
 }
 
 // ===== ANÁLISIS DE PROGRESO =====
@@ -1701,55 +2331,158 @@ function smoothScrollToBottom(element) {
 }
 
 // Efecto de escribiendo (typing) para las respuestas de IA
-function typeWriter(text, element, speed = 50) {
+let typingStopped = false;
+let typingTimeout = null;
+function typeWriter(text, element, speed = 1, onComplete) {
     let i = 0;
+    typingStopped = false;
     element.innerHTML = '';
-    
+    // Mostrar botón de parar
+    const stopBtn = document.getElementById('stop-typing-btn');
+    if (stopBtn) stopBtn.style.display = 'inline-block';
     function type() {
+        if (typingStopped) {
+            if (stopBtn) stopBtn.style.display = 'none';
+            return;
+        }
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
             i++;
-            setTimeout(type, speed);
+            // auto-scroll durante el tipeo
+            const chatDiv = document.getElementById('chat-history');
+            if (chatDiv) chatDiv.scrollTop = chatDiv.scrollHeight;
+            typingTimeout = setTimeout(type, speed);
+        } else {
+            if (stopBtn) stopBtn.style.display = 'none';
+            if (typeof onComplete === 'function') onComplete();
         }
     }
-    
     type();
 }
 
-// Detección de inactividad para mostrar sugerencias
-let inactivityTimer;
-function resetInactivityTimer() {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-        if (chatHistory.length === 0) {
-            const suggestions = currentMode === 'docente' ? sugeridasDocente : sugeridasEstudiante;
-            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-            
-            // Pulsar sugerencia aleatoria
-            const suggestionBtns = document.querySelectorAll('.suggestion-btn');
-            suggestionBtns.forEach(btn => {
-                if (btn.textContent.includes(randomSuggestion.substring(0, 20))) {
-                    btn.style.animation = 'pulse 1s ease-in-out 3';
-                }
-            });
-        }
-    }, 30000); // 30 segundos de inactividad
+function stopTyping() {
+    typingStopped = true;
+    if (typingTimeout) clearTimeout(typingTimeout);
+    const stopBtn = document.getElementById('stop-typing-btn');
+    if (stopBtn) stopBtn.style.display = 'none';
 }
 
-// Eventos de actividad del usuario
-document.addEventListener('mousemove', resetInactivityTimer);
-document.addEventListener('keypress', resetInactivityTimer);
-document.addEventListener('click', resetInactivityTimer);
+// ===== ROLE / SESSION MODAL LOGIC =====
+function initRoleModal(){
+    const modal=document.getElementById('role-modal');
+    if(!modal) return;
+    const btnRoleDocente=document.getElementById('btn-role-docente');
+    const btnRoleEst=document.getElementById('btn-role-estudiante');
+    const step1=document.getElementById('role-step-1');
+    const stepDoc=document.getElementById('role-step-docente');
+    const stepEst=document.getElementById('role-step-estudiante');
 
-// Mejorar la función de renderHistory con estadísticas
-const originalRenderHistory = renderHistory;
-renderHistory = function() {
-    originalRenderHistory();
-    updateStats();
-    
-    // Smooth scroll
-    const chatDiv = document.getElementById('chat-history');
-    setTimeout(() => smoothScrollToBottom(chatDiv), 100);
-};
+    btnRoleDocente.addEventListener('click',()=>{
+        step1.style.display='none';
+        stepDoc.style.display='block';
+    });
+    btnRoleEst.addEventListener('click',()=>{
+        step1.style.display='none';
+        stepEst.style.display='block';
+    });
 
-console.log('🚀 AI Asistente Educativo cargado completamente');
+    document.getElementById('btn-docente-login').addEventListener('click',()=>{
+        const email=document.getElementById('docente-email').value.trim().toLowerCase();
+        const pass=document.getElementById('docente-pass').value.trim();
+        if(!email||!pass){alert('Ingresa correo y contraseña');return;}
+        // Credenciales simples en localStorage (solo demostración)
+        const storedPass=localStorage.getItem(`teacherPass_${email}`);
+        if(storedPass===null){
+            // Primera vez: registra credencial
+            localStorage.setItem(`teacherPass_${email}`,pass);
+            alert('Cuenta creada');
+        }
+        if(localStorage.getItem(`teacherPass_${email}`)===pass){
+            currentRole='docente';
+            localStorage.setItem('currentRole',currentRole);
+            localStorage.setItem('teacherEmail',email);
+            modal.style.display='none';
+            switchMode('docente');
+            updateTabsVisibility();
+        }else{
+            alert('Credenciales incorrectas');
+        }
+    });
+    document.getElementById('btn-student-start').addEventListener('click',()=>{
+        const name=document.getElementById('student-name-input').value.trim();
+        if(!name){alert('Ingresa tu nombre');return;}
+        const displayName = capitalizeWords(name);
+        studentName=displayName;
+        localStorage.setItem('studentName',studentName);
+        currentRole='estudiante';
+        localStorage.setItem('currentRole',currentRole);
+        modal.style.display='none';
+        switchMode('estudiante');
+        updateTabsVisibility();
+    });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+    // si ya hay rol guardado, ocultar modal
+    const savedRole=localStorage.getItem('currentRole');
+    if(savedRole){
+        currentRole=savedRole;
+        if(savedRole==='estudiante') switchMode('estudiante');
+        else switchMode('docente');
+        document.getElementById('role-modal').style.display='none';
+        updateTabsVisibility();
+        showLogout(); // Mostrar botón de logout cuando hay sesión activa
+    }else{
+        initRoleModal();
+    }
+
+    // Agregar event listener al botón de logout
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+});
+
+// ===== IMAGE CAROUSEL FUNCTIONALITY =====
+let currentSlideIndex = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const indicators = document.querySelectorAll('.carousel-indicator');
+let carouselInterval = null;
+
+function showSlide(index) {
+    if (!slides.length) return;
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+    indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === index);
+    });
+    currentSlideIndex = index;
+}
+
+function changeSlide(direction) {
+    if (!slides.length) return;
+    let newIndex = currentSlideIndex + direction;
+    if (newIndex < 0) newIndex = slides.length - 1;
+    if (newIndex >= slides.length) newIndex = 0;
+    showSlide(newIndex);
+    resetCarouselInterval();
+}
+
+function goToSlide(index) {
+    if (!slides.length) return;
+    showSlide(index);
+    resetCarouselInterval();
+}
+
+function resetCarouselInterval() {
+    if (carouselInterval) clearInterval(carouselInterval);
+    carouselInterval = setInterval(() => {
+        changeSlide(1);
+    }, 5000);
+}
+
+// Initialize carousel interval on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    resetCarouselInterval();
+});
