@@ -24,16 +24,8 @@ Los docentes que trabajan con estudiantes que requieren adecuaciones curriculare
 
 ---
 
-#### **Importancia y contexto:**  
 
-Al permitir que el docente consulte a la IA directamente desde una interfaz física o web, se optimiza el tiempo de planificación, se fomenta la personalización del material y se promueve una participación más equitativa dentro del grupo. Esto contribuye a:
-- Responder rápidamente a dudas pedagógicas específicas.
-- Generar explicaciones, ejemplos y actividades según las necesidades del estudiante.
-- Alinear el contenido que se trabaja en clase de manera que todo el grupo avance en los mismos temas, respetando los ritmos individuales.
-- Promover la autonomía del docente en la creación de recursos sin depender de repositorios externos o procesos de búsqueda extensos.
-- Cumple con lo establecido en la Ley 7600 (Costa Rica) y los Objetivos de Desarrollo Sostenible (ODS 4) para una educación inclusiva.  
-
-**Ejemplo de impacto:**  
+**Ejemplo de funcionamiento:**  
 Un docente puede preguntar: *"¿Cómo enseñar los volcanes a un estudiante con TEA?"* y recibir:  
 - Una explicación con lenguaje claro.  
 - Una actividad sensorial (ej: maqueta con texturas).  
@@ -47,11 +39,7 @@ Un docente puede preguntar: *"¿Cómo enseñar los volcanes a un estudiante con 
 | Grupo | Beneficio | Limitación |  
 |-------|----------|------------|  
 | **Docentes** | Acceso rápido a IA pedagógica. | Requiere conexión para consultas. |  
-| **Estudiantes con adecuaciones** | Reciben material adaptado para fortalecer su aprendizaje. | Depende de que el docente planifique con conexión si no tiene una conexion estable en el momento. |   
-
-**Alternativas para mitigar la dependencia offline:**  
-- **Exportación de respuestas**: El docente puede exportar en formato PDF las consultas y guardarlas para acceder a ellas luego.  
-- **Base de datos local mínima**: Almacena respuestas básicas (ej: definiciones pedagógicas) en el ESP32 (SPIFFS).  
+| **Estudiantes con adecuaciones** | Reciben material adaptado para fortalecer su aprendizaje. | Depende de que el docente planifique con conexión si no tiene una conexion estable en el momento. |    
 
 ---
 
