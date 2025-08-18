@@ -2,6 +2,7 @@
 
 ### **1. Diagrama General de la Arquitectura Completa**
 
+<img width="743" height="1441" alt="image" src="https://github.com/user-attachments/assets/052d24b9-a08f-4fb2-aded-8b6e8f5dccc9" />
 
 
 ---
