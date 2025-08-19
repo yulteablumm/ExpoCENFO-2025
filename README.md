@@ -73,15 +73,18 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 - #### **Evidencia visual:**
 
 - Captura de pantalla de la interfaz web en modo docente.   
+<img width="1915" height="912" alt="image" src="https://github.com/user-attachments/assets/6213de22-f8ae-40d9-8838-8be8540e2cdc" />    
 
 - Captura de pantalla en modo estudiante.  
 
 
 - Foto del hardware montado con el NeoPixel encendido.   
-  Docente:   
+  Docente:    
+<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/f20f11de-c7d7-4e7a-8028-2420f7fb0f38" />  
 
  
-   Estudiante:   
+   Estudiante:    
+<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/72cfd5cf-7a2e-45de-8095-d7ada5256981" />  
 
 
 - Captura de consola con registros del sistema.   
