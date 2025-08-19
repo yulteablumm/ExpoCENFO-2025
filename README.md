@@ -73,7 +73,15 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 - #### **Evidencia visual:**
 
 - Captura de pantalla de la interfaz web en modo docente.   
-<img width="1915" height="912" alt="image" src="https://github.com/user-attachments/assets/6213de22-f8ae-40d9-8838-8be8540e2cdc" />    
+<img width="1915" height="912" alt="image" src="https://github.com/user-attachments/assets/6213de22-f8ae-40d9-8838-8be8540e2cdc" />   
+<img width="1911" height="912" alt="image" src="https://github.com/user-attachments/assets/fb40072d-ce4b-48c8-8f81-e554a55e578f" />   
+<img width="1919" height="911" alt="image" src="https://github.com/user-attachments/assets/a6bf7768-d183-4ad5-ba70-6316049342a6" />  
+<img width="1916" height="907" alt="image" src="https://github.com/user-attachments/assets/c88a9639-798d-4743-9fc4-c36105c2e0de" />   
+<img width="1915" height="913" alt="image" src="https://github.com/user-attachments/assets/f111a704-24da-4890-96d1-290e9b2d97ef" />  
+
+
+
+
 
 - Captura de pantalla en modo estudiante.  
 
