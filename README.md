@@ -54,7 +54,22 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 - Visualizar estados y respuestas del sistema mediante señales físicas (LED RGB) y web (interfaz HTML).
 
 ---
+#### **Conceptos clave:**  
+**API**
+  - Analogia: como un mesero en un restaurante.
+  - Tecnicamente: Interfaz que permite que dos aplicaciones se comuniquen entre si mediante      peticiones HTTP.    
+    <img width="355" height="133" alt="image" src="https://github.com/user-attachments/assets/a7f94802-130a-4a54-9987-9f00fb4855b8" />
 
+**ENDPOINT**
+  - Analogia: como una direccion especifica.
+  - Tecnicamente: URL especifica donde una API recibe peticiones para una funcion especifica.   
+    <img width="354" height="132" alt="image" src="https://github.com/user-attachments/assets/ea2ec842-3d01-4623-9d2e-089fb9cccb0c" />
+
+**JSON**
+  - Analogia: Lista de compras organizadas.
+  - Tecnicamente: Formato ligero para intercambio de datos basado en tenxo y legible por humanos.   
+    <img width="308" height="117" alt="image" src="https://github.com/user-attachments/assets/ba42e77c-598c-494a-90d7-b775ce2a852b" />   
+---
 - #### **Evidencia visual:**
 
 - Captura de pantalla de la interfaz web en modo docente.   
