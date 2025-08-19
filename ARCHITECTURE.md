@@ -10,7 +10,7 @@
 · Hardware: ESP32  
 · Comunicación: HTTP  
 · Interfaz Web: HTML, CSS y JavaScript básicos  
-· Inteligencia Artificial: API externa (DeepHermes 3 Llama 3 vía OpenRouter)  
+· Inteligencia Artificial: API externa
 · Indicador visual: LED RGB  
 
  ## Descripción General del Funcionamiento
