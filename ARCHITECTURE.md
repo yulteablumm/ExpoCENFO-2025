@@ -408,14 +408,14 @@ static std::map<String, PendingRequest> pendingRequests;
 
 ---
 
-
-
-
-
-
-
-
-
+#### **Componentes previstos:**  
+  - Microcontrolador: ESP32  
+  - Sensores/actuadores:  
+    | Componente          | Función                             |
+    |---------------------|-------------------------------------|  
+    | **NeoPixel RGB**    | Feedback visual (colores/estados)   |
+    | **Botón en interfaz**    | Cambiar modos (docente/estudiante)  | 
+---
 ## Librerías Utilizadas  
 
 **En `platformio.ini`:**  
@@ -469,22 +469,7 @@ lib_deps =
 | **`map` (STL)**            | Almacena solicitudes pendientes en memoria (`pendingRequests`).                           | `std::map<String, PendingRequest> pendingRequests;`                                            | Parte de C++ Standard Library |
 
 
----
 
-
-- #### **Arquitectura inicial(diagrama)**  
-<img width="1980" height="1020" alt="prueba corta(progra) - Copy of expo 1" src="https://github.com/user-attachments/assets/7a7719e4-c95d-40a7-9fff-867d533aac72" />
- 
----
-
-- #### **Componentes previstos:**  
-  - Microcontrolador: ESP32  
-  - Sensores/actuadores:  
-    | Componente          | Función                             |
-    |---------------------|-------------------------------------|  
-    | **NeoPixel RGB**    | Feedback visual (colores/estados)   |
-    | **Botón en interfaz**    | Cambiar modos (docente/estudiante)  | 
-  
   ---
   
   - **LLM/API:**  
