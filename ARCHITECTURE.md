@@ -18,17 +18,7 @@
 - Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
 
 ---
-### Diagrama general del proyecto
-<img width="50%" height="80%" alt="prueba corta(progra) - expo 1" src="https://github.com/user-attachments/assets/2c7bffe1-2ee9-406b-94bd-ad7a66aa6491" />
-
-
-
-
-
-  
----
-
-### **4. Diseño Preliminar del Sistema**  
+ 
 - #### **Arquitectura inicial(diagrama)**  
 <img width="1980" height="1020" alt="prueba corta(progra) - Copy of expo 1" src="https://github.com/user-attachments/assets/7a7719e4-c95d-40a7-9fff-867d533aac72" />
  
