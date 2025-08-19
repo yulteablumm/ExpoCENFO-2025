@@ -103,7 +103,7 @@ La lógica de frontend realiza polling cada segundo y actualiza la interfaz con 
 2. **Estructura del payload**:  
    ```json
    {
-     "model": "deepseek/deepseek-r1-0528-qwen3-8b:free",
+     "model": "modelo",
      "messages": [{"role": "user", "content": "..."}]
    }
    ```
@@ -164,18 +164,52 @@ void setup() {
 ```cpp
 String callOpenRouterAPI(const char* question) {
   HTTPClient http;
-  http.begin(OPENROUTER_API_URL);
+  String url = String(OPENROUTER_API_URL);
+  http.begin(url);
+  http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", String("Bearer ") + OPENROUTER_API_KEY);
-  
+  http.addHeader("HTTP-Referer", "https://tusitio.com"); // Opcional, cambia por tu URL
+  http.addHeader("X-Title", "ESP32-Project"); // Opcional, cambia por el nombre de tu sitio
+
+  // Construir el payload según OpenRouter
   DynamicJsonDocument doc(2048);
-  doc["model"] = "deepseek/deepseek-r1-0528-qwen3-8b:free";
-  // ... (construcción del JSON)
-  
+  doc["model"] = ""; //el modelo de lenguaje que vayas a usar
+  JsonArray messages = doc.createNestedArray("messages");
+  JsonObject userMsg = messages.createNestedObject();
+  userMsg["role"] = "user";
+  userMsg["content"] = question;
+
+  String payload;
+  serializeJson(doc, payload);
+
   int httpCode = http.POST(payload);
+  String respuesta = "⛔ Error al conectar con OpenRouter";
+
   if (httpCode == 200) {
-    // Procesa respuesta JSON
+    String responseBody = http.getString();
+    Serial.println("Respuesta OpenRouter:");
+    Serial.println(responseBody);
+
+    DynamicJsonDocument resDoc(8192);
+    DeserializationError error = deserializeJson(resDoc, responseBody);
+
+    if (!error && resDoc.containsKey("choices")) {
+      respuesta = resDoc["choices"][0]["message"]["content"].as<String>();
+    } else {
+      respuesta = "⛔ Error al interpretar la respuesta de OpenRouter";
+    }
+  } else {
+    Serial.print("Error en llamada API: ");
+    Serial.println(httpCode);
+    respuesta = "⛔ Código HTTP: " + String(httpCode);
+    if (httpCode > 0) {
+      String errorBody = http.getString();
+      Serial.println("Respuesta de error:");
+      Serial.println(errorBody);
+    }
   }
-  http.end();
+
+  http.end(); // Finaliza la conexión HTTP
   return respuesta;
 }
 ```
@@ -190,11 +224,12 @@ String callOpenRouterAPI(const char* question) {
 **Propósito**: Feedback visual del modo actual.  
 **Lógica**:  
 ```cpp
+// Actualiza el color del LED según el modo seleccionado
 void updateModeLED() {
   if (currentMode == "estudiante") {
-    setLEDColor(255, 255, 0);  // Amarillo
-  } else {
-    setLEDColor(128, 0, 128);  // Violeta
+    setLEDColor(255, 255, 0); // Amarillo para estudiante
+  } else if (currentMode == "docente") {
+    setLEDColor(128, 0, 128); // Violeta para docente
   }
 }
 ```
@@ -222,14 +257,57 @@ void setLEDColor(uint8_t r, uint8_t g, uint8_t b) {
 #### **POST `/ask`**  
 ```cpp
 server.on("/ask", HTTP_POST, [](AsyncWebServerRequest *request){}, NULL,
-  [](...){
-    // Genera ID único
-    String id = String(millis()) + String(random(1000,9999));
-    pendingRequests[id] = {question, "", false};
-    
-    // Llama a la IA en segundo plano
-    xTaskCreatePinnedToCore(apiTask, "API_Task", 8192, tdata, 1, NULL, 1);
-  });
+    [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
+      String body = "";
+      for(size_t i=0; i<len; i++) body += (char)data[i];
+      DynamicJsonDocument doc(512);
+      DeserializationError error = deserializeJson(doc, body);
+      if(error || !doc.containsKey("question")) {
+        request->send(400, "application/json", "{\"error\":\"JSON inválido\"}");
+        return;
+      }
+      String question = doc["question"].as<String>();
+      // Generar un id único (timestamp + random)
+      String id = String(millis()) + String(random(1000,9999));
+      PendingRequest pr;
+      pr.question = question;
+      pr.response = "";
+      pr.ready = false;
+      pendingRequests[id] = pr;
+      // Lanzar tarea para procesar la pregunta
+      struct TaskData { String id; String question; };
+      TaskData* tdata = new TaskData{id, question};
+      // Inicia arcoíris mientras genera la respuesta
+      startRainbow();
+      xTaskCreatePinnedToCore(
+        [](void* param) {
+          TaskData* tdata = (TaskData*)param;
+          String resp = callOpenRouterAPI(tdata->question.c_str());
+          pendingRequests[tdata->id].response = resp;
+          pendingRequests[tdata->id].ready = true;
+          // Detiene arcoíris y restaura color de modo
+          stopRainbow();
+          updateModeLED();
+          // Parpadeo rojo para indicar que la respuesta está lista
+          for (int i = 0; i < 2; i++) {
+            setLEDColor(255, 0, 0); // Rojo
+            delay(200);
+            updateModeLED();
+            delay(200);
+          }
+          updateModeLED(); // Vuelve al color del modo
+          delete tdata;
+          vTaskDelete(NULL);
+        },
+        "API_Task", 8192, tdata, 1, NULL, 1
+      );
+      // Responder con el id
+      DynamicJsonDocument respDoc(128);
+      respDoc["id"] = id;
+      String respJSON;
+      serializeJson(respDoc, respJSON);
+      request->send(200, "application/json", respJSON);
+    });
 ```
 **Flujo**:  
 1. Recibe pregunta via JSON.  
@@ -238,13 +316,30 @@ server.on("/ask", HTTP_POST, [](AsyncWebServerRequest *request){}, NULL,
 
 #### **GET `/result`**  
 ```cpp
-server.on("/result", HTTP_GET, [](AsyncWebServerRequest *request){
-  String id = request->getParam("id")->value();
-  if (pendingRequests.count(id)) {
-    request->send(200, "application/json", pendingRequests[id].response);
-    pendingRequests.erase(id);  // Libera memoria
-  }
-});
+  // --- Endpoint para consultar la respuesta (GET /result?id=...) ---
+  server.on("/result", HTTP_GET, [](AsyncWebServerRequest *request){
+    if (!request->hasParam("id")) {
+      request->send(400, "application/json", "{\"error\":\"Falta id\"}");
+      return;
+    }
+    String id = request->getParam("id")->value();
+    if (pendingRequests.count(id) == 0) {
+      request->send(404, "application/json", "{\"error\":\"ID no encontrado\"}");
+      return;
+    }
+    PendingRequest& pr = pendingRequests[id];
+    DynamicJsonDocument respDoc(8192);
+    if (pr.ready) {
+      respDoc["response"] = pr.response;
+      pendingRequests.erase(id); // Borra la respuesta después de entregarla
+    } else {
+      respDoc["response"] = nullptr;
+    }
+    String respJSON;
+    serializeJson(respDoc, respJSON);
+    request->send(200, "application/json", respJSON);
+  });
+  // --- Fin de la arquitectura de polling ---
 ```
 **Propósito**: Polling para obtener respuestas listas.
 
@@ -270,12 +365,14 @@ void rainbowTask(void* parameter) {
 ### **7. Manejo de Memoria (`pendingRequests`)**  
 **Estructura**:  
 ```cpp
+// --- Estructura para manejar solicitudes pendientes de respuesta ---
 struct PendingRequest {
-  String question;
-  String response;
-  bool ready;
+  String question;   // Pregunta enviada
+  String response;   // Respuesta recibida
+  bool ready;        // Indica si la respuesta está lista
 };
-std::map<String, PendingRequest> pendingRequests;
+// Mapa global para almacenar solicitudes pendientes, usando un id único como clave
+static std::map<String, PendingRequest> pendingRequests;
 ```
 **Función**:  
 - Almacena consultas pendientes en RAM.  
