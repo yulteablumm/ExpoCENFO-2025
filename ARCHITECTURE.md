@@ -567,64 +567,6 @@ String callOpenRouterAPI(const char* question) {
   return respuesta;
 }
 ```
----
-
-  **Función de cada librería**
-  
-  | Librería | Función |
-  |---------|--------|
-  | ESPAsyncWebServer | Servidor web asincrónico para manejar múltiples conexiones HTTP simultáneas |
-  | AsyncTCP | Soporte para conexiones TCP no bloqueantes |
-  | ArduinoJson | Manejo de estructuras JSON para la API y el frontend |
-  | Adafruit NeoPixel | Control del LED RGB para visualizar estados del sistema |
-  
-  ---
-  
-  - **Archivos del Proyecto**
-  
-     `/src/main.cpp`: Lógica central de backend ESP32  
-     `/data/index.html`: Interfaz web para el usuario  
-     `/data/styles.css`: Estilos de la página  
-     `/data/script.js`: Lógica cliente para interacción web  
-     `platformio.ini`: Configuración del entorno PlatformIO  
-  
-    * **Backend (ESP32)**
-      - **Control de estados:** Gestión de colores con NeoPixel según actividad o perfil (amarillo para estudiante, violeta para docente, rojo intermitente cuando hay respuesta disponible).
-      - **Polling distribuido:** El servidor gestiona la pregunta y genera un `ID` único. Una tarea separada llama al modelo y publica la respuesta para ser consultada posteriormente.
-      - **Gestión de modos:** Permite alternar entre perfiles con retroalimentación visual y lógica en el sistema.
-      - **Integración con OpenRouter:** Utiliza `HTTPClient` para enviar preguntas y recibir respuestas JSON estructuradas.
-    
-    * **Frontend (HTML + JavaScript)**
-      - Interfaz web intuitiva con pestañas para docentes y estudiantes.
-      - Preguntas sugeridas según el perfil.
-      - Campo de entrada y botón de envío que realiza POST a `/ask`.
-      - Lógica de polling en JavaScript para mostrar la respuesta una vez esté lista.
-
----
-
-
-### **5. Toma de desiciones y accion**  
-
-#### **6.1 Asincronía**  
-- **Problema**: Bloqueo durante consultas HTTP  
-- **Solución**:  
-  ```cpp
-  xTaskCreatePinnedToCore(
-    taskConsultaAPI,  // Función
-    "API_Task",      // Nombre
-    8192,            // Stack size
-    (void*)&data,    // Parámetros
-    1,               // Prioridad
-    NULL,            // Handle
-    1                // Core
-  );
-  ```
-
-#### **Gestión de Memoria**  
-- **Técnicas**:  
-  - Pool de buffers JSON (reutilización)  
-  - Limpieza agresiva de `pendingRequests`  
-  - SPIFFS con rotación automática  
 
 
 
