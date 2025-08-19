@@ -71,7 +71,59 @@
   
 });
 
+### Implementado en main.cpp
+```
+String callOpenRouterAPI(const char* question) {
+  HTTPClient http;
+  String url = String(OPENROUTER_API_URL);
+  http.begin(url);
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Authorization", String("Bearer ") + OPENROUTER_API_KEY);
+  http.addHeader("HTTP-Referer", "https://tusitio.com"); // Opcional, cambia por tu URL
+  http.addHeader("X-Title", "ESP32-Project"); // Opcional, cambia por el nombre de tu sitio
 
+  // Construir el payload según OpenRouter
+  DynamicJsonDocument doc(2048);
+  doc["model"] = "deepseek/deepseek-r1-0528-qwen3-8b:free";
+  JsonArray messages = doc.createNestedArray("messages");
+  JsonObject userMsg = messages.createNestedObject();
+  userMsg["role"] = "user";
+  userMsg["content"] = question;
+
+  String payload;
+  serializeJson(doc, payload);
+
+  int httpCode = http.POST(payload);
+  String respuesta = "⛔ Error al conectar con OpenRouter";
+
+  if (httpCode == 200) {
+    String responseBody = http.getString();
+    Serial.println("Respuesta OpenRouter:");
+    Serial.println(responseBody);
+
+    DynamicJsonDocument resDoc(8192);
+    DeserializationError error = deserializeJson(resDoc, responseBody);
+
+    if (!error && resDoc.containsKey("choices")) {
+      respuesta = resDoc["choices"][0]["message"]["content"].as<String>();
+    } else {
+      respuesta = "⛔ Error al interpretar la respuesta de OpenRouter";
+    }
+  } else {
+    Serial.print("Error en llamada API: ");
+    Serial.println(httpCode);
+    respuesta = "⛔ Código HTTP: " + String(httpCode);
+    if (httpCode > 0) {
+      String errorBody = http.getString();
+      Serial.println("Respuesta de error:");
+      Serial.println(errorBody);
+    }
+  }
+
+  http.end(); // Finaliza la conexión HTTP
+  return respuesta;
+}
+```
 ---
 
   **Función de cada librería**
