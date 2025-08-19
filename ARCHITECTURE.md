@@ -140,15 +140,21 @@ La lógica de frontend realiza polling cada segundo y actualiza la interfaz con 
 **Propósito**: Inicialización del sistema.  
 **Componentes críticos**:  
 ```cpp
+// --- Función principal de inicialización ---
 void setup() {
-  Serial.begin(115200);
-  strip.begin();  // Inicializa NeoPixel
-  SPIFFS.begin(true);  // Monta sistema de archivos
-  WiFi.begin(ssid, password);  // Conexión WiFi
-  server.begin();  // Inicia servidor web
-  MDNS.begin("esp32");  // Configura mDNS
-  updateModeLED();  // Establece color inicial
-}
+  Serial.begin(115200); // Inicializa la comunicación serie
+  Serial.println("Arrancando ESP32...");
+  strip.begin();        // Inicializa el NeoPixel
+  strip.show();         // Apaga el LED al inicio
+  setLEDColor(0, 0, 0); // Asegura que el LED esté apagado
+
+  // Inicializar SPIFFS para servir archivos estáticos
+  if(!SPIFFS.begin(true)){
+    Serial.println("Error al montar SPIFFS");
+    setLEDColor(255, 0, 0); // Rojo si falla SPIFFS
+    return;
+  }
+
 ```
 **Flujo**:  
 1. Configura comunicación serial para depuración.  
