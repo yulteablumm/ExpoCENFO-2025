@@ -15,10 +15,7 @@
 ### ** Pasos para Instalar**
 
 #### **1. Clonar el Repositorio**
-```bash
-git clone https://github.com/tu-usuario/proyecto-esp32-educativo.git
-cd proyecto-esp32-educativo
-```
+- Clonar el repositorio desde GitHub o descargar todos los archivos directamente para tenerlos de forma local.
 
 #### **2. Configurar PlatformIO**
 - Abre el proyecto en VS Code con la extensión **PlatformIO** instalada.
