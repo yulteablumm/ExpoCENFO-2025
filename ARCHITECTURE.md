@@ -135,7 +135,7 @@ La lógica de frontend realiza polling cada segundo y actualiza la interfaz con 
 ### **Diagrama de Flujo Exacto (Basado en el Código)**  
 
 ---
-### **Funciones mas importantes**  
+# **Funciones mas importantes**  
 ### **1. `setup()`**  
 **Propósito**: Inicialización del sistema.  
 **Componentes críticos**:  
