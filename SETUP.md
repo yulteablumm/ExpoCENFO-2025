@@ -37,8 +37,7 @@ const char* OPENROUTER_API_KEY = "sk-or-v1-...";  // Clave de OpenRouter
 
 ---
 
-### ** Despliegue en el ESP32**
-#### **1. Subir archivos de /data/ a la placa**
+#### **4. Subir archivos de /data/ a la placa**
 
 1. Subir contenido del frontend a `/data` usando SPIFFS (PlatformIO).
 2. Configurar credenciales WiFi y API key directamente en el código.
@@ -59,13 +58,13 @@ const char* OPENROUTER_API_KEY = "sk-or-v1-...";  // Clave de OpenRouter
 
    - Y sigues los pasos anteriores con los demas archivos de data, seleccionas el archivo y lo subes a la placa...
 
-#### **2. Compilar y Subir el Código**
+#### **5. Compilar y Subir el Código**
 - Conecta el ESP32 vía USB.
 - En PlatformIO:
   - Click en **Build** (✔️).
   - Luego en **Upload** (→).
 
-#### **3. Conectar al WiFi**
+#### **6. Conectar al WiFi**
 - Monitorea el puerto serial (`115200 bauds`):
   ```
   Conectando a WiFi...
@@ -73,7 +72,7 @@ const char* OPENROUTER_API_KEY = "sk-or-v1-...";  // Clave de OpenRouter
   mDNS iniciado: http://esp32.local
   ```
 
-#### **4. Acceder a la Interfaz Web**
+#### **7. Acceder a la Interfaz Web**
 - Abre en tu navegador:
   - `http://esp32.local` (vía mDNS) **o**
   - `http://<IP-del-ESP32>` (ej: `http://192.168.1.100`).
