@@ -48,12 +48,10 @@ La lógica de frontend realiza polling cada segundo y actualiza la interfaz con 
 · mDNS: Servicio iniciado en el ESP32 para facilitar acceso desde el navegador sin necesidad de IP directa.  
 
 ### Frontend (HTML + JavaScript)  
-**Cambios realizados:**  
-· Se mejoró el diseño visual manteniendo una estructura simple y funcional.  
+· Se mejoró el diseño visual manteniendo una estructura mas colorida.  
 · Se añadieron pestañas para alternar entre perfiles docente y estudiante.  
 · Preguntas sugeridas se adaptan al perfil activo.  
-· Se implementó lógica de polling para consultar respuestas según el ID generado por el backend.  
-· Se agregó retroalimentación en tiempo real en el campo de respuesta.  
+· Se implementó lógica de polling para consultar respuestas según el ID generado por el backend.    
 
 
 ### **Arquitectura del Sistema en el proceamiento**  
