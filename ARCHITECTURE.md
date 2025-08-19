@@ -1,4 +1,19 @@
-## Descripción General del Funcionamiento
+
+## Archivos del Proyecto  
+· `/src/main.cpp`: Lógica central de backend ESP32  
+· `/data/index.html`: Interfaz web para el usuario  
+· `/data/styles.css`: Estilos de la página  
+· `/data/script.js`: Lógica cliente para interacción web  
+· `platformio.ini`: Configuración del entorno PlatformIO  
+
+## Tecnologías Utilizadas  
+· Hardware: ESP32  
+· Comunicación: HTTP  
+· Interfaz Web: HTML, CSS y JavaScript básicos  
+· Inteligencia Artificial: API externa (DeepHermes 3 Llama 3 vía OpenRouter)  
+· Indicador visual: LED RGB  
+
+ ## Descripción General del Funcionamiento
 1. **Conexión inicial del ESP32 a una red WiFi**  
 El microcontrolador utiliza las credenciales definidas en el código (`ssid` y `password`) para establecer la conexión con una red inalámbrica.  
 Una vez conectada, se imprime en la consola serie la dirección IP local obtenida por el dispositivo, y se inicializa el servicio mDNS (`esp32.local`) para permitir el acceso desde navegadores por nombre, sin depender de una IP fija.  
@@ -426,20 +441,37 @@ lib_deps =
 | ArduinoJson           | Manejo de estructuras JSON para la API y el frontend                   |
 | Adafruit NeoPixel     | Control del LED RGB para visualizar estados del sistema                |
 
-## Archivos del Proyecto  
-· `/src/main.cpp`: Lógica central de backend ESP32  
-· `/data/index.html`: Interfaz web para el usuario  
-· `/data/styles.css`: Estilos de la página  
-· `/data/script.js`: Lógica cliente para interacción web  
-· `platformio.ini`: Configuración del entorno PlatformIO  
 
-## Tecnologías Utilizadas  
-· Hardware: ESP32  
-· Comunicación: HTTP  
-· Interfaz Web: HTML, CSS y JavaScript básicos  
-· Inteligencia Artificial: API externa (DeepHermes 3 Llama 3 vía OpenRouter)  
-· Indicador visual: LED RGB  
- 
+
+---
+**En `main.cpp`:** 
+```cpp
+// --- Inclusión de librerías necesarias para el funcionamiento del ESP32 y funcionalidades extra ---
+#include <WiFi.h>                    // Manejo de la conexión WiFi
+#include <ESPAsyncWebServer.h>        // Servidor web asíncrono
+#include <SPIFFS.h>                   // Sistema de archivos en memoria flash
+#include <ArduinoJson.h>              // Manejo de JSON
+#include <HTTPClient.h>               // Cliente HTTP para peticiones a APIs
+#include <ESPmDNS.h>                  // Soporte para mDNS (acceso por nombre de red)
+#include <map>                        // Estructura de datos map de C++
+#include <Adafruit_NeoPixel.h>        // Librería para controlar NeoPixel
+```      
+
+| **Librería**               | **Función en el Proyecto**                                                                 | **Ejemplo de Uso en el Código**                                                                 | **Dependencias**              |
+|----------------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|-------------------------------|
+| **`WiFi.h`**               | Gestiona la conexión WiFi del ESP32.                                                      | `WiFi.begin(ssid, password);`                                                                  | Incluida en framework Arduino |
+| **`ESPAsyncWebServer.h`**  | Servidor web asíncrono para manejar peticiones HTTP (endpoints `/ask`, `/setmode`, etc.). | `server.on("/ask", HTTP_POST, [](AsyncWebServerRequest *request){...});`                       | Requiere `AsyncTCP`           |
+| **`SPIFFS.h`**             | Sistema de archivos para almacenar HTML/CSS y historial de consultas.                     | `SPIFFS.begin(true);` <br> `server.serveStatic("/", SPIFFS, "/");`                             | Incluida en framework Arduino |
+| **`ArduinoJson.h`**        | Procesa JSON para enviar peticiones a la API y parsear respuestas.                        | `DynamicJsonDocument doc(2048);` <br> `serializeJson(doc, payload);`                           | Ninguna                       |
+| **`HTTPClient.h`**         | Realiza peticiones HTTP a la API de OpenRouter.                                           | `http.begin(OPENROUTER_API_URL);` <br> `http.POST(payload);`                                   | Incluida en framework Arduino |
+| **`ESPmDNS.h`**            | Permite acceder al ESP32 mediante `esp32.local` en la red local.                          | `MDNS.begin("esp32");`                                                                         | Incluida en framework Arduino |
+| **`Adafruit_NeoPixel.h`**  | Controla el LED RGB para feedback visual (modos, errores, etc.).                         | `Adafruit_NeoPixel strip(1, LED_PIN, NEO_GRB + NEO_KHZ800);` <br> `strip.setPixelColor(...);`  | Ninguna                       |
+| **`map` (STL)**            | Almacena solicitudes pendientes en memoria (`pendingRequests`).                           | `std::map<String, PendingRequest> pendingRequests;`                                            | Parte de C++ Standard Library |
+
+
+---
+
+
 - #### **Arquitectura inicial(diagrama)**  
 <img width="1980" height="1020" alt="prueba corta(progra) - Copy of expo 1" src="https://github.com/user-attachments/assets/7a7719e4-c95d-40a7-9fff-867d533aac72" />
  
