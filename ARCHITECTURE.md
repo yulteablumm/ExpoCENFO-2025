@@ -30,7 +30,7 @@ Se expone el endpoint `/ask`, que recibe preguntas en formato JSON desde el nave
 Cada solicitud es procesada en una tarea independiente creada con `xTaskCreatePinnedToCore`, permitiendo que la interacción con la IA no bloquee el funcionamiento del servidor.  
 La pregunta se almacena temporalmente junto a un identificador único (`id` generado por timestamp + número aleatorio) en una estructura tipo `map`, garantizando acceso individualizado.  
 Durante el procesamiento, se activa el efecto visual **arcoíris dinámico** con NeoPixel, como indicador de actividad.  
-La respuesta se obtiene desde la API de OpenRouter usando el modelo `DeepHermes 3 Llama 3 8B Preview`, y se almacena hasta que el cliente la solicite desde `/result?id=...`.
+La respuesta se obtiene desde la API de OpenRouter usando el modelo elegido, y se almacena hasta que el cliente la solicite desde `/result?id=...`.
 
 4. **Cambio dinámico de perfil mediante el endpoint `/setmode`**  
 El sistema permite alternar entre dos perfiles funcionales (`"docente"` y `"estudiante"`), que se actualizan dinámicamente desde la interfaz web mediante una solicitud `POST`.  
