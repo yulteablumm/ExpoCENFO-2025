@@ -50,7 +50,7 @@ graph TD
    git push origin feature/nombre-funcionalidad
    ```
 
-7. **Abre un Pull Request** hacia la rama `ultima'version` del repositorio principal
+7. **Abre un Pull Request** hacia la rama `ultima-version` del repositorio principal
 
 
 ---
