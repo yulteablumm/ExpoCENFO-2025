@@ -24,3 +24,6 @@
 
 ## [3.1] - 17/08/2025
 - Se intento modificar y mejorar mas la pagina en algunos errores que daban al devolver la respuesta.
+
+## [3.2] - 119/08/2025
+- Se mejoro el panel de las preguntas sugeridas.
