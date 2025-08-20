@@ -84,6 +84,11 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 
 
 - Captura de pantalla en modo estudiante.  
+<img width="1919" height="963" alt="image" src="https://github.com/user-attachments/assets/04f217f4-30b3-4812-ae4e-4b5e5ef42665" />   
+<img width="1913" height="967" alt="image" src="https://github.com/user-attachments/assets/79ec88bc-b71d-47f6-a1fb-32b06a54e7ed" />   
+<img width="1913" height="967" alt="image" src="https://github.com/user-attachments/assets/434c4e2d-0847-48ff-8ae1-3d4cb5dae4d1" />  
+<img width="1917" height="960" alt="image" src="https://github.com/user-attachments/assets/04ae5faf-4a88-4dc7-8123-99ea5173d2cd" />    
+  <img width="1915" height="971" alt="image" src="https://github.com/user-attachments/assets/802bf545-727e-4758-b43a-ac8f799ccc13" />  
 
 
 - Foto del hardware montado con el NeoPixel encendido.   
@@ -96,7 +101,6 @@ Desarrollar un asistente educativo con IA basado en ESP32 que, mediante una inte
 
 
 - Captura de consola con registros del sistema.   
-
-- Videos    
-
+<img width="1764" height="955" alt="image" src="https://github.com/user-attachments/assets/7283462d-71da-4704-9027-09ddb526d05b" />   
+<img width="1269" height="536" alt="image" src="https://github.com/user-attachments/assets/674c7c32-2676-4760-ad50-591de3390bbb" />  
 
